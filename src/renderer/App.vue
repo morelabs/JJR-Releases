@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import SystemInformation from "./components/LandingPage/SystemInformation";
+import SystemInformation from "./components/System/SystemInformation";
 export default {
   name: "JpjFrontend",
   components: { SystemInformation },
@@ -49,7 +49,7 @@ footer {
   height: 2em;
   line-height: 2em;
   z-index: 1000;
-  font-size: 10px;
+  font-size: 12px;
   background-color: #fff;
 }
 </style>

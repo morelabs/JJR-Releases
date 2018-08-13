@@ -3,6 +3,8 @@ import Router from "vue-router";
 import Layout from "@/components/Layout";
 import Dashboard from "@/components/Dashboard";
 import Login from "@/components/Login";
+import Ipps from "@/components/Ipp/Ipps";
+import NewIpp from "@/components/Ipp/NewIpp";
 
 Vue.use(Router);
 
@@ -22,6 +24,16 @@ const routes = [
         name: "dashboard",
         component: Dashboard,
         meta: { requireAuth: true }
+      },
+      {
+        path: "/ipps/new",
+        name: "newIpp",
+        component: NewIpp
+      },
+      {
+        path: "/ipps",
+        name: "ipps",
+        component: Ipps
       }
     ]
   }

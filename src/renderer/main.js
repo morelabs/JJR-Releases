@@ -11,9 +11,14 @@ import moment from "moment";
 import VueOffline from "vue-offline";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircle,
+  faChevronRight,
+  faChevronLeft
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
+import locale from "element-ui/lib/locale/lang/es";
 import InterceptorsSetup from "./api/interceptors";
 
 require("moment/locale/es");
@@ -27,9 +32,10 @@ Vue.config.productionTip = false;
 InterceptorsSetup();
 
 Vue.use(VueMoment, { moment });
-Vue.use(ElementUI);
+Vue.use(ElementUI, { locale });
 Vue.use(VueOffline);
-library.add(faCircle);
+
+library.add(faCircle, faChevronLeft, faChevronRight);
 Vue.component("fw-icon", FontAwesomeIcon);
 
 /* eslint-disable no-new */

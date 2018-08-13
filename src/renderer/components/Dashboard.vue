@@ -2,12 +2,14 @@
   <div id="dashboard">
     <el-row :gutter="12">
       <el-col :span="8">
-        <el-card
-          class="option"
-          shadow="hover">
-          <i class="el-icon-plus"></i>
-          <p>Nuevo IPP</p>
-        </el-card>
+        <router-link :to="{ name: 'newIpp' }">
+          <el-card
+            class="option"
+            shadow="hover">
+            <i class="el-icon-plus"></i>
+            <p>Nuevo IPP</p>
+          </el-card>
+        </router-link>
       </el-col>
       <el-col :span="8">
         <el-card
@@ -39,6 +41,10 @@ export default {
 #dashboard {
   margin: 30px 0px;
   text-align: center;
+}
+#dashboard a {
+  text-decoration: none;
+  color: #888;
 }
 .option {
   font-size: 20px;

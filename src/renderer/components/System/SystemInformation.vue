@@ -2,21 +2,25 @@
   <div>
     <div class="items">
       <div class="group-left">
-        <div class="item">2018 &#174;</div>
-        <div class="item">Vue.js: <b>{{ vue }}</b></div>
+        <div class="item">2018 &#174; Morelabs</div>
+        <!-- <div class="item">Vue.js: <b>{{ vue }}</b></div>
         <div class="item">Electron: <b>{{ electron }}</b></div>
         <div class="item">Node: <b>{{ node }}</b></div>
-        <div class="item">Platforma: <b>{{ platform }}</b></div>
+        <div class="item">Platforma: <b>{{ platform }}</b></div> -->
       </div>
       <div class="group-right">
-        <div class="item">User: {{ user.first_name }} {{ user.last_name }} - {{ user.role }}</div>
-        <div class="item">
-          Status 
-          <fw-icon
-            :class="online ? 'green' : 'red'"
-            icon="circle"/>
-        </div>
+        <div class="item">Usuario: {{ user.first_name }} {{ user.last_name }} - {{ user.role }}</div>
         <div class="item">Version: 1.0.0</div>
+        <div class="item">
+          <el-tooltip
+            :content="'Estado de la conexion: ' + (online ? 'OK' : 'ERROR')"
+            effect="dark"
+            placement="top">
+            <fw-icon
+              :class="online ? 'green' : 'red'"
+              icon="circle"/>
+          </el-tooltip>
+        </div>
       </div>
     </div>
   </div>
@@ -63,16 +67,18 @@ export default {
 }
 .items .group-left .item {
   display: inline-block;
-  margin-right: 20px;
+  margin-right: 10px;
+  text-align: center;
 }
 .items .group-right .item {
   display: inline-block;
-  margin-left: 20px;
+  margin-left: 10px;
+  text-align: center;
 }
 .fa-circle.green {
-  color: green;
+  color: #27be12;
 }
 .fa-circle.red {
-  color: red;
+  color: #f04b38;
 }
 </style>
