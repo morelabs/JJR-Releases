@@ -1,21 +1,26 @@
 <template>
-  <div id="layout">
-    <nav>
-      <a
-        href="#" 
-        @click="closeSession()">Salir</a>
-    </nav>
-    <div
-      v-loading="loading"
-      class="wrapper">
-      <router-view/>
-    </div>
-  </div>
+  <el-container
+    style="height: 100%; border: 1px solid #eee">
+    <el-aside
+      width="10%"
+      style="background-color: #fff">
+      <div style="padding: 10px;">
+        <p>{{ user.first_name }} {{ user.last_name }}</p>
+        <router-link :to="{ name: 'dashboard' }">Panel</router-link>
+        <a @click="closeSession()">Salir</a>
+      </div>
+    </el-aside>
+    <el-main style="display: flex; flex-direction: column; flex: auto;">
+      <div style="margin: 0px 0px 16px 0px; flex: auto; background: rgb(255, 255, 255);position: relative;overflow: hidden scroll;">
+        <router-view/>
+      </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
 import { createNamespacedHelpers as namespace } from "vuex";
-const { mapActions: authActions } = namespace("auth");
+const { mapActions: authActions, mapGetters: authGetters } = namespace("auth");
 
 export default {
   name: "Layout",
@@ -23,6 +28,9 @@ export default {
     return {
       loading: false
     };
+  },
+  computed: {
+    ...authGetters(["user"])
   },
   created() {
     this.checkLogged();
@@ -48,20 +56,3 @@ export default {
   }
 };
 </script>
-
-<style>
-#layout {
-  background: #f1f1f1;
-  padding: 10px;
-}
-.main-title {
-  text-align: center;
-  font-size: 12px;
-}
-.wrapper,
-nav {
-  height: 100%;
-  width: 70%;
-  margin: 0px auto;
-}
-</style>

@@ -56,7 +56,7 @@ export default {
 
 <style scoped>
 .items {
-  width: 70%;
+  width: 89%;
   margin: auto;
 }
 .items .group-left {

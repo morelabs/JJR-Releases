@@ -1,7 +1,7 @@
 <template>
   <div id="dashboard">
     <el-row :gutter="12">
-      <el-col :span="8">
+      <el-col :span="6">
         <router-link :to="{ name: 'newIpp' }">
           <el-card
             class="option"
@@ -11,7 +11,7 @@
           </el-card>
         </router-link>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="6">
         <el-card
           class="option"
           shadow="hover">
@@ -19,12 +19,20 @@
           <p>Expedientes</p>
         </el-card>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="6">
         <el-card
           class="option"
           shadow="hover">
           <i class="el-icon-tickets"></i>
           <p>Administracion</p>
+        </el-card>
+      </el-col>
+      <el-col :span="6">
+        <el-card
+          class="option"
+          shadow="hover">
+          <i class="el-icon-tickets"></i>
+          <p>Test</p>
         </el-card>
       </el-col>
     </el-row>
@@ -39,8 +47,8 @@ export default {
 
 <style>
 #dashboard {
-  margin: 30px 0px;
   text-align: center;
+  padding: 20px;
 }
 #dashboard a {
   text-decoration: none;
