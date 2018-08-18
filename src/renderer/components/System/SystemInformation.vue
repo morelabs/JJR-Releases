@@ -9,7 +9,13 @@
         <div class="item">Platforma: <b>{{ platform }}</b></div> -->
       </div>
       <div class="group-right">
-        <div class="item">Usuario: {{ user.first_name }} {{ user.last_name }} - {{ user.role }}</div>
+        <div class="item">
+          Conectado a 
+          <span class="highlight">{{ region | capitalize }}</span>
+          como
+          <span class="highlight">{{ user.first_name }} {{ user.last_name }} </span> -
+          <span style="color: #999;">{{ user.role | capitalize }}</span>
+        </div>
         <div class="item">Version: 1.0.0</div>
         <div class="item">
           <el-tooltip
@@ -45,19 +51,23 @@ export default {
       node: process.versions.node,
       path: this.$route.path,
       platform: require("os").platform(),
-      vue: require("vue/package.json").version
+      vue: require("vue/package.json").version,
+      region: ""
     };
   },
   computed: {
     ...authGetters(["user", "app"])
+  },
+  created() {
+    this.region = localStorage.getItem("region").replace(/_/, " ");
   }
 };
 </script>
 
 <style scoped>
 .items {
-  width: 89%;
-  margin: auto;
+  padding-left: 10px;
+  padding-right: 20px;
 }
 .items .group-left {
   float: left;
@@ -80,5 +90,8 @@ export default {
 }
 .fa-circle.red {
   color: #f04b38;
+}
+.item .highlight {
+  color: #f56c6c;
 }
 </style>

@@ -5,6 +5,12 @@ import Dashboard from "@/components/Dashboard";
 import Login from "@/components/Login";
 import Ipps from "@/components/Ipp/Ipps";
 import NewIpp from "@/components/Ipp/NewIpp";
+import Admin from "@/components/Administration/Admin";
+import Users from "@/components/Administration/Users";
+import Collaborators from "@/components/Administration/Collaborators";
+import Institutions from "@/components/Administration/Institutions";
+import File from "@/components/Files/File";
+import Files from "@/components/Files/Files";
 
 Vue.use(Router);
 
@@ -34,6 +40,41 @@ const routes = [
         path: "/ipps",
         name: "ipps",
         component: Ipps
+      },
+      {
+        path: "/files",
+        name: "files",
+        component: Files
+      },
+      {
+        path: "/files/:id",
+        name: "file",
+        component: File
+      },
+      {
+        path: "/admin",
+        component: Admin,
+        children: [
+          {
+            path: "",
+            name: "adminUsers",
+            component: Users
+          },
+          {
+            path: "collaborators",
+            name: "adminCollaborators",
+            component: Collaborators
+          },
+          {
+            path: "institutions",
+            name: "adminInstitutions",
+            component: Institutions
+          }
+        ]
+      },
+      {
+        path: "*",
+        component: Dashboard
       }
     ]
   }

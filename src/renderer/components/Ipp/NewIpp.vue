@@ -1,34 +1,36 @@
 <template>
   <div class="ipp-form">
     <div class="step-indicator">
-      <el-steps
-        :active="active"
-        align-center>
-        <el-step
-          title="Inicio"
-          description="Informacion Basica"
-          icon="icono-arg-firma-contrato icono-2x"/>
-        <el-step
-          title="Involucrados I"
-          description="Victimarios"
-          icon="icono-arg-comunidad icono-2x"/>
-        <el-step
-          title="Involucrados II"
-          description="Victimas"
-          icon="icono-arg-comunidad icono-2x"/>
-        <el-step
-          title="Hechos"
-          description="Datos de los hechos"
-          icon="icono-arg-seguridad icono-2x"/>
-        <el-step
-          title="Origen"
-          description="Monitoreo y asignacion"
-          icon="icono-arg-justicia icono-2x"/>
-        <el-step
-          title="Resumen"
-          description="Monitoreo y asignacion"
-          icon="icono-arg-tramite icono-2x"/>
-      </el-steps>
+      <div style="padding: 20px 10px;">
+        <el-steps
+          :active="active"
+          align-center>
+          <el-step
+            title="Inicio"
+            description="Informacion Basica"
+            icon="icono-arg-firma-contrato icono-2x"/>
+          <el-step
+            title="Involucrados I"
+            description="Victimarios"
+            icon="icono-arg-comunidad icono-2x"/>
+          <el-step
+            title="Involucrados II"
+            description="Victimas"
+            icon="icono-arg-comunidad icono-2x"/>
+          <el-step
+            title="Hechos"
+            description="Datos de los hechos"
+            icon="icono-arg-seguridad icono-2x"/>
+          <el-step
+            title="Origen"
+            description="Monitoreo y asignacion"
+            icon="icono-arg-justicia icono-2x"/>
+          <el-step
+            title="Resumen"
+            description="Monitoreo y asignacion"
+            icon="icono-arg-tramite icono-2x"/>
+        </el-steps>
+      </div>
     </div>
     <div class="step-content">
       <el-form>
@@ -101,15 +103,18 @@ export default {
 .step-indicator {
   padding: 10px;
 }
-
+.step-content {
+  height: 100%;
+  overflow-y: hidden scroll;
+}
 .ipp-form {
-  padding: 20px;
   background: #fff;
   height: 100%;
 }
 .ipp-form-wrapper {
   position: relative;
   height: 100%;
+  padding: 0px 20px 20px 20px;
 }
 
 .ipp-step-header {

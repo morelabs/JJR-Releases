@@ -19,10 +19,10 @@ export default {
   },
   created() {
     this.$on("online", function() {
-      this.onlineState = "I'm online now!";
+      this.onlineState = true;
     });
     this.$on("offline", function() {
-      this.onlineState = "I'm offline now!";
+      this.onlineState = false;
     });
   }
 };
@@ -43,13 +43,14 @@ body {
 }
 footer {
   position: absolute;
-  border-top: solid 1px #ccc;
+  border-top: solid 1px #f1f1f1;
   width: 100%;
   bottom: 0px;
   height: 2em;
   line-height: 2em;
   z-index: 1000;
-  font-size: 12px;
+  font-size: 13px;
+  color: #333;
   background-color: #fff;
 }
 </style>

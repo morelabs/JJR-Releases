@@ -29,7 +29,7 @@
                 suffix-icon="icono-arg-dni"
                 name="dni"
                 style="width: 100%;"
-                placeholder="XX.XXX.XXX"
+                placeholder="DNI: XX.XXX.XXX"
                 @change="validateDNI"/>
               <div>
                 <el-checkbox

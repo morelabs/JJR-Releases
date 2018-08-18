@@ -64,7 +64,7 @@ Object.assign(actions, {
     commit("IPP_RESET");
   }
 });
-console.log("Actions for IPP", actions);
+
 export default {
   state: initialState,
   mutations,

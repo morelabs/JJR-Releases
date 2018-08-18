@@ -33,7 +33,7 @@
               format="dd/MM/yyyy"
               style="width: 100%;"
               name="commited_at"
-              placeholder="DD/MM/YYYY"/>
+              placeholder="Fecha del hecho"/>
             <div>
               <el-checkbox
                 v-model="ipp.commitedAtDisabled"
@@ -51,7 +51,7 @@
               format="dd/MM/yyyy"
               style="width: 100%;"
               name="commited_at"
-              placeholder="DD/MM/YYYY"/>
+              placeholder="Fecha de la denuncia"/>
             <div>
               <el-checkbox
                 v-model="ipp.reportedAtDisabled"
@@ -163,10 +163,12 @@ export default {
     },
     cleanDate(field) {
       if (field == "commited_at") {
-        this.ipp[field] = this.commitedAtDisabled ? "" : this.ipp[field];
+        this.ipp[field] = this.ipp.commitedAtDisabled ? "" : this.ipp[field];
       } else if (field == "reported_at") {
-        this.ipp[field] = this.reportedAtDisabled ? "" : this.ipp[field];
+        this.ipp[field] = this.ipp.reportedAtDisabled ? "" : this.ipp[field];
       }
+
+      console.log(field, this.ipp[field]);
     },
     setSource(val) {
       this.ipp.source = this.allSources.find(s => val === s.id);

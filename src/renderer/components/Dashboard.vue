@@ -2,14 +2,12 @@
   <div id="dashboard">
     <el-row :gutter="12">
       <el-col :span="6">
-        <router-link :to="{ name: 'newIpp' }">
-          <el-card
-            class="option"
-            shadow="hover">
-            <i class="el-icon-plus"></i>
-            <p>Nuevo IPP</p>
-          </el-card>
-        </router-link>
+        <el-card
+          class="option"
+          shadow="hover">
+          <i class="el-icon-search"></i>
+          <p>IPP's</p>
+        </el-card>
       </el-col>
       <el-col :span="6">
         <el-card

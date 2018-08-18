@@ -1,6 +1,7 @@
 "use strict";
-
 import { app, BrowserWindow } from "electron";
+const log = require("electron-log");
+const { autoUpdater } = require("electron-updater");
 
 /**
  * Set `__static` path to static files in production
@@ -23,9 +24,11 @@ function createWindow() {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
-    useContentSize: true,
-    width: 1000
+    height: 900,
+    width: 1650,
+    minWidth: 1450,
+    minHeight: 800,
+    useContentSize: true
   });
 
   mainWindow.loadURL(winURL);
@@ -48,7 +51,6 @@ app.on("activate", () => {
     createWindow();
   }
 });
-
 /**
  * Auto Updater
  *
@@ -56,7 +58,6 @@ app.on("activate", () => {
  * support auto updating. Code Signing with a valid certificate is required.
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
  */
-
 /*
 import { autoUpdater } from 'electron-updater'
 
