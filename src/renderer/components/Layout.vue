@@ -35,7 +35,9 @@
                 href="#"
                 class="logout"
                 @click="confirmLogut = true">
-                <fw-icon icon="lock"/>
+                <fw-icon
+                  :class="collapsed ? '' : 'hidden'"
+                  icon="lock"/>
                 <span :class="collapsed ? 'hidden' : ''">Cerrar sesion</span>
               </a>
             </el-popover>
@@ -56,24 +58,27 @@
       <br>
       <div class="menu-items">
         <el-tooltip
-          v-if="collapsed"
+          :disabled="!collapsed"
           class="item"
           effect="dark"
-          content="Dashboard"
+          content="Panel inicio"
           placement="right">
           <router-link
             :to="{ name: 'dashboard' }"
             class="menu-item dashboard">
             <i
               :class="collapsed ? 'hidden' : ''"
-              class="icono-arg-capacitacion"></i>
-            <span>Dashboard</span>
+              class="icono-arg-justicia-negativo"></i>
+            <span>Inicio</span>
             <div class="collapsed">
-              <i class="icono-arg-capacitacion"></i>
+              <i
+                style="font-size: 13px;"
+                class="icono-arg-justicia-negativo"></i>
             </div>
           </router-link>
         </el-tooltip>
         <el-tooltip
+          :disabled="!collapsed"
           class="item"
           effect="dark"
           content="Administracion"
@@ -86,12 +91,15 @@
               class="icono-arg-cambio-tecnologico"></i>
             <span>Administracion</span>
             <div class="collapsed">
-              <i class="icono-arg-cambio-tecnologico"></i>
+              <i
+                style="font-size: 13px;"
+                class="icono-arg-cambio-tecnologico"></i>
             </div>
           </router-link>
         </el-tooltip>
-        <h3><i class="icono-arg-justicia-negativo"></i> IPP</h3>
+        <h3><i class="icono-arg-declaracio-n-jurada-declaracion-jurada-rectificativa"></i> IPP</h3>
         <el-tooltip
+          :disabled="!collapsed"
           class="item"
           effect="dark"
           content="Ingresar nuevo IPP"
@@ -106,6 +114,7 @@
           </router-link>
         </el-tooltip>
         <el-tooltip
+          :disabled="!collapsed"
           class="item"
           effect="dark"
           content="Listado de IPPs"
@@ -120,6 +129,7 @@
           </router-link>
         </el-tooltip>
         <el-tooltip
+          :disabled="!collapsed"
           class="item"
           effect="dark"
           content="Listado de expedientes"
@@ -135,6 +145,7 @@
         </el-tooltip>
         <h3><i class="icono-arg-marcador-ubicacion-2"></i> Reportes</h3>
         <el-tooltip
+          :disabled="!collapsed"
           class="item"
           effect="dark"
           content="Mapa Victimarios"
@@ -149,6 +160,7 @@
           </router-link>
         </el-tooltip>
         <el-tooltip
+          :disabled="!collapsed"
           class="item"
           effect="dark"
           content="Estadisticas y reportes"
