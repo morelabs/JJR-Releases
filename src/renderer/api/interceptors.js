@@ -2,15 +2,12 @@ import axios from "axios";
 import router from "../router";
 
 export default function setup() {
+  axios.defaults.baseURL = process.env.API_URL;
   axios.interceptors.request.use(
     function(config) {
-      let region = localStorage.getItem("region");
       let token = localStorage.getItem("token");
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
-      }
-      if (region) {
-        config.baseURL = `http://${region}.jpj.local:3000`;
       }
       config.headers["Accept"] = "application/json";
       config.headers["Content-Type"] = "application/json";
