@@ -1,29 +1,43 @@
 <template>
-  <div id="app">
+  <div
+    v-loading="loading"
+    id="app">
     <router-view/>
-    <footer>
-      <system-information :online="onlineState"/>
-    </footer>
   </div>
 </template>
 
 <script>
-import SystemInformation from "./components/System/SystemInformation";
+import { createNamespacedHelpers as namespace } from "vuex";
+const { mapActions: authActions, mapGetters: authGetters } = namespace("auth");
+
 export default {
   name: "JpjFrontend",
-  components: { SystemInformation },
   data() {
     return {
-      onlineState: navigator.onLine
+      onlineState: navigator.onLine,
+      loading: false
     };
   },
   created() {
-    this.$on("online", function() {
-      this.onlineState = true;
-    });
-    this.$on("offline", function() {
-      this.onlineState = false;
-    });
+    this.checkLogged();
+  },
+  methods: {
+    ...authActions(["checkUser", "logout"]),
+    checkLogged() {
+      console.log("Checking user...");
+      this.loading = true;
+      setTimeout(() => {
+        this.checkUser()
+          .then(response => {
+            this.loading = false;
+          })
+          .catch(error => {
+            this.$message.error(error);
+            this.$router.push({ name: "login" });
+            this.loading = false;
+          });
+      }, 2000);
+    }
   }
 };
 </script>

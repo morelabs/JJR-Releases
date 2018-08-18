@@ -55,4 +55,7 @@ export default {
 .option {
   font-size: 20px;
 }
+#dashboard img {
+  height: 100px;
+}
 </style>

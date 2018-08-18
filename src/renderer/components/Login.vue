@@ -1,15 +1,10 @@
 <template>
   <div id="wrapper">
-    <img 
-      id="logo" 
-      src="~@/assets/images/logo.png" 
-      alt="electron-vue">
     <main>
-      <div class="left-side">
-        <h1 class="title">
-          Bienvenido a JPJ
-        </h1>
-        
+      <div class="title">
+        <img src="~@/assets/images/icon.png">
+        <h1>Justicia Penal Juvenil</h1>
+        <div style="color: #999; font-size: 15px;">Justicia restaurativa</div>
       </div>
       <div class="login-container">
         <el-form
@@ -129,18 +124,23 @@ export default {
 };
 </script>
 
-<style>
-#wrapper {
-  width: 50%;
-  text-align: center;
-  margin: 0px auto;
-  padding-top: 50px;
-}
-#logo {
-  height: 100px;
-}
+<style scoped>
 .login-container {
-  margin: 50px auto;
-  width: 50%;
+  width: 30%;
+  margin: auto;
+}
+.title {
+  width: 30%;
+  margin: 20px auto;
+  text-align: center;
+  border-bottom: solid 1px #ccc;
+  padding-bottom: 10px;
+}
+.title h1 {
+  margin: 10px 0px;
+}
+.title img {
+  width: 80px;
+  margin: auto;
 }
 </style>

@@ -23,7 +23,8 @@ export default {
 .admin-header a {
   height: 3em;
   line-height: 3em;
-  padding: 1em;
+  padding: 15px;
+  background: transparent;
   color: #888;
 }
 
