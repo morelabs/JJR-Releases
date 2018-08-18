@@ -55,6 +55,10 @@
               @click.native.prevent="authenticate()">Submit</el-button>
           </el-form-item>
         </el-form>
+        <div style="font-size: 12px; color: #999;">
+          <div style="float: left">{{ name }}</div>
+          <div style="float: right"> v.{{ version }}</div>
+        </div>
       </div>
     </main>
   </div>
@@ -63,12 +67,15 @@
 <script>
 import { createNamespacedHelpers as namespace } from "vuex";
 const { mapActions: authActions } = namespace("auth");
+const appPackage = require("../../../package.json");
 
 export default {
   name: "Login",
   data() {
     return {
       loading: false,
+      name: appPackage.build.productName,
+      version: appPackage.version,
       credentials: {
         region: "",
         username: "",
