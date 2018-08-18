@@ -10,13 +10,10 @@
       </div>
       <div class="group-right">
         <div class="item">
-          Conectado a 
-          <span class="highlight">{{ region | capitalize }}</span>
-          como
-          <span class="highlight">{{ user.first_name }} {{ user.last_name }} </span> -
-          <span style="color: #999;">{{ user.role | capitalize }}</span>
+          Conectado como
+          <span class="highlight">{{ user.first_name }} {{ user.last_name }} </span>
         </div>
-        <div class="item">Version: 1.0.0</div>
+        <div class="item">{{ appName }} - v{{ version }}</div>
         <div class="item">
           <el-tooltip
             :content="'Estado de la conexion: ' + (online ? 'OK' : 'ERROR')"
@@ -34,6 +31,7 @@
 
 <script>
 import { createNamespacedHelpers as namespace } from "vuex";
+import { mkdir } from "fs";
 const { mapGetters: authGetters } = namespace("auth");
 
 export default {
@@ -41,6 +39,14 @@ export default {
   props: {
     online: {
       type: Boolean,
+      required: true
+    },
+    appName: {
+      type: String,
+      required: true
+    },
+    version: {
+      type: String,
       required: true
     }
   },

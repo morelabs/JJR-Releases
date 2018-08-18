@@ -11,12 +11,12 @@
         trigger="hover"
         placement="right">
         <div slot="content">
-          <div style="text-align: center">
+          <div style="text-align: center; color: #ccc;">
             <div>Usuario</div>
             <div style="font-size: 16px;">{{ user.first_name }} {{ user.last_name }}</div>
+            <p>{{ user.email }}</p>
+            <a href="/profile">Ver Perfil</a>
           </div>
-          <p>Email: {{ user.email }}</p>
-          <p>Role: {{ user.role }}</p>
         </div>
         <div class="user-info">
           <a
@@ -26,7 +26,14 @@
             <img src="@/assets/images/man.png">
           </a>
           <div class="user-name">
-            <div :class="collapsed ? 'hidden' : 'name'">{{ user.first_name }} {{ user.last_name }}</div>
+            <div :class="collapsed ? 'hidden' : 'name'">
+              <router-link
+                :to="{ path: '/profile' }"
+                style="color: #f1f1f1;">
+                <div>{{ user.first_name }} {{ user.last_name }}</div>
+                <small style="font-size: 12px;">{{ user.email }}</small>
+              </router-link>
+            </div>
             <div style="padding-top: 5px;">
               <el-popover
                 v-model="confirmLogut"
@@ -162,12 +169,12 @@
           :disabled="!collapsed"
           class="item"
           effect="dark"
-          content="Mapa Victimarios"
+          content="Mapa de hechos"
           placement="right">
           <router-link
             :to="{ path: '/map/victimizers' }"
             class="menu-item item">
-            <span>Mapa Victimarios</span>
+            <span>Mapa de hechos</span>
             <div class="collapsed">
               <i class="el-icon-location"></i>
             </div>
@@ -201,7 +208,10 @@
       <main-search ref="search"/>
     </el-main>
     <footer>
-      <system-information :online="onlineState"/>
+      <system-information
+        :online="onlineState"
+        :app-name="appName"
+        :version="version"/>
     </footer>
   </el-container>
 </template>
@@ -212,6 +222,7 @@ import MainSearch from "@/components/Shared/MainSearch";
 import { extend } from "lodash";
 import { createNamespacedHelpers as namespace } from "vuex";
 const { mapActions: authActions, mapGetters: authGetters } = namespace("auth");
+const appPackage = require("../../../package.json");
 
 export default {
   name: "Layout",
@@ -221,6 +232,8 @@ export default {
   },
   data() {
     return {
+      appName: appPackage.build.productName,
+      version: appPackage.version,
       loading: false,
       collapsed: false,
       onlineState: navigator.onLine,
@@ -354,14 +367,16 @@ a {
 .el-aside.main-side-menu {
   background-color: rgb(51, 62, 76);
   color: rgb(201, 196, 200);
-  padding: 10px 0px;
   width: 250px !important;
 }
-
+.el-aside.main-side-menu.collapsed {
+  transition: transform 1s ease(cubic-bezier);
+  transition-duration: 0.8s, 0.8s;
+}
 /* User info styles */
 .user-info {
-  padding: 10px;
-  margin: 10px 0px;
+  padding: 30px 10px 10px 10px;
+  margin: 0px;
   text-align: center;
 }
 .user-info .image {

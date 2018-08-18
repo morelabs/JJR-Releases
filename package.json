@@ -23,7 +23,7 @@
     "publish:win": "build --win -p always"
   },
   "build": {
-    "productName": "JPJ 2.0",
+    "productName": "JPJ",
     "appId": "org.morelabs.jpj",
     "directories": {
       "output": "build"
