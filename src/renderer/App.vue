@@ -51,6 +51,10 @@ body {
   font-family: Ubuntu;
   margin: 0px;
 }
+body {
+  -ms-overflow-style: scrollbar;
+  -webkit-app-region: drag;
+}
 #app {
   height: 100%;
   overflow-y: scroll;

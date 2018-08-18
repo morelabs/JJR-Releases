@@ -28,7 +28,8 @@ function createWindow() {
     width: 1650,
     minWidth: 1450,
     minHeight: 800,
-    useContentSize: true
+    useContentSize: true,
+    titleBarStyle: "hidden"
   });
 
   mainWindow.loadURL(winURL);

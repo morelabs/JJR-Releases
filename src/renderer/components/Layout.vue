@@ -4,46 +4,60 @@
     <el-aside
       :class="collapsed ? 'collapsed' : ''"
       class="main-side-menu">
-      <div class="user-info">
-        <div class="image">
+      <el-tooltip
+        :disabled="!collapsed"
+        class="item"
+        effect="dark"
+        trigger="hover"
+        placement="right">
+        <div slot="content">
+          <div style="text-align: center">
+            <div>Usuario</div>
+            <div style="font-size: 16px;">{{ user.first_name }} {{ user.last_name }}</div>
+          </div>
+          <p>Email: {{ user.email }}</p>
+          <p>Role: {{ user.role }}</p>
+        </div>
+        <div class="user-info">
           <a
             href="#"
+            class="image"
             @click="collapsed = !collapsed">
             <img src="@/assets/images/man.png">
           </a>
-        </div>
-        <div class="user-name">
-          <div class="name">{{ user.first_name }} {{ user.last_name }}</div>
-          <div style="padding-top: 5px;">
-            <el-popover
-              v-model="confirmLogut"
-              placement="right"
-              width="160">
-              <p>Estas seguro de salir?</p>
-              <div style="text-align: right; margin: 0">
-                <el-button
-                  size="mini"
-                  type="text"
-                  @click="confirmLogut = false">Cancelar</el-button>
-                <el-button
-                  type="danger"
-                  size="mini"
-                  @click="closeSession()">Si, salir</el-button>
-              </div>
-              <a
-                slot="reference"
-                href="#"
-                class="logout"
-                @click="confirmLogut = true">
-                <fw-icon
-                  :class="collapsed ? '' : 'hidden'"
-                  icon="lock"/>
-                <span :class="collapsed ? 'hidden' : ''">Cerrar sesion</span>
-              </a>
-            </el-popover>
+          <div class="user-name">
+            <div :class="collapsed ? 'hidden' : 'name'">{{ user.first_name }} {{ user.last_name }}</div>
+            <div style="padding-top: 5px;">
+              <el-popover
+                v-model="confirmLogut"
+                placement="right"
+                width="160">
+                <p>Estas seguro de salir?</p>
+                <div style="text-align: right; margin: 0">
+                  <el-button
+                    size="mini"
+                    type="text"
+                    @click="confirmLogut = false">Cancelar</el-button>
+                  <el-button
+                    type="danger"
+                    size="mini"
+                    @click="closeSession()">Si, salir</el-button>
+                </div>
+                <a
+                  slot="reference"
+                  href="#"
+                  class="logout"
+                  @click="confirmLogut = true">
+                  <fw-icon
+                    :class="collapsed ? '' : 'hidden'"
+                    icon="sign-out-alt"/>
+                  <span :class="collapsed ? 'hidden' : ''">Cerrar sesion</span>
+                </a>
+              </el-popover>
+            </div>
           </div>
         </div>
-      </div>
+      </el-tooltip>
       <div
         class="search-form"
         @click="openSearchModal()">
@@ -53,7 +67,7 @@
       <div
         class="search-form-collapsed"
         @click="openSearchModal()">
-        Buscar
+        <i class="el-icon-search"></i>
       </div>
       <br>
       <div class="menu-items">
@@ -249,10 +263,11 @@ export default {
   flex: auto;
   background: rgb(255, 255, 255);
   position: relative;
-  overflow: hidden scroll;
+  overflow: scroll;
 }
 a {
   text-decoration: none;
+  color: #888;
 }
 .slide-left-enter-active,
 .slide-left-leave-active,
@@ -279,10 +294,11 @@ a {
 }
 /* Collapsed menu */
 .el-aside.main-side-menu.collapsed {
-  width: 100px !important;
+  width: 70px !important;
 }
-.el-aside.main-side-menu.collapsed .name {
-  font-size: 14px !important;
+.el-aside.main-side-menu.collapsed .image img {
+  width: 40px;
+  height: 40px;
 }
 .el-aside.main-side-menu.collapsed a.item span,
 .el-aside.main-side-menu.collapsed a.dashboard span,
@@ -307,7 +323,6 @@ a {
   vertical-align: middle;
   margin: 0px !important;
 }
-
 .el-aside.main-side-menu.collapsed a.item:hover .collapsed i,
 .el-aside.main-side-menu.collapsed a.dashboard:hover .collapsed i,
 .el-aside.main-side-menu.collapsed
@@ -346,7 +361,7 @@ a {
 /* User info styles */
 .user-info {
   padding: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0px;
   text-align: center;
 }
 .user-info .image {
@@ -364,6 +379,9 @@ a {
 }
 .user-info .name {
   font-size: 18px;
+}
+.collapsed .user-info .logout {
+  font-size: 16px;
 }
 .user-info .logout {
   color: #f56c6c;
