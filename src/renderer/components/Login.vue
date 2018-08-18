@@ -55,11 +55,18 @@
               @click.native.prevent="authenticate()">Submit</el-button>
           </el-form-item>
         </el-form>
-        <div style="font-size: 12px; color: #999;">
+        <div style="font-size: 12px; color: #999; clear: both; overflow: auto;">
           <div style="float: left">{{ name }}</div>
           <div style="float: right"> v.{{ version }}</div>
         </div>
+        <hr>
+        <div v-if="debug">
+          <div style="text-align: center; font-size: 12px; color: #999;">
+            <span>DEBUG DATA - [ URL -> {{ envs.API_URL }} ] - [ ENV -> {{ envs.NODE_ENV }} ]</span>
+          </div>
+        </div>
       </div>
+      
     </main>
   </div>
 </template>
@@ -73,9 +80,11 @@ export default {
   name: "Login",
   data() {
     return {
+      debug: process.env.NODE_ENV === "development",
       loading: false,
       name: appPackage.build.productName,
       version: appPackage.version,
+      envs: process.env,
       credentials: {
         region: "",
         username: "",
