@@ -191,7 +191,7 @@
             class="menu-item item">
             <span>Estadisticas</span>
             <div class="collapsed">
-              <i class="el-icon-goods"></i>
+              <fw-icon icon="chart-bar"/>
             </div>
           </router-link>
         </el-tooltip>
@@ -309,7 +309,7 @@ a {
 .el-aside.main-side-menu.collapsed .image img {
   width: 40px;
   height: 40px;
-  transform: rotate(360deg);
+  /* transform: rotate(360deg); */
   transition-duration: 0.5s;
 }
 .el-aside.main-side-menu.collapsed a.item span,
@@ -324,6 +324,11 @@ a {
 }
 .el-aside.main-side-menu.collapsed a.item .collapsed i,
 .el-aside.main-side-menu.collapsed a.dashboard .collapsed i {
+  float: none !important;
+  margin: 0px;
+}
+.el-aside.main-side-menu.collapsed a.item .collapsed,
+.el-aside.main-side-menu.collapsed a.dashboard .collapsed {
   display: inline-block !important;
   float: none !important;
   border: solid 1px rgb(201, 196, 200);
@@ -335,16 +340,12 @@ a {
   vertical-align: middle;
   margin: 0px !important;
 }
-.el-aside.main-side-menu.collapsed a.item:hover .collapsed i,
-.el-aside.main-side-menu.collapsed a.dashboard:hover .collapsed i,
+.el-aside.main-side-menu.collapsed a.item:hover .collapsed,
+.el-aside.main-side-menu.collapsed a.dashboard:hover .collapsed,
 .el-aside.main-side-menu.collapsed
   a.dashboard.router-link-exact-active
-  .collapsed
-  i,
-.el-aside.main-side-menu.collapsed
-  a.item.router-link-exact-active
-  .collapsed
-  i {
+  .collapsed,
+.el-aside.main-side-menu.collapsed a.item.router-link-exact-active .collapsed {
   color: #fff;
   border: solid 1px #fff;
 }

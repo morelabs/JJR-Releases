@@ -17,7 +17,8 @@ import {
   faChevronRight,
   faChevronLeft,
   faLock,
-  faSignOutAlt
+  faSignOutAlt,
+  faChartBar
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import locale from "element-ui/lib/locale/lang/es";
@@ -39,7 +40,14 @@ Vue.use(VueMoment, { moment });
 Vue.use(ElementUI, { locale });
 Vue.use(VueOffline);
 
-library.add(faCircle, faChevronLeft, faChevronRight, faLock, faSignOutAlt);
+library.add(
+  faCircle,
+  faChevronLeft,
+  faChevronRight,
+  faLock,
+  faSignOutAlt,
+  faChartBar
+);
 Vue.component("fw-icon", FontAwesomeIcon);
 Vue.component("vue-simple-suggest", VueSimpleSuggest);
 Vue.filter("capitalize", function(name) {

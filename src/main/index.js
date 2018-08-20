@@ -29,13 +29,18 @@ function createWindow() {
     minWidth: 1450,
     minHeight: 800,
     useContentSize: true,
-    titleBarStyle: "hidden"
+    titleBarStyle: "hidden",
+    show: false,
+    backgroundColor: "#002b36"
   });
 
   mainWindow.loadURL(winURL);
 
   mainWindow.on("closed", () => {
     mainWindow = null;
+  });
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.show();
   });
 }
 
