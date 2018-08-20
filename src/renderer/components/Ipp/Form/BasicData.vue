@@ -12,97 +12,99 @@
           <fw-icon icon="chevron-right"/>
         </el-button>
       </div>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item>
-            <el-input
-              v-model="ipp.number"
-              name="number"
-              style="width: 100%;"
-              placeholder="Numero: XX-XX-XXXX-XX"/>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="20">
-        <el-col :span="12">
-          <el-form-item>
-            <el-date-picker
-              v-model="ipp.commited_at"
-              :clearable="true"
-              :disabled="ipp.commitedAtDisabled"
-              format="dd/MM/yyyy"
-              style="width: 100%;"
-              name="commited_at"
-              placeholder="Fecha del hecho"/>
-            <div>
-              <el-checkbox
-                v-model="ipp.commitedAtDisabled"
-                label="Fecha desconocida"
-                @change="cleanDate('commited_at')"/>
-            </div>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item>
-            <el-date-picker
-              v-model="ipp.reported_at"
-              :clearable="true"
-              :disabled="ipp.reportedAtDisabled"
-              format="dd/MM/yyyy"
-              style="width: 100%;"
-              name="commited_at"
-              placeholder="Fecha de la denuncia"/>
-            <div>
-              <el-checkbox
-                v-model="ipp.reportedAtDisabled"
-                label="Fecha desconocida"
-                @change="cleanDate('reported_at')"/>
-            </div>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <h3 style="margin-top: 20px">Origen</h3>
-      <el-row :gutter="20">
-        <el-col :span="16">
-          <el-form-item>
-            <el-select
-              v-model="ipp.source.id"
-              clearable
-              filterable
-              placeholder="Seleccionar origen"
-              style="width: 100%;">
-              <el-option
-                v-for="item in allSources"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-                <span style="float: left">{{ item.name }}</span>
-                <span style="float: right; color: #8492a6; font-size: 13px">{{ item.city }}</span>
-              </el-option>  
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item>
-            <el-select
-              v-model="ipp.state"
-              :disabled="ipp.archived"
-              clearable
-              filterable
-              placeholder="Seleccionar estado"
-              style="width: 100%;">
-              <el-option
-                v-for="item in allStates"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"/>
-            </el-select>
-            <div>
-              <el-checkbox v-model="ipp.archived">Archivado?</el-checkbox>
-            </div>
-          </el-form-item>
-        </el-col>
-      </el-row>
+      <div class="ipp-step-inner">
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item>
+              <el-input
+                v-model="ipp.number"
+                name="number"
+                style="width: 100%;"
+                placeholder="Numero: XX-XX-XXXX-XX"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item>
+              <el-date-picker
+                v-model="ipp.commited_at"
+                :clearable="true"
+                :disabled="ipp.commitedAtDisabled"
+                format="dd/MM/yyyy"
+                style="width: 100%;"
+                name="commited_at"
+                placeholder="Fecha del hecho"/>
+              <div>
+                <el-checkbox
+                  v-model="ipp.commitedAtDisabled"
+                  label="Fecha desconocida"
+                  @change="cleanDate('commited_at')"/>
+              </div>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item>
+              <el-date-picker
+                v-model="ipp.reported_at"
+                :clearable="true"
+                :disabled="ipp.reportedAtDisabled"
+                format="dd/MM/yyyy"
+                style="width: 100%;"
+                name="commited_at"
+                placeholder="Fecha de la denuncia"/>
+              <div>
+                <el-checkbox
+                  v-model="ipp.reportedAtDisabled"
+                  label="Fecha desconocida"
+                  @change="cleanDate('reported_at')"/>
+              </div>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <h3 style="margin-top: 20px">Origen</h3>
+        <el-row :gutter="20">
+          <el-col :span="16">
+            <el-form-item>
+              <el-select
+                v-model="ipp.source.id"
+                clearable
+                filterable
+                placeholder="Seleccionar origen"
+                style="width: 100%;">
+                <el-option
+                  v-for="item in allSources"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+                  <span style="float: left">{{ item.name }}</span>
+                  <span style="float: right; color: #8492a6; font-size: 13px">{{ item.city }}</span>
+                </el-option>  
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item>
+              <el-select
+                v-model="ipp.state"
+                :disabled="ipp.archived"
+                clearable
+                filterable
+                placeholder="Seleccionar estado"
+                style="width: 100%;">
+                <el-option
+                  v-for="item in allStates"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"/>
+              </el-select>
+              <div>
+                <el-checkbox v-model="ipp.archived">Archivado?</el-checkbox>
+              </div>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </div>
     </div>
   </div>
 </template>

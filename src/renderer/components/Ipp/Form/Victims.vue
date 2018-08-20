@@ -19,7 +19,7 @@
           <fw-icon icon="chevron-right"/>
         </el-button>
       </div>
-      <div>
+      <div class="ipp-step-inner">
         <el-row :gutter="20">
           <el-col :span="4">
             <el-form-item>
@@ -83,44 +83,44 @@
           </el-col>
         </el-row>
         <hr>
+        <el-table
+          :data="ipp.victims"
+          style="width: 100%">
+          <el-table-column width="70">
+            <template slot-scope="scope">
+              <i class="icono-arg-arma-portacion"></i>
+            </template>
+          </el-table-column>
+          <el-table-column label="Nombre">
+            <template slot-scope="scope">
+              {{ scope.row.first_name }} {{ scope.row.last_name }}
+            </template>
+          </el-table-column>
+          <el-table-column label="DNI">
+            <template slot-scope="scope">
+              {{ scope.row.dni || "--------" }}
+            </template>
+          </el-table-column>
+          <el-table-column label="Direccion">
+            <template slot-scope="scope">
+              {{ scope.row.address || "--------" }}
+            </template>
+          </el-table-column>
+          <el-table-column label="Edad">
+            <template slot-scope="scope">
+              {{ scope.row.adult === "Adulto" ? "Adulto (+18)" : "Menor (-18)" }}
+            </template>
+          </el-table-column>
+          <el-table-column width="70">
+            <template slot-scope="scope">
+              <a
+                href="#"
+                @click="removeVictim(scope.row)"><i class="el-icon-delete"/>
+              </a>
+            </template>
+          </el-table-column>
+        </el-table>
       </div>
-      <el-table
-        :data="ipp.victims"
-        style="width: 100%">
-        <el-table-column width="70">
-          <template slot-scope="scope">
-            <i class="icono-arg-arma-portacion"></i>
-          </template>
-        </el-table-column>
-        <el-table-column label="Nombre">
-          <template slot-scope="scope">
-            {{ scope.row.first_name }} {{ scope.row.last_name }}
-          </template>
-        </el-table-column>
-        <el-table-column label="DNI">
-          <template slot-scope="scope">
-            {{ scope.row.dni || "--------" }}
-          </template>
-        </el-table-column>
-        <el-table-column label="Direccion">
-          <template slot-scope="scope">
-            {{ scope.row.address || "--------" }}
-          </template>
-        </el-table-column>
-        <el-table-column label="Edad">
-          <template slot-scope="scope">
-            {{ scope.row.adult === "Adulto" ? "Adulto (+18)" : "Menor (-18)" }}
-          </template>
-        </el-table-column>
-        <el-table-column width="70">
-          <template slot-scope="scope">
-            <a
-              href="#"
-              @click="removeVictim(scope.row)"><i class="el-icon-delete"/>
-            </a>
-          </template>
-        </el-table-column>
-      </el-table>
     </div>
   </div>
 </template>

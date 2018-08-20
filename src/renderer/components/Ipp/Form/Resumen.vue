@@ -18,7 +18,7 @@
           <fw-icon icon="el-icon-save"/>
         </el-button>
       </div>
-      <div class="ipp-content-resumen">
+      <div class="ipp-step-inner">
         <h3>Informacion Basica</h3>
         <el-row :gutter="20">
           <el-col :span="8">

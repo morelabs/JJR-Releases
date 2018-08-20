@@ -121,10 +121,16 @@ export default {
 <style>
 .step-indicator {
   padding: 10px;
+  border-bottom: solid 2px #f1f1f1;
 }
 .step-content {
-  height: 100%;
-  overflow-y: hidden scroll;
+  height: 670px;
+  margin: 0px;
+  padding: 0px;
+  flex: auto;
+  background: rgb(255, 255, 255);
+  position: relative;
+  overflow: scroll;
 }
 .ipp-form {
   background: #fff;
@@ -133,19 +139,28 @@ export default {
 .ipp-form-wrapper {
   position: relative;
   height: 100%;
-  padding: 0px 20px 20px 20px;
+  padding: 0px 10px;
 }
 
 .ipp-step-header {
-  height: 2em;
-  line-height: 2em;
-  border-bottom: solid 1px #f1f1f1;
-  border-top: solid 1px #f1f1f1;
-  margin-bottom: 20px;
+  height: 50px;
+  line-height: 50px;
+  border-bottom: solid 2px #f1f1f1;
+  margin-bottom: 10px;
   padding-bottom: 10px;
   padding-top: 10px;
-  margin-top: 20px;
+  margin-top: 10px;
   text-align: center;
   font-size: 20px;
+}
+
+.ipp-step-inner {
+  height: 560px;
+  margin-top: 10px;
+  flex: auto;
+  background: rgb(255, 255, 255);
+  position: relative;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 </style>

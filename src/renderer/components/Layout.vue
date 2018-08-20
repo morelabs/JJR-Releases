@@ -2,12 +2,12 @@
   <el-container style="height: 100%;">
     <el-aside
       :class="collapsed ? 'collapsed' : ''"
-      class="main-side-menu"
-      @collapse="(value) => { collapsed = value }">
+      class="main-side-menu">
       <main-side-menu
         :user="user"
         @open-search-modal="openSearchModal()"
-        @confirm-logout="closeSession()"/>
+        @confirm-logout="closeSession()"
+        @toggle-collapse="(value) => toggleCollapse(value)"/>
     </el-aside>
     <el-main class="jpj-main">
       <div class="jpj-main-inner">
@@ -47,7 +47,9 @@
       </el-dialog>
     </el-main>
     <footer>
-      <system-information :online="onlineState"/>
+      <system-information
+        :online="onlineState"
+        :collapsed="collapsed"/>
     </footer>
   </el-container>
 </template>
@@ -96,6 +98,10 @@ export default {
         this.$router.push({ name: "login" });
       });
     },
+    toggleCollapse(value) {
+      console.log("Collapse value", value);
+      this.collapsed = value;
+    },
     openSearchModal() {
       this.$refs.search.openSearch();
     },
@@ -122,7 +128,7 @@ export default {
   flex: auto;
 }
 .jpj-main .jpj-main-inner {
-  margin: 0px 0px 16px 0px;
+  margin: 0px 0px 10px 0px;
   flex: auto;
   background: rgb(255, 255, 255);
   position: relative;
@@ -143,6 +149,26 @@ hr {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   margin: 40px 0px;
+}
+
+.slide-left-enter-active,
+.slide-left-leave-active,
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition-duration: 0.3s;
+  transition-property: height, opacity, transform;
+  transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
+  overflow: hidden;
+}
+.slide-left-enter,
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translate(2em, 0);
+}
+.slide-left-leave-active,
+.slide-right-enter {
+  opacity: 0;
+  transform: translate(-2em, 0);
 }
 
 /* Page titles */

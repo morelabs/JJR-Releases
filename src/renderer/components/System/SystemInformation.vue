@@ -1,8 +1,10 @@
 <template>
   <div>
     <div class="items">
-      <div class="group-left">
-        <div class="item item-withe">2018 &#174; Morelabs</div>
+      <div
+        :class="collapsed ? 'collapsed': ''"
+        class="group-left">
+        <div class="item">2018 &#174; <span v-if="!collapsed">Morelabs</span></div>
         <!-- <div class="item">Vue.js: <b>{{ vue }}</b></div>
         <div class="item">Electron: <b>{{ electron }}</b></div>
         <div class="item">Node: <b>{{ node }}</b></div>
@@ -42,6 +44,10 @@ export default {
     online: {
       type: Boolean,
       required: true
+    },
+    collapsed: {
+      type: Boolean,
+      required: true
     }
   },
   data() {
@@ -76,6 +82,10 @@ export default {
 }
 .items .group-left {
   float: left;
+}
+.items .group-left.collapsed {
+  float: left;
+  width: 70px;
 }
 .items .group-right {
   float: right;
