@@ -1,201 +1,13 @@
 <template>
-  <el-container
-    style="height: 100%;">
+  <el-container style="height: 100%;">
     <el-aside
       :class="collapsed ? 'collapsed' : ''"
-      class="main-side-menu">
-      <el-tooltip
-        :disabled="!collapsed"
-        class="item"
-        effect="dark"
-        trigger="hover"
-        placement="right">
-        <div slot="content">
-          <div style="text-align: center; color: #ccc;">
-            <div>Usuario</div>
-            <div style="font-size: 16px;">{{ user.first_name }} {{ user.last_name }}</div>
-            <p>{{ user.email }}</p>
-            <a href="/profile">Ver Perfil</a>
-          </div>
-        </div>
-        <div class="user-info">
-          <a
-            href="#"
-            class="image"
-            @click="collapsed = !collapsed">
-            <img src="@/assets/images/man.png">
-          </a>
-          <div class="user-name">
-            <div :class="collapsed ? 'hidden' : 'name'">
-              <router-link
-                :to="{ path: '/profile' }"
-                style="color: #f1f1f1;">
-                <div>{{ user.first_name }} {{ user.last_name }}</div>
-                <small style="font-size: 12px;">{{ user.email }}</small>
-              </router-link>
-            </div>
-            <div style="padding-top: 5px;">
-              <el-popover
-                v-model="confirmLogut"
-                placement="right"
-                width="160">
-                <p>Estas seguro de salir?</p>
-                <div style="text-align: right; margin: 0">
-                  <el-button
-                    size="mini"
-                    type="text"
-                    @click="confirmLogut = false">Cancelar</el-button>
-                  <el-button
-                    type="danger"
-                    size="mini"
-                    @click="closeSession()">Si, salir</el-button>
-                </div>
-                <a
-                  slot="reference"
-                  href="#"
-                  class="logout"
-                  @click="confirmLogut = true">
-                  <fw-icon
-                    :class="collapsed ? '' : 'hidden'"
-                    icon="sign-out-alt"/>
-                  <span :class="collapsed ? 'hidden' : ''">Cerrar sesion</span>
-                </a>
-              </el-popover>
-            </div>
-          </div>
-        </div>
-      </el-tooltip>
-      <div
-        class="search-form"
-        @click="openSearchModal()">
-        <span>Buscador avanzado...</span>
-        <div style="float: right"><i class="el-icon-search"></i></div>
-      </div>
-      <div
-        class="search-form-collapsed"
-        @click="openSearchModal()">
-        <i class="el-icon-search"></i>
-      </div>
-      <br>
-      <div class="menu-items">
-        <el-tooltip
-          :disabled="!collapsed"
-          class="item"
-          effect="dark"
-          content="Panel inicio"
-          placement="right">
-          <router-link
-            :to="{ name: 'dashboard' }"
-            class="menu-item dashboard">
-            <i
-              :class="collapsed ? 'hidden' : ''"
-              class="icono-arg-justicia-negativo"></i>
-            <span>Inicio</span>
-            <div class="collapsed">
-              <i
-                style="font-size: 13px;"
-                class="icono-arg-justicia-negativo"></i>
-            </div>
-          </router-link>
-        </el-tooltip>
-        <el-tooltip
-          :disabled="!collapsed"
-          class="item"
-          effect="dark"
-          content="Administracion"
-          placement="right">
-          <router-link
-            :to="{ path: '/admin' }"
-            class="menu-item dashboard admin">
-            <i
-              :class="collapsed ? 'hidden' : ''" 
-              class="icono-arg-cambio-tecnologico"></i>
-            <span>Administracion</span>
-            <div class="collapsed">
-              <i
-                style="font-size: 13px;"
-                class="icono-arg-cambio-tecnologico"></i>
-            </div>
-          </router-link>
-        </el-tooltip>
-        <h3><i class="icono-arg-declaracio-n-jurada-declaracion-jurada-rectificativa"></i> IPP</h3>
-        <el-tooltip
-          :disabled="!collapsed"
-          class="item"
-          effect="dark"
-          content="Ingresar nuevo IPP"
-          placement="right">
-          <router-link
-            :to="{ name: 'newIpp' }"
-            class="menu-item item">
-            <span>Nuevo IPP</span>
-            <div class="collapsed">
-              <i class="el-icon-edit"></i>
-            </div>
-          </router-link>
-        </el-tooltip>
-        <el-tooltip
-          :disabled="!collapsed"
-          class="item"
-          effect="dark"
-          content="Listado de IPPs"
-          placement="right">
-          <router-link
-            :to="{ name: 'ipps' }"
-            class="menu-item item">
-            <span>Listado de IPP</span>
-            <div class="collapsed">
-              <i class="el-icon-document"></i>
-            </div>
-          </router-link>
-        </el-tooltip>
-        <el-tooltip
-          :disabled="!collapsed"
-          class="item"
-          effect="dark"
-          content="Listado de expedientes"
-          placement="right">
-          <router-link
-            :to="{ name: 'files' }"
-            class="menu-item item">
-            <span>Expedientes</span>
-            <div class="collapsed">
-              <i class="el-icon-tickets"></i>
-            </div>
-          </router-link>
-        </el-tooltip>
-        <h3><i class="icono-arg-marcador-ubicacion-2"></i> Reportes</h3>
-        <el-tooltip
-          :disabled="!collapsed"
-          class="item"
-          effect="dark"
-          content="Mapa de hechos"
-          placement="right">
-          <router-link
-            :to="{ path: '/map/victimizers' }"
-            class="menu-item item">
-            <span>Mapa de hechos</span>
-            <div class="collapsed">
-              <i class="el-icon-location"></i>
-            </div>
-          </router-link>
-        </el-tooltip>
-        <el-tooltip
-          :disabled="!collapsed"
-          class="item"
-          effect="dark"
-          content="Estadisticas y reportes"
-          placement="right">
-          <router-link
-            :to="{ path: '/report/origin' }"
-            class="menu-item item">
-            <span>Estadisticas</span>
-            <div class="collapsed">
-              <fw-icon icon="chart-bar"/>
-            </div>
-          </router-link>
-        </el-tooltip>
-      </div>
+      class="main-side-menu"
+      @collapse="(value) => { collapsed = value }">
+      <main-side-menu
+        :user="user"
+        @open-search-modal="openSearchModal()"
+        @confirm-logout="closeSession()"/>
     </el-aside>
     <el-main class="jpj-main">
       <div class="jpj-main-inner">
@@ -206,12 +18,36 @@
         </transition>
       </div>
       <main-search ref="search"/>
+      <el-dialog
+        :visible.sync="showModal"
+        :fullscreen="true"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+        :show-close="false"
+        :center="true"
+        custom-class="no-connection"
+        title="Se perdio la conexion!">
+        <div style="text-align: center;padding: 60px;">
+          <div v-if="!message">
+            <div style="font-size: 40px; color: #f56c6c;">
+              <i class="icono-arg-tecnovigilancia"></i>
+            </div>
+            <div style="font-size: 30px">
+              <p>No podemos trabajar sin conexion :(</p>
+              <p>Verifique la red en su casa: el router si tiene uno, o comuniquese con su proveedor de internet.</p>
+            </div>
+          </div>
+          <div v-else>
+            <div style="font-size: 40px; color: #67c23a;">
+              <i class="icono-arg-sustancias-ok"></i>
+            </div>
+            <div style="font-size: 30px;">{{ message }}</div>
+          </div>
+        </div>
+      </el-dialog>
     </el-main>
     <footer>
-      <system-information
-        :online="onlineState"
-        :app-name="appName"
-        :version="version"/>
+      <system-information :online="onlineState"/>
     </footer>
   </el-container>
 </template>
@@ -219,25 +55,25 @@
 <script>
 import SystemInformation from "@/components/System/SystemInformation";
 import MainSearch from "@/components/Shared/MainSearch";
-import { extend } from "lodash";
+import MainSideMenu from "@/components/Layout/MainSideMenu";
 import { createNamespacedHelpers as namespace } from "vuex";
 const { mapActions: authActions, mapGetters: authGetters } = namespace("auth");
-const appPackage = require("../../../package.json");
 
 export default {
   name: "Layout",
   components: {
     MainSearch,
-    SystemInformation
+    SystemInformation,
+    MainSideMenu
   },
   data() {
     return {
-      appName: appPackage.build.productName,
-      version: appPackage.version,
       loading: false,
+      onlineState: navigator.onLine || false,
+      confirmLogut: false,
       collapsed: false,
-      onlineState: navigator.onLine,
-      confirmLogut: false
+      showModal: false,
+      message: ""
     };
   },
   computed: {
@@ -246,9 +82,11 @@ export default {
   created() {
     this.$on("online", function() {
       this.onlineState = true;
+      this.toggleModal();
     });
     this.$on("offline", function() {
       this.onlineState = false;
+      this.toggleModal();
     });
   },
   methods: {
@@ -260,6 +98,18 @@ export default {
     },
     openSearchModal() {
       this.$refs.search.openSearch();
+    },
+    toggleModal() {
+      console.log("Toggle modal", this.showModal);
+      if (this.showModal) {
+        this.message = "Volvimos a conectarnos!";
+        setTimeout(() => {
+          this.showModal = false;
+        }, 2000);
+      } else {
+        this.message = "";
+        this.showModal = true;
+      }
     }
   }
 };
@@ -282,179 +132,11 @@ a {
   text-decoration: none;
   color: #888;
 }
-.slide-left-enter-active,
-.slide-left-leave-active,
-.slide-right-enter-active,
-.slide-right-leave-active {
-  transition-duration: 0.3s;
-  transition-property: height, opacity, transform;
-  transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
-  overflow: hidden;
+a:active,
+a:focus {
+  outline: none;
+  border: none;
 }
-.slide-left-enter,
-.slide-right-leave-active {
-  opacity: 0;
-  transform: translate(2em, 0);
-}
-.slide-left-leave-active,
-.slide-right-enter {
-  opacity: 0;
-  transform: translate(-2em, 0);
-}
-.el-aside.main-side-menu a.item .collapsed,
-.el-aside.main-side-menu a.dashboard .collapsed {
-  display: none;
-}
-/* Collapsed menu */
-.el-aside.main-side-menu.collapsed .image img {
-  width: 40px;
-  height: 40px;
-  /* transform: rotate(360deg); */
-  transition-duration: 0.5s;
-}
-.el-aside.main-side-menu.collapsed a.item span,
-.el-aside.main-side-menu.collapsed a.dashboard span,
-.el-aside.main-side-menu.collapsed h3 {
-  display: none;
-}
-.el-aside.main-side-menu.collapsed a.item,
-.el-aside.main-side-menu.collapsed a.dashboard {
-  text-align: center;
-  padding: 10px 0px;
-}
-.el-aside.main-side-menu.collapsed a.item .collapsed i,
-.el-aside.main-side-menu.collapsed a.dashboard .collapsed i {
-  float: none !important;
-  margin: 0px;
-}
-.el-aside.main-side-menu.collapsed a.item .collapsed,
-.el-aside.main-side-menu.collapsed a.dashboard .collapsed {
-  display: inline-block !important;
-  float: none !important;
-  border: solid 1px rgb(201, 196, 200);
-  border-radius: 100%;
-  height: 35px;
-  line-height: 35px;
-  width: 35px;
-  text-align: center;
-  vertical-align: middle;
-  margin: 0px !important;
-}
-.el-aside.main-side-menu.collapsed a.item:hover .collapsed,
-.el-aside.main-side-menu.collapsed a.dashboard:hover .collapsed,
-.el-aside.main-side-menu.collapsed
-  a.dashboard.router-link-exact-active
-  .collapsed,
-.el-aside.main-side-menu.collapsed a.item.router-link-exact-active .collapsed {
-  color: #fff;
-  border: solid 1px #fff;
-}
-.el-aside.main-side-menu.collapsed a.item.router-link-exact-active,
-.el-aside.main-side-menu.collapsed a.dashboard.router-link-exact-active {
-  background: rgb(112, 151, 196);
-  color: #fff;
-}
-.el-aside.main-side-menu.collapsed a.item .collapsed,
-.el-aside.main-side-menu.collapsed a.dashboard .collapsed {
-  display: block;
-  float: none !important;
-  text-align: center;
-}
-.hidden {
-  display: none;
-}
-/* Expanded Menu */
-.el-aside.main-side-menu {
-  background-color: rgb(51, 62, 76);
-  color: rgb(201, 196, 200);
-  width: 250px !important;
-  transition: all 0.1s;
-}
-.el-aside.main-side-menu.collapsed {
-  width: 70px !important;
-  transition: all 1s;
-}
-/* User info styles */
-.user-info {
-  padding: 30px 10px 10px 10px;
-  margin: 0px;
-  text-align: center;
-}
-.user-info .image {
-  text-align: center;
-}
-
-.user-info .image img {
-  border-radius: 100%;
-  border: solid 1px #fff;
-  width: 60px;
-  height: 60px;
-  transition-duration: 1s;
-}
-
-.user-info:hover {
-  color: #fff;
-}
-.user-info .name {
-  font-size: 18px;
-}
-.collapsed .user-info .logout {
-  font-size: 16px;
-}
-.user-info .logout {
-  color: #f56c6c;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-/* Menu items styles */
-.menu-items {
-  margin: 20px 0px;
-}
-.menu-items a.menu-item {
-  color: rgb(201, 196, 200);
-  display: block;
-  padding: 10px;
-}
-.menu-items a.menu-item:hover {
-  background: rgb(103, 111, 122);
-  color: #fff;
-}
-.menu-items a.menu-item.router-link-exact-active {
-  background: rgb(112, 151, 196);
-  color: #fff;
-}
-.menu-items a.menu-item.admin.router-link-exact-active,
-.menu-items a.menu-item.admin.router-link-active {
-  background: rgb(103, 111, 122);
-  color: #fff;
-}
-.menu-items a.menu-item span {
-  padding-left: 35px;
-}
-.menu-items h3 i,
-.menu-items .menu-item.dashboard i {
-  float: left;
-  margin-right: 10px;
-  margin-top: -2px;
-  font-size: 17px;
-}
-.menu-items .menu-item.dashboard span {
-  padding-left: 0px;
-  font-size: 17px;
-}
-.menu-items .menu-item.dashboard {
-  margin: 15px 0px;
-  padding: 10px 0px 10px 10px;
-}
-.menu-items h3 {
-  margin: 15px 0px;
-  padding: 10px 0px 10px 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
-  font-size: 17px;
-}
-/* Search styles */
 hr {
   border: 0;
   height: 0;
@@ -462,34 +144,7 @@ hr {
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   margin: 40px 0px;
 }
-.search-form,
-.search-form-collapsed {
-  padding: 10px;
-  margin: 10px;
-  background: rgb(103, 111, 122);
-  border-color: transparent;
-  color: #c7c7c7;
-  opacity: 0.5;
-  border-radius: 5px;
-}
-.search-form input:focus,
-.search-form input:active,
-.search-form input:hover {
-  border-color: transparent;
-  outline: none;
-  padding: 5px 10px;
-}
-.search-form-collapsed {
-  display: none;
-}
-.el-aside.main-side-menu.collapsed .search-form {
-  display: none;
-}
-.el-aside.main-side-menu.collapsed .search-form-collapsed {
-  display: block;
-  text-align: center;
-  cursor: pointer;
-}
+
 /* Page titles */
 .page-header {
   height: 3em;
@@ -498,5 +153,10 @@ hr {
   text-align: center;
   font-size: 20px;
   padding: 10px 20px;
+}
+
+.no-connection {
+  background: #f1f1f1;
+  color: #333;
 }
 </style>

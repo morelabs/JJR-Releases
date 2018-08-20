@@ -4,7 +4,7 @@
     <div class="list">
       <el-table
         :data="ipps"
-        height="750"
+        height="735"
         style="width: 100%">
         <el-table-column label="Fecha">
           <template slot-scope="scope">
@@ -17,6 +17,13 @@
         <el-table-column
           prop="state"
           label="Estado"/>
+        <el-table-column>
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="primary">Ir al expediente</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -138,6 +145,6 @@ export default {
 }
 
 .list {
-  padding: 0px 20px 20px;
+  padding: 0px;
 }
 </style>

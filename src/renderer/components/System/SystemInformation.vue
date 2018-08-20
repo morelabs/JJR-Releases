@@ -2,7 +2,7 @@
   <div>
     <div class="items">
       <div class="group-left">
-        <div class="item">2018 &#174; Morelabs</div>
+        <div class="item item-withe">2018 &#174; Morelabs</div>
         <!-- <div class="item">Vue.js: <b>{{ vue }}</b></div>
         <div class="item">Electron: <b>{{ electron }}</b></div>
         <div class="item">Node: <b>{{ node }}</b></div>
@@ -12,6 +12,7 @@
         <div class="item">
           Conectado como
           <span class="highlight">{{ user.first_name }} {{ user.last_name }} </span>
+          <span v-if="user.signed_in">el {{ user.signed_in | moment("DD/MM/Y, HH:mm [hs]") }}</span>
         </div>
         <div class="item">{{ appName }} - v{{ version }}</div>
         <div class="item">
@@ -33,20 +34,13 @@
 import { createNamespacedHelpers as namespace } from "vuex";
 import { mkdir } from "fs";
 const { mapGetters: authGetters } = namespace("auth");
+const appPackage = require("../../../../package.json");
 
 export default {
   name: "SystemInformation",
   props: {
     online: {
       type: Boolean,
-      required: true
-    },
-    appName: {
-      type: String,
-      required: true
-    },
-    version: {
-      type: String,
       required: true
     }
   },
@@ -57,12 +51,17 @@ export default {
       node: process.versions.node,
       path: this.$route.path,
       platform: require("os").platform(),
-      vue: require("vue/package.json").version,
-      region: ""
+      vue: require("vue/package.json").version
     };
   },
   computed: {
-    ...authGetters(["user", "app"])
+    ...authGetters(["user", "app"]),
+    appName() {
+      return appPackage.build.productName;
+    },
+    version() {
+      return appPackage.version;
+    }
   },
   created() {
     this.region = localStorage.getItem("region").replace(/_/, " ");
@@ -85,11 +84,13 @@ export default {
   display: inline-block;
   margin-right: 10px;
   text-align: center;
+  color: #fff;
 }
 .items .group-right .item {
   display: inline-block;
   margin-left: 10px;
   text-align: center;
+  color: #333;
 }
 .fa-circle.green {
   color: #27be12;

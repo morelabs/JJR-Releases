@@ -76,6 +76,10 @@ import Victims from "./Form/Victims";
 import PoliceStation from "./Form/PoliceStation";
 import IppSource from "./Form/Source";
 import IppResumen from "./Form/Resumen";
+
+import { createNamespacedHelpers as namespace } from "vuex";
+const { mapActions: ippActions } = namespace("ipp");
+
 export default {
   name: "NewIpp",
   components: {
@@ -86,12 +90,27 @@ export default {
     IppSource,
     IppResumen
   },
+  beforeRouteLeave(to, from, next) {
+    // called when the route that renders this component is about to
+    // be navigated away from.
+    // has access to `this` component instance.
+    let yes = window.confirm(
+      "Si salis de esta pagina vas a perder todo lo que cargaste del formlario."
+    );
+    if (yes) {
+      this.resetIpp();
+      next();
+    } else {
+      next(false);
+    }
+  },
   data() {
     return {
       active: 1
     };
   },
   methods: {
+    ...ippActions(["resetIpp"]),
     moveTo(value) {
       this.active = value;
     }

@@ -26,17 +26,15 @@ export default {
     checkLogged() {
       console.log("Checking user...");
       this.loading = true;
-      setTimeout(() => {
-        this.checkUser()
-          .then(response => {
-            this.loading = false;
-          })
-          .catch(error => {
-            this.$message.error(error);
-            this.$router.push({ name: "login" });
-            this.loading = false;
-          });
-      }, 2000);
+      this.checkUser()
+        .then(response => {
+          this.loading = false;
+        })
+        .catch(error => {
+          this.$message.error(error);
+          this.$router.push({ name: "login" });
+          this.loading = false;
+        });
     }
   }
 };
@@ -61,14 +59,12 @@ body {
 }
 footer {
   position: absolute;
-  border-top: solid 1px #f1f1f1;
   width: 100%;
   bottom: 0px;
-  height: 2em;
-  line-height: 2em;
+  height: 2.5em;
+  line-height: 2.5em;
   z-index: 1000;
   font-size: 13px;
-  color: #333;
-  background-color: #fff;
+  background: transparent;
 }
 </style>

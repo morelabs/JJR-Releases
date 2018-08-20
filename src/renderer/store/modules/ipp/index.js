@@ -28,7 +28,7 @@ const mutations = {
     state.form.policeStation = data;
   },
   ["IPP_RESET"](state) {
-    state.ipp = {
+    state.form = {
       base: {},
       victims: {},
       victimizers: {},
