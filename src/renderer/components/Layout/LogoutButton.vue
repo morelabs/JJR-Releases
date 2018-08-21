@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-top: 5px;">
+  <div class="user-logout">
     <el-popover
       v-model="confirmLogout"
       placement="right"
@@ -20,10 +20,7 @@
         href="#"
         class="logout"
         @click="confirmLogout = true">
-        <fw-icon
-          :class="collapsed ? '' : 'hidden'"
-          icon="sign-out-alt"/>
-        <span :class="collapsed ? 'hidden' : ''">Cerrar sesion</span>
+        <span>{{ collapsed ? 'Salir' : 'Cerrar sesion' }}</span>
       </a>
     </el-popover>
   </div>
@@ -50,3 +47,15 @@ export default {
   }
 };
 </script>
+
+<style>
+.user-logout {
+  padding-top: 5px;
+}
+.user-logout .logout {
+  color: #f56c6c !important;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+</style>

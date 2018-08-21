@@ -15,25 +15,24 @@
         </div>
       </div>
       <div class="user-info">
-        <a
-          href="#"
-          class="image"
-          @click="toggleMenu()">
-          <img src="@/assets/images/man.png">
-        </a>
-        <div class="user-name">
-          <div :class="collapsed ? 'hidden' : 'name'">
-            <router-link
-              :to="{ path: '/profile' }"
-              style="color: #f1f1f1;">
-              <div>{{ user.first_name }} {{ user.last_name }}</div>
-              <small style="font-size: 12px;">{{ user.email }}</small>
-            </router-link>
-          </div>
-          <logout-button
-            :collapsed="collapsed"
-            @confirm-logout="confirmLogout()"/>
+        <div class="image">
+          <a
+            href="#"
+            class="image"
+            @click="toggleMenu()">
+            <img src="@/assets/images/man.png">
+          </a>
         </div>
+        <div :class="collapsed ? 'hidden' : 'name'">
+          <router-link
+            :to="{ path: '/profile' }">
+            <div>{{ user.first_name }} {{ user.last_name }}</div>
+            <small style="font-size: 12px;">{{ user.email }}</small>
+          </router-link>
+        </div>
+        <logout-button
+          :collapsed="collapsed"
+          @confirm-logout="confirmLogout()"/>
       </div>
     </el-tooltip>
     <search-button @open-search="openSearchModal()"/>
@@ -207,14 +206,16 @@ export default {
 }
 .el-aside.main-side-menu.collapsed {
   width: 70px !important;
-  transition: all 1s;
+  transition: all 0.5s;
 }
 /* User info styles */
 .user-info {
   padding: 30px 10px 10px 10px;
   margin: 0px;
   text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
+
 .user-info .image {
   text-align: center;
 }
@@ -227,24 +228,17 @@ export default {
   transition-duration: 1s;
 }
 
-.user-info:hover {
+.user-info:hover .name a {
   color: #fff;
 }
-.user-info .name {
+.user-info .name a {
   font-size: 18px;
+  color: rgb(201, 196, 200);
 }
-.collapsed .user-info .logout {
-  font-size: 16px;
-}
-.user-info .logout {
-  color: #f56c6c;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
+
 /* Menu items styles */
 .menu-items {
-  margin: 20px 0px;
+  margin: 10px 0px;
 }
 .menu-items a.menu-item {
   color: rgb(201, 196, 200);
@@ -278,45 +272,16 @@ export default {
   padding-left: 0px;
   font-size: 17px;
 }
-.menu-items .menu-item.dashboard {
-  margin: 15px 0px;
+.menu-items .menu-item.dashboard,
+.menu-items .menu-item.dashboard.admin {
+  margin: 0px;
   padding: 10px 0px 10px 10px;
 }
 .menu-items h3 {
-  margin: 15px 0px;
+  margin: 0px;
   padding: 10px 0px 10px 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   font-size: 17px;
-}
-/* Search styles */
-
-.search-form,
-.search-form-collapsed {
-  padding: 10px;
-  margin: 10px;
-  background: rgb(103, 111, 122);
-  border-color: transparent;
-  color: #c7c7c7;
-  opacity: 0.5;
-  border-radius: 5px;
-}
-.search-form input:focus,
-.search-form input:active,
-.search-form input:hover {
-  border-color: transparent;
-  outline: none;
-  padding: 5px 10px;
-}
-.search-form-collapsed {
-  display: none;
-}
-.el-aside.main-side-menu.collapsed .search-form {
-  display: none;
-}
-.el-aside.main-side-menu.collapsed .search-form-collapsed {
-  display: block;
-  text-align: center;
-  cursor: pointer;
 }
 </style>

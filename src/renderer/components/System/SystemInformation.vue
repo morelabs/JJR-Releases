@@ -12,9 +12,13 @@
       </div>
       <div class="group-right">
         <div class="item">
-          Conectado como
-          <span class="highlight">{{ user.first_name }} {{ user.last_name }} </span>
-          <span v-if="user.signed_in">el {{ user.signed_in | moment("DD/MM/Y, HH:mm [hs]") }}</span>
+          Entraste como
+          <span class="highlight">
+            {{ user.first_name }} {{ user.last_name }}
+          </span>
+          <span v-if="user.signed_in">
+            a las {{ user.signed_in | moment("HH:mm [hs]") }} del {{ user.signed_in | moment("DD/MM/Y") }}
+          </span>
         </div>
         <div class="item">{{ appName }} - v{{ version }}</div>
         <div class="item">
@@ -109,6 +113,7 @@ export default {
   color: #f04b38;
 }
 .item .highlight {
-  color: #f56c6c;
+  color: #2561a1;
+  margin: 0px 5px;
 }
 </style>

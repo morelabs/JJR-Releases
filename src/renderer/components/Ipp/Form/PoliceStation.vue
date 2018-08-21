@@ -1,139 +1,137 @@
 <template>
-  <div class="ipp-form-wrapper">
-    <div class="ipp-form-container">
-      <div class="ipp-step-header">
-        <el-button
-          type="primary"
-          style="float: left"
-          @click="goBack()">
-          <fw-icon icon="chevron-left"/>
-          Volver
-        </el-button>
-        Cargar Hechos
-        <el-button
-          :disabled="!valid"
-          type="primary"
-          style="float: right"
-          @click="goNext()">
-          Siguiente
-          <fw-icon icon="chevron-right"/>
-        </el-button>
-      </div>
-      <div class="ipp-step-inner">
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item>
-              <el-select
-                v-model="newOffense.id"
-                clearable
-                filterable
-                placeholder="Seleccionar delito"
-                style="width: 100%;">
-                <el-option
-                  v-for="item in allOffenses"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"/>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item>
-              <el-select
-                v-model="newOffense.type"
-                clearable
-                filterable
-                placeholder="Seleccionr grado"
-                style="width: 100%;">
-                <el-option
-                  v-for="item in allOffenseTypes"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"/>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-form-item>
-              <el-button
-                :disabled="!newOffense.type || !newOffense.id"
-                style="width: 100%;"
-                @click="addOffense()">Agregar</el-button>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-table
-          :data="ipp.offenses"
-          style="width: 100%">
-          <el-table-column width="70">
-            <template slot-scope="scope">
-              <i class="icono-arg-conexion"></i>
-            </template>
-          </el-table-column>
-          <el-table-column label="Delito">
-            <template slot-scope="scope">
-              {{ offenseName(scope.row.id) }}
-            </template>
-          </el-table-column>
-          <el-table-column label="Grado">
-            <template slot-scope="scope">
-              {{ scope.row.type || "--------" }}
-            </template>
-          </el-table-column>
-          <el-table-column width="70">
-            <template slot-scope="scope">
-              <a
-                href="#"
-                @click="removeOffense(scope.row)"><i class="el-icon-delete"/>
-              </a>
-            </template>
-          </el-table-column>
-        </el-table>
-        <h3 style="margin-top: 50px;">Comisaria</h3>
-        <el-form-item>
-          <el-select
-            v-model="ipp.policeStation.id"
-            clearable
-            filterable
-            placeholder="Seleccionar Comisaria"
-            style="width: 100%;"
-            @change="setPoliceStation">
-            <el-option
-              v-for="(item, index) in allPoliceStations"
-              :key="index"
-              :label="item.name"
-              :value="item.id">
-              <span style="float: left">{{ item.name }}</span>
-              <span style="float: right; color: #8492a6; font-size: 13px">{{ item.neighborhood }}</span>
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-row
-          v-if="ipp.policeStation.id"
-          :gutter="20">
-          <el-col :span="8">
-            <el-form-item label="Barrio">
-              <el-input
-                v-model="ipp.policeStation.neighborhood"
-                readonly/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="Localidad">
-              <el-input
-                v-model="ipp.policeStation.city"
-                readonly/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="Provincia">
-              <el-input
-                v-model="ipp.policeStation.state"
-                readonly/>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </div>
+  <div class="ipp-form-container">
+    <div class="ipp-step-header">
+      <el-button
+        type="primary"
+        style="float: left"
+        @click="goBack()">
+        <fw-icon icon="chevron-left"/>
+        Volver
+      </el-button>
+      Cargar Hechos
+      <el-button
+        :disabled="!valid"
+        type="primary"
+        style="float: right"
+        @click="goNext()">
+        Siguiente
+        <fw-icon icon="chevron-right"/>
+      </el-button>
+    </div>
+    <div class="ipp-step-inner">
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item>
+            <el-select
+              v-model="newOffense.id"
+              clearable
+              filterable
+              placeholder="Seleccionar delito"
+              style="width: 100%;">
+              <el-option
+                v-for="item in allOffenses"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"/>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item>
+            <el-select
+              v-model="newOffense.type"
+              clearable
+              filterable
+              placeholder="Seleccionr grado"
+              style="width: 100%;">
+              <el-option
+                v-for="item in allOffenseTypes"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"/>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item>
+            <el-button
+              :disabled="!newOffense.type || !newOffense.id"
+              style="width: 100%;"
+              @click="addOffense()">Agregar</el-button>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-table
+        :data="ipp.offenses"
+        style="width: 100%">
+        <el-table-column width="70">
+          <template slot-scope="scope">
+            <i class="icono-arg-conexion"></i>
+          </template>
+        </el-table-column>
+        <el-table-column label="Delito">
+          <template slot-scope="scope">
+            {{ offenseName(scope.row.id) }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Grado">
+          <template slot-scope="scope">
+            {{ scope.row.type || "--------" }}
+          </template>
+        </el-table-column>
+        <el-table-column width="70">
+          <template slot-scope="scope">
+            <a
+              href="#"
+              @click="removeOffense(scope.row)"><i class="el-icon-delete"/>
+            </a>
+          </template>
+        </el-table-column>
+      </el-table>
+      <h3 style="margin-top: 50px;">Comisaria</h3>
+      <el-form-item>
+        <el-select
+          v-model="ipp.policeStation.id"
+          clearable
+          filterable
+          placeholder="Seleccionar Comisaria"
+          style="width: 100%;"
+          @change="setPoliceStation">
+          <el-option
+            v-for="(item, index) in allPoliceStations"
+            :key="index"
+            :label="item.name"
+            :value="item.id">
+            <span style="float: left">{{ item.name }}</span>
+            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.neighborhood }}</span>
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-row
+        v-if="ipp.policeStation.id"
+        :gutter="20">
+        <el-col :span="8">
+          <el-form-item label="Barrio">
+            <el-input
+              v-model="ipp.policeStation.neighborhood"
+              readonly/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="Localidad">
+            <el-input
+              v-model="ipp.policeStation.city"
+              readonly/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item label="Provincia">
+            <el-input
+              v-model="ipp.policeStation.state"
+              readonly/>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>

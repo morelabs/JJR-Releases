@@ -1,104 +1,102 @@
 <template>
-  <div class="ipp-form-wrapper">
-    <div class="ipp-form-container">
-      <div class="ipp-step-header">
-        <el-button
-          type="primary"
-          style="float: left"
-          @click="goBack()">
-          <fw-icon icon="chevron-left"/>
-          Volver
-        </el-button>
-        Origen y usuarios
-        <el-button
-          :disabled="!valid"
-          type="primary"
-          style="float: right"
-          @click="goNext()">
-          Siguiente
-          <fw-icon icon="chevron-right"/>
-        </el-button>
-      </div>
-      <div class="ipp-step-inner">
-        <h3>Observaciones</h3>
-        <el-row :gutter="20">
-          <el-col :span="16">
-            <el-form-item>
-              <el-select
-                v-model="newNote"
-                clearable
-                filterable
-                placeholder="Seleccionar nota"
-                style="width: 100%;">
-                <el-option
-                  v-for="item in allNotes"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id"/>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-button @click="addNote()">Agregar</el-button>
-          </el-col>
-        </el-row>
-        <el-table
-          :data="ipp.notes"
-          style="100%">
-          <el-table-column
-            label="Nota"
-            prop="name"/>
-          <el-table-column>
-            <template slot-scope="scope">
-              <a
-                href="#" 
-                @click="removeNote(scope.row)"><i class="el-icon-delete"/></a>
-            </template>
-          </el-table-column>
-        </el-table>
-        <h3 style="margin-top: 40px">Asignados</h3>
-        <el-row :gutter="20">
-          <el-col :span="16">
-            <el-form-item>
-              <el-select
-                v-model="newAssignee"
-                clearable
-                filterable
-                placeholder="Seleccionar usuario"
-                style="width: 100%;">
-                <el-option
-                  v-for="item in allUsers"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id">
-                  <span style="float: left">{{ item.name }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 13px">{{ item.role }}</span>
-                </el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-button @click="addUser()">Agregar</el-button>
-          </el-col>
-        </el-row>
-        <el-table
-          :data="ipp.assignees"
-          style="100%">
-          <el-table-column
-            label="Nombre"
-            prop="name"/>
-          <el-table-column
-            label="Rol"
-            prop="role"/>
-          <el-table-column>
-            <template slot-scope="scope">
-              <a
-                href="#" 
-                @click="removeUser(scope.row)"><i class="el-icon-delete"/></a>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
+  <div class="ipp-form-container">
+    <div class="ipp-step-header">
+      <el-button
+        type="primary"
+        style="float: left"
+        @click="goBack()">
+        <fw-icon icon="chevron-left"/>
+        Volver
+      </el-button>
+      Origen y usuarios
+      <el-button
+        :disabled="!valid"
+        type="primary"
+        style="float: right"
+        @click="goNext()">
+        Siguiente
+        <fw-icon icon="chevron-right"/>
+      </el-button>
+    </div>
+    <div class="ipp-step-inner">
+      <h3>Observaciones</h3>
+      <el-row :gutter="20">
+        <el-col :span="16">
+          <el-form-item>
+            <el-select
+              v-model="newNote"
+              clearable
+              filterable
+              placeholder="Seleccionar nota"
+              style="width: 100%;">
+              <el-option
+                v-for="item in allNotes"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"/>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-button @click="addNote()">Agregar</el-button>
+        </el-col>
+      </el-row>
+      <el-table
+        :data="ipp.notes"
+        style="100%">
+        <el-table-column
+          label="Nota"
+          prop="name"/>
+        <el-table-column>
+          <template slot-scope="scope">
+            <a
+              href="#" 
+              @click="removeNote(scope.row)"><i class="el-icon-delete"/></a>
+          </template>
+        </el-table-column>
+      </el-table>
+      <h3 style="margin-top: 40px">Asignados</h3>
+      <el-row :gutter="20">
+        <el-col :span="16">
+          <el-form-item>
+            <el-select
+              v-model="newAssignee"
+              clearable
+              filterable
+              placeholder="Seleccionar usuario"
+              style="width: 100%;">
+              <el-option
+                v-for="item in allUsers"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+                <span style="float: left">{{ item.name }}</span>
+                <span style="float: right; color: #8492a6; font-size: 13px">{{ item.role }}</span>
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-button @click="addUser()">Agregar</el-button>
+        </el-col>
+      </el-row>
+      <el-table
+        :data="ipp.assignees"
+        style="100%">
+        <el-table-column
+          label="Nombre"
+          prop="name"/>
+        <el-table-column
+          label="Rol"
+          prop="role"/>
+        <el-table-column>
+          <template slot-scope="scope">
+            <a
+              href="#" 
+              @click="removeUser(scope.row)"><i class="el-icon-delete"/></a>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
   </div>
 </template>

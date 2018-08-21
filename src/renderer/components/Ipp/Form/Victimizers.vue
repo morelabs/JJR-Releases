@@ -1,149 +1,148 @@
 <template>
-  <div class="ipp-form-wrapper">
-    <div class="ipp-form-container">
-      <div class="ipp-step-header">
-        <el-button
-          type="primary"
-          style="float: left"
-          @click="goBack()">
-          <fw-icon icon="chevron-left"/>
-          Volver
-        </el-button>
-        Cargar Victimarios
-        <el-button
-          :disabled="!valid"
-          type="primary"
-          style="float: right"
-          @click="goNext()">
-          Siguiente
-          <fw-icon icon="chevron-right"/>
-        </el-button>
-      </div>
-      <div class="ipp-step-inner">
-        <el-row :gutter="20">
-          <el-col :span="4">
-            <el-form-item>
-              <el-input
-                v-model="newVictimizer.dni"
-                :disabled="newVictimizer.noDNI"
-                suffix-icon="icono-arg-dni"
-                name="dni"
-                style="width: 100%;"
-                placeholder="DNI: XX.XXX.XXX"
-                @change="validateDNI"/>
-              <div>
-                <el-checkbox
-                  v-model="newVictimizer.noDNI"
-                  label="Sin DNI"
-                  @change="cleanField('dni')"/>
-              </div>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item>
-              <el-input
-                v-model="newVictimizer.first_name"
-                name="name"
-                style="width: 100%;"
-                placeholder="Nombre"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item>
-              <el-input
-                v-model="newVictimizer.last_name"
-                name="last_name"
-                style="width: 100%;"
-                placeholder="Apellido"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-form-item>
-              <el-radio-group v-model="newVictimizer.adult">
-                <el-radio-button label="Adulto"/>
-                <el-radio-button label="Menor"/>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item>
-              <el-input
-                v-model="newVictimizer.address"
-                :disabled="newVictimizer.noAddress"
-                name="address"
-                style="width: 100%;"
-                placeholder="Direccion completa"/>
-              <div>
-                <el-checkbox
-                  v-model="newVictimizer.noAddress"
-                  label="Direccion desconocida"
-                  @change="cleanField('address')"/>
-              </div>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-form-item>
-              <el-input
-                v-model="newVictimizer.addressNumber"
-                :disabled="newVictimizer.noAddress"
-                name="addressNumber"
-                style="width: 100%;"
-                placeholder="Altura"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-button
+  <div class="ipp-form-container">
+    <div class="ipp-step-header">
+      <el-button
+        type="primary"
+        style="float: left"
+        @click="goBack()">
+        <fw-icon icon="chevron-left"/>
+        Volver
+      </el-button>
+      Cargar Victimarios
+      <el-button
+        :disabled="!valid"
+        type="primary"
+        style="float: right"
+        @click="goNext()">
+        Siguiente
+        <fw-icon icon="chevron-right"/>
+      </el-button>
+    </div>
+    <div class="ipp-step-inner">
+      <el-row :gutter="20">
+        <el-col :span="4">
+          <el-form-item>
+            <el-input
+              v-model="newVictimizer.dni"
+              :disabled="newVictimizer.noDNI"
+              suffix-icon="icono-arg-dni"
+              name="dni"
+              style="width: 100%;"
+              placeholder="DNI: XX.XXX.XXX"
+              @change="validateDNI"/>
+            <div>
+              <el-checkbox
+                v-model="newVictimizer.noDNI"
+                label="Sin DNI"
+                @change="cleanField('dni')"/>
+            </div>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item>
+            <el-input
+              v-model="newVictimizer.first_name"
+              name="name"
+              style="width: 100%;"
+              placeholder="Nombre"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item>
+            <el-input
+              v-model="newVictimizer.last_name"
+              name="last_name"
+              style="width: 100%;"
+              placeholder="Apellido"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item style="width: 100%;">
+            <el-radio-group
+              v-model="newVictimizer.adult">
+              <el-radio-button label="Adulto"/>
+              <el-radio-button label="Menor"/>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item>
+            <el-input
+              v-model="newVictimizer.address"
               :disabled="newVictimizer.noAddress"
-              style="width: 100%">Validar</el-button>
-          </el-col>
-          <el-col :span="4">
-            <el-button
-              :disabled="!dataValidated"
-              style="width: 100%"
-              @click="addVictimizer()">Agregar</el-button>
-          </el-col>
-        </el-row>
-        <hr>
-        <el-table
-          :data="ipp.victimizers"
-          style="width: 100%">
-          <el-table-column width="70">
-            <template slot-scope="scope">
-              <i class="icono-arg-arma-portacion"></i>
-            </template>
-          </el-table-column>
-          <el-table-column label="Nombre">
-            <template slot-scope="scope">
-              {{ scope.row.first_name }} {{ scope.row.last_name }}
-            </template>
-          </el-table-column>
-          <el-table-column label="DNI">
-            <template slot-scope="scope">
-              {{ scope.row.dni || "--------" }}
-            </template>
-          </el-table-column>
-          <el-table-column label="Direccion">
-            <template slot-scope="scope">
-              {{ scope.row.address || "--------" }}
-            </template>
-          </el-table-column>
-          <el-table-column label="Edad">
-            <template slot-scope="scope">
-              {{ scope.row.adult === "Adulto" ? "Adulto (+18)" : "Menor (-18)" }}
-            </template>
-          </el-table-column>
-          <el-table-column width="70">
-            <template slot-scope="scope">
-              <a
-                href="#"
-                @click="removeVictimizer(scope.row)"><i class="el-icon-delete"/>
-              </a>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
+              name="address"
+              style="width: 100%;"
+              placeholder="Direccion completa"/>
+            <div>
+              <el-checkbox
+                v-model="newVictimizer.noAddress"
+                label="Direccion desconocida"
+                @change="cleanField('address')"/>
+            </div>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item>
+            <el-input
+              v-model="newVictimizer.addressNumber"
+              :disabled="newVictimizer.noAddress"
+              name="addressNumber"
+              style="width: 100%;"
+              placeholder="Altura"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-button
+            :disabled="newVictimizer.noAddress"
+            style="width: 100%">Validar</el-button>
+        </el-col>
+        <el-col :span="4">
+          <el-button
+            :disabled="!dataValidated"
+            style="width: 100%"
+            @click="addVictimizer()">Agregar</el-button>
+        </el-col>
+      </el-row>
+      <hr>
+      <el-table
+        :data="ipp.victimizers"
+        style="width: 100%">
+        <el-table-column width="70">
+          <template slot-scope="scope">
+            <i class="icono-arg-arma-portacion"></i>
+          </template>
+        </el-table-column>
+        <el-table-column label="Nombre">
+          <template slot-scope="scope">
+            {{ scope.row.first_name }} {{ scope.row.last_name }}
+          </template>
+        </el-table-column>
+        <el-table-column label="DNI">
+          <template slot-scope="scope">
+            {{ scope.row.dni || "--------" }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Direccion">
+          <template slot-scope="scope">
+            {{ scope.row.address || "--------" }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Edad">
+          <template slot-scope="scope">
+            {{ scope.row.adult === "Adulto" ? "Adulto (+18)" : "Menor (-18)" }}
+          </template>
+        </el-table-column>
+        <el-table-column width="70">
+          <template slot-scope="scope">
+            <a
+              href="#"
+              @click="removeVictimizer(scope.row)"><i class="el-icon-delete"/>
+            </a>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
   </div>
 </template>

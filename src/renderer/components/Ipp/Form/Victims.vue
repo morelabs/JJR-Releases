@@ -1,126 +1,124 @@
 <template>
-  <div class="ipp-form-wrapper">
-    <div class="ipp-form-container">
-      <div class="ipp-step-header">
-        <el-button
-          type="primary"
-          style="float: left"
-          @click="goBack()">
-          <fw-icon icon="chevron-left"/>
-          Volver
-        </el-button>
-        Cargar Victimas
-        <el-button
-          :disabled="!valid"
-          type="primary"
-          style="float: right"
-          @click="goNext()">
-          Siguiente
-          <fw-icon icon="chevron-right"/>
-        </el-button>
-      </div>
-      <div class="ipp-step-inner">
-        <el-row :gutter="20">
-          <el-col :span="4">
-            <el-form-item>
-              <el-input
-                v-model="newVictim.dni"
-                :disabled="newVictim.noDNI"
-                suffix-icon="icono-arg-dni"
-                name="dni"
-                style="width: 100%;"
-                placeholder="XX.XXX.XXX"/>
-              <div>
-                <el-checkbox
-                  v-model="newVictim.noDNI"
-                  label="Sin DNI"
-                  @change="cleanField('dni')"/>
-              </div>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item>
-              <el-input
-                v-model="newVictim.first_name"
-                name="name"
-                style="width: 100%;"
-                placeholder="Nombre"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item>
-              <el-input
-                v-model="newVictim.last_name"
-                name="last_name"
-                style="width: 100%;"
-                placeholder="Apellido"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-form-item>
-              <el-radio-group v-model="newVictim.adult">
-                <el-radio-button label="Adulto"/>
-                <el-radio-button label="Menor"/>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="20">
-            <el-form-item>
-              <el-input
-                v-model="newVictim.address"
-                name="address"
-                style="width: 100%;"
-                placeholder="Direccion completa"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="4">
-            <el-button
-              :disabled="!dataValidated"
-              style="width: 100%"
-              @click="addVictim()">Agregar</el-button>
-          </el-col>
-        </el-row>
-        <hr>
-        <el-table
-          :data="ipp.victims"
-          style="width: 100%">
-          <el-table-column width="70">
-            <template slot-scope="scope">
-              <i class="icono-arg-arma-portacion"></i>
-            </template>
-          </el-table-column>
-          <el-table-column label="Nombre">
-            <template slot-scope="scope">
-              {{ scope.row.first_name }} {{ scope.row.last_name }}
-            </template>
-          </el-table-column>
-          <el-table-column label="DNI">
-            <template slot-scope="scope">
-              {{ scope.row.dni || "--------" }}
-            </template>
-          </el-table-column>
-          <el-table-column label="Direccion">
-            <template slot-scope="scope">
-              {{ scope.row.address || "--------" }}
-            </template>
-          </el-table-column>
-          <el-table-column label="Edad">
-            <template slot-scope="scope">
-              {{ scope.row.adult === "Adulto" ? "Adulto (+18)" : "Menor (-18)" }}
-            </template>
-          </el-table-column>
-          <el-table-column width="70">
-            <template slot-scope="scope">
-              <a
-                href="#"
-                @click="removeVictim(scope.row)"><i class="el-icon-delete"/>
-              </a>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
+  <div class="ipp-form-container">
+    <div class="ipp-step-header">
+      <el-button
+        type="primary"
+        style="float: left"
+        @click="goBack()">
+        <fw-icon icon="chevron-left"/>
+        Volver
+      </el-button>
+      Cargar Victimas
+      <el-button
+        :disabled="!valid"
+        type="primary"
+        style="float: right"
+        @click="goNext()">
+        Siguiente
+        <fw-icon icon="chevron-right"/>
+      </el-button>
+    </div>
+    <div class="ipp-step-inner">
+      <el-row :gutter="20">
+        <el-col :span="4">
+          <el-form-item>
+            <el-input
+              v-model="newVictim.dni"
+              :disabled="newVictim.noDNI"
+              suffix-icon="icono-arg-dni"
+              name="dni"
+              style="width: 100%;"
+              placeholder="XX.XXX.XXX"/>
+            <div>
+              <el-checkbox
+                v-model="newVictim.noDNI"
+                label="Sin DNI"
+                @change="cleanField('dni')"/>
+            </div>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item>
+            <el-input
+              v-model="newVictim.first_name"
+              name="name"
+              style="width: 100%;"
+              placeholder="Nombre"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item>
+            <el-input
+              v-model="newVictim.last_name"
+              name="last_name"
+              style="width: 100%;"
+              placeholder="Apellido"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-form-item>
+            <el-radio-group v-model="newVictim.adult">
+              <el-radio-button label="Adulto"/>
+              <el-radio-button label="Menor"/>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="20">
+          <el-form-item>
+            <el-input
+              v-model="newVictim.address"
+              name="address"
+              style="width: 100%;"
+              placeholder="Direccion completa"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="4">
+          <el-button
+            :disabled="!dataValidated"
+            style="width: 100%"
+            @click="addVictim()">Agregar</el-button>
+        </el-col>
+      </el-row>
+      <hr>
+      <el-table
+        :data="ipp.victims"
+        style="width: 100%">
+        <el-table-column width="70">
+          <template slot-scope="scope">
+            <i class="icono-arg-arma-portacion"></i>
+          </template>
+        </el-table-column>
+        <el-table-column label="Nombre">
+          <template slot-scope="scope">
+            {{ scope.row.first_name }} {{ scope.row.last_name }}
+          </template>
+        </el-table-column>
+        <el-table-column label="DNI">
+          <template slot-scope="scope">
+            {{ scope.row.dni || "--------" }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Direccion">
+          <template slot-scope="scope">
+            {{ scope.row.address || "--------" }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Edad">
+          <template slot-scope="scope">
+            {{ scope.row.adult === "Adulto" ? "Adulto (+18)" : "Menor (-18)" }}
+          </template>
+        </el-table-column>
+        <el-table-column width="70">
+          <template slot-scope="scope">
+            <a
+              href="#"
+              @click="removeVictim(scope.row)"><i class="el-icon-delete"/>
+            </a>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
   </div>
 </template>

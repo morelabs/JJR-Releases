@@ -7,30 +7,18 @@
         <div style="color: #999; font-size: 15px;">Justicia restaurativa</div>
       </div>
       <div class="login-container">
+        <div v-if="hasError">
+          <el-alert
+            :closable="false"
+            :center="true"
+            title="No estas logueado"
+            type="error"
+            show-icon/>
+          <br>
+        </div>
         <el-form
           ref="loginForm" 
           :model="credentials">
-          <el-form-item>
-            <el-select
-              v-model="credentials.region"
-              :clearable="true"
-              name="region"
-              style="width: 100%;"
-              placeholder="Selecciona juridiccion">
-              <el-option
-                value="san_isidro"
-                label="San Isidro"/>
-              <el-option
-                value="pergamino"
-                label="Pergamino"/>
-              <el-option
-                value="tigre"
-                label="Tigre"/>
-              <el-option
-                value="tandil"
-                label="Tandil"/>
-            </el-select>
-          </el-form-item>
           <el-form-item>
             <el-input
               v-model="credentials.username"
@@ -85,8 +73,8 @@ export default {
       name: appPackage.build.productName,
       version: appPackage.version,
       envs: process.env,
+      hasError: false,
       credentials: {
-        region: "",
         username: "",
         password: ""
       }
@@ -94,11 +82,7 @@ export default {
   },
   computed: {
     isValidData() {
-      return (
-        this.credentials.username &&
-        this.credentials.region &&
-        this.credentials.password
-      );
+      return this.credentials.username && this.credentials.password;
     }
   },
   created() {
@@ -110,6 +94,7 @@ export default {
       this.loading = true;
       this.login(this.credentials)
         .then(response => {
+          this.hasError = false;
           this.$notify.success({
             title: "Bienvenido",
             message: "Logueado recien como..."
@@ -123,11 +108,7 @@ export default {
           } else {
             message = error.authentication[0];
           }
-          this.$notify.error({
-            title: "Error",
-            message: message,
-            duration: 10000
-          });
+          this.hasError = true;
         })
         .finally(() => {
           this.loading = false;

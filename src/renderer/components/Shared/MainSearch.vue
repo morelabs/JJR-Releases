@@ -182,6 +182,7 @@ export default {
 .my-suggestion-list .my-suggestion-list-item {
   padding: 10px;
   margin: 0px;
+  cursor: pointer;
 }
 .my-suggestion-list .my-suggestion-list-item:hover {
   background-color: #409eff;

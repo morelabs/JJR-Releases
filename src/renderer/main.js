@@ -18,7 +18,8 @@ import {
   faChevronLeft,
   faLock,
   faSignOutAlt,
-  faChartBar
+  faChartBar,
+  faSave
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import locale from "element-ui/lib/locale/lang/es";
@@ -46,7 +47,8 @@ library.add(
   faChevronRight,
   faLock,
   faSignOutAlt,
-  faChartBar
+  faChartBar,
+  faSave
 );
 Vue.component("fw-icon", FontAwesomeIcon);
 Vue.component("vue-simple-suggest", VueSimpleSuggest);

@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <div class="search-form">
     <div
-      class="search-form"
       @click="openSearch()">
-      <span>Buscador avanzado...</span>
+      <span>Ir a ...</span>
       <div style="float: right"><i class="el-icon-search"></i></div>
     </div>
     <div
@@ -24,3 +23,30 @@ export default {
   }
 };
 </script>
+
+<style>
+.search-form,
+.search-form-collapsed {
+  padding: 10px;
+  margin: 20px 10px 0px 10px;
+  background: rgb(103, 111, 122);
+  border-color: transparent;
+  color: #c7c7c7;
+  opacity: 0.5;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.search-form-collapsed {
+  display: none;
+}
+.el-aside.main-side-menu.collapsed .search-form {
+  display: none;
+}
+.el-aside.main-side-menu.collapsed .search-form-collapsed {
+  display: block;
+  text-align: center;
+  cursor: pointer;
+}
+</style>

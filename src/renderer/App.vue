@@ -61,8 +61,8 @@ footer {
   position: absolute;
   width: 100%;
   bottom: 0px;
-  height: 2.5em;
-  line-height: 2.5em;
+  height: 2.2em;
+  line-height: 2.2em;
   z-index: 1000;
   font-size: 13px;
   background: transparent;

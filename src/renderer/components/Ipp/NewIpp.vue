@@ -94,24 +94,30 @@ export default {
     // called when the route that renders this component is about to
     // be navigated away from.
     // has access to `this` component instance.
-    let yes = window.confirm(
-      "Si salis de esta pagina vas a perder todo lo que cargaste del formlario."
-    );
-    if (yes) {
-      this.resetIpp();
-      next();
+    if (this.hasChanges) {
+      let yes = window.confirm(
+        "Si salis de esta pagina vas a perder todo lo que cargaste del formlario."
+      );
+      if (yes) {
+        this.resetIpp();
+        next();
+      } else {
+        next(false);
+      }
     } else {
-      next(false);
+      next();
     }
   },
   data() {
     return {
-      active: 1
+      active: 1,
+      hasChanges: false
     };
   },
   methods: {
     ...ippActions(["resetIpp"]),
     moveTo(value) {
+      this.hasChanges = true;
       this.active = value;
     }
   }
@@ -119,12 +125,16 @@ export default {
 </script>
 
 <style>
+.ipp-form {
+  height: 100%;
+}
 .step-indicator {
   padding: 10px;
   border-bottom: solid 2px #f1f1f1;
+  height: 120px;
 }
 .step-content {
-  height: 670px;
+  height: 100%;
   margin: 0px;
   padding: 0px;
   flex: auto;
@@ -142,21 +152,24 @@ export default {
   padding: 0px 10px;
 }
 
+.ipp-form-container {
+  height: 100%;
+}
 .ipp-step-header {
   height: 50px;
   line-height: 50px;
   border-bottom: solid 2px #f1f1f1;
   margin-bottom: 10px;
-  padding-bottom: 10px;
-  padding-top: 10px;
+  padding: 10px 5px;
   margin-top: 10px;
   text-align: center;
   font-size: 20px;
 }
 
 .ipp-step-inner {
-  height: 560px;
+  height: 635px;
   margin-top: 10px;
+  padding: 5px;
   flex: auto;
   background: rgb(255, 255, 255);
   position: relative;
