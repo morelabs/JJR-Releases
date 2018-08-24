@@ -126,6 +126,7 @@ export default {
   display: flex;
   flex-direction: column;
   flex: auto;
+  padding: 0px;
 }
 .jpj-main .jpj-main-inner {
   margin: 0px 0px 10px 0px;

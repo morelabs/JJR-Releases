@@ -44,7 +44,7 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Ubuntu");
 html,
 body {
-  background-color: #f1f1f1 !important;
+  background-color: #fff !important;
   height: 100%;
   font-family: Ubuntu;
   margin: 0px;

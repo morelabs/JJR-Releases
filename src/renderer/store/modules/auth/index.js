@@ -1,20 +1,17 @@
 import getters from "./getters";
 import actions from "./actions";
 import * as types from "../types";
-import JWTDecode from "jwt-decode";
 
 const state = {
   user: {}
 };
 
 const mutations = {
-  [types.UPDATE_CURRENT_USER](state, { token }) {
-    const user = JWTDecode(token);
+  [types.UPDATE_CURRENT_USER](state, user) {
     state.user = user;
   },
-  [types.LOGIN_SUCCESS](state, { token }) {
+  [types.LOGIN_SUCCESS](state, { token, user }) {
     if (token) {
-      const user = JWTDecode(token);
       state.user = user;
       localStorage.setItem("token", token);
     }
