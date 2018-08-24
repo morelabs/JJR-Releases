@@ -127,6 +127,7 @@ export default {
 <style>
 .ipp-form {
   height: 100%;
+  padding: 5px;
 }
 .step-indicator {
   padding: 10px;

@@ -31,7 +31,8 @@ function createWindow() {
     useContentSize: true,
     titleBarStyle: "hidden",
     show: false,
-    backgroundColor: "#002b36"
+    backgroundColor: "#002b36",
+    draggable: false
   });
 
   mainWindow.loadURL(winURL);
@@ -41,6 +42,7 @@ function createWindow() {
   });
   mainWindow.once("ready-to-show", () => {
     mainWindow.show();
+    mainWindow.maximize();
   });
 }
 

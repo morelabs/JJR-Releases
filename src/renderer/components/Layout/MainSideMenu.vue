@@ -82,7 +82,7 @@
       <h3><i class="icono-arg-marcador-ubicacion-2"></i> Reportes</h3>
       <side-menu-item
         :collapsed="collapsed"
-        :route-name="{ path: '/map/victimizers' }"
+        :route-name="{ name: 'victimizerMap' }"
         :is-main="false"
         tooltip-content="Mapa de hechos"
         display-name="Mapa de hechos"

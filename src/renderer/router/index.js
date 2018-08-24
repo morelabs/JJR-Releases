@@ -11,6 +11,7 @@ import Collaborators from "@/components/Administration/Collaborators";
 import Institutions from "@/components/Administration/Institutions";
 import File from "@/components/Files/File";
 import Files from "@/components/Files/Files";
+import VictimizerMap from "@/components/Statistics/VictimizerMap";
 
 Vue.use(Router);
 
@@ -50,6 +51,11 @@ const routes = [
         path: "/files/:id",
         name: "file",
         component: File
+      },
+      {
+        path: "/map/victimizers",
+        name: "victimizerMap",
+        component: VictimizerMap
       },
       {
         path: "/admin",
