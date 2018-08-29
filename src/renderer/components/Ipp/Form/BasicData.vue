@@ -16,7 +16,7 @@
         <el-col :span="12">
           <el-form-item>
             <el-input
-              v-model="ipp.number"
+              v-model="ipp.ipp_number"
               name="number"
               style="width: 100%;"
               placeholder="Numero: XX-XX-XXXX-XX"/>
@@ -27,36 +27,45 @@
         <el-col :span="12">
           <el-form-item>
             <el-date-picker
-              v-model="ipp.commited_at"
+              v-model="ipp.event_date"
               :clearable="true"
-              :disabled="ipp.commitedAtDisabled"
-              format="dd/MM/yyyy"
-              style="width: 100%;"
-              name="commited_at"
+              :disabled="ipp.eventDateDisabled"
+              :format="dateFormat"
+              style="width: 67.5%;"
+              name="event_date"
               placeholder="Fecha del hecho"/>
+            <el-time-select
+              v-model="ipp.event_hour"
+              :clearable="true"
+              :disabled="ipp.eventDateDisabled"
+              :picker-options="pickerOptions"
+              style="width: 27.5%; float: right;"
+              name="event_hour"
+              placeholder="Hora del hecho"/>
             <div>
               <el-checkbox
-                v-model="ipp.commitedAtDisabled"
+                v-model="ipp.eventDateDisabled"
                 label="Fecha desconocida"
-                @change="cleanDate('commited_at')"/>
+                @change="cleanDate('event')"/>
             </div>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item>
             <el-date-picker
-              v-model="ipp.reported_at"
+              v-model="ipp.report_date"
               :clearable="true"
-              :disabled="ipp.reportedAtDisabled"
-              format="dd/MM/yyyy"
+              :disabled="ipp.reportDateDisabled"
+              :format="dateFormat"
+              :picker-options="pickerReportOptions"
               style="width: 100%;"
-              name="commited_at"
+              name="report_date"
               placeholder="Fecha de la denuncia"/>
             <div>
               <el-checkbox
-                v-model="ipp.reportedAtDisabled"
+                v-model="ipp.reportDateDisabled"
                 label="Fecha desconocida"
-                @change="cleanDate('reported_at')"/>
+                @change="cleanDate('report')"/>
             </div>
           </el-form-item>
         </el-col>
@@ -66,11 +75,12 @@
         <el-col :span="16">
           <el-form-item>
             <el-select
-              v-model="ipp.source.id"
+              v-model="ipp.origin_id"
               clearable
               filterable
               placeholder="Seleccionar origen"
-              style="width: 100%;">
+              style="width: 100%;"
+              @change="setOrigin">
               <el-option
                 v-for="item in allSources"
                 :key="item.id"
@@ -85,24 +95,22 @@
         <el-col :span="8">
           <el-form-item>
             <el-select
-              v-model="ipp.state"
-              :disabled="ipp.archived"
+              v-model="ipp.case_state_id"
               clearable
               filterable
               placeholder="Seleccionar estado"
-              style="width: 100%;">
+              style="width: 100%;"
+              @change="setCase">
               <el-option
                 v-for="item in allStates"
                 :key="item.id"
                 :label="item.name"
                 :value="item.id"/>
             </el-select>
-            <div>
-              <el-checkbox v-model="ipp.archived">Archivado?</el-checkbox>
-            </div>
           </el-form-item>
         </el-col>
       </el-row>
+      <p>{{ ipp }}</p>
     </div>
   </div>
 </template>
@@ -116,16 +124,28 @@ export default {
   name: "BasicData",
   data() {
     return {
+      dateFormat: "dddd dd, MMMM yyyy",
+      pickerOptions: {
+        start: "08:30",
+        step: "00:15",
+        end: "18:30"
+      },
+      pickerReportOptions: {
+        disabledDate: time => {
+          return time.getTime() < this.ipp.event_date.getTime();
+        }
+      },
       ipp: {
-        number: "",
-        commited_at: "",
-        reported_at: "",
-        total_involved: 1,
-        reportedAtDisabled: false,
-        commitedAtDisabled: false,
-        archived: false,
-        source: { id: "", name: "" },
-        state: ""
+        ipp_number: "",
+        event_date: "",
+        event_hour: "",
+        report_date: "",
+        eventDateDisabled: false,
+        reportDateDisabled: false,
+        origin_id: "",
+        origin: {},
+        case_state_id: "",
+        case_state: {}
       },
       allSources: [
         { id: 1, name: "Fiscalia 1", city: "San Isidro" },
@@ -144,7 +164,9 @@ export default {
   computed: {
     ...ippGetters(["ippFormBase"]),
     valid() {
-      return this.ipp.number && this.ipp.total_involved > 0;
+      return (
+        this.ipp.ipp_number && this.ipp.origin_id && this.ipp.case_state_id
+      );
     }
   },
   created() {
@@ -162,16 +184,21 @@ export default {
       }
     },
     cleanDate(field) {
-      if (field == "commited_at") {
-        this.ipp[field] = this.ipp.commitedAtDisabled ? "" : this.ipp[field];
-      } else if (field == "reported_at") {
-        this.ipp[field] = this.ipp.reportedAtDisabled ? "" : this.ipp[field];
+      if (field == "report") {
+        this.ipp.report_date = "";
+      } else if (field == "event") {
+        this.ipp.event_date = "";
+        this.ipp.event_hour = "";
       }
-
-      console.log(field, this.ipp[field]);
     },
-    setSource(val) {
-      this.ipp.source = this.allSources.find(s => val === s.id);
+    setOrigin(val) {
+      this.ipp.origin = this.allSources.find(s => val === s.id);
+    },
+    setCase(val) {
+      this.ipp.case_state = this.allStates.find(s => val === s.id);
+    },
+    minDateSet() {
+      return this.event_date <= this.report_date;
     }
   }
 };
