@@ -10,6 +10,7 @@ import VueMoment from "vue-moment";
 import moment from "moment";
 import VueOffline from "vue-offline";
 import VueSimpleSuggest from "vue-simple-suggest";
+import VueTheMask from "vue-the-mask";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -40,6 +41,7 @@ InterceptorsSetup();
 Vue.use(VueMoment, { moment });
 Vue.use(ElementUI, { locale });
 Vue.use(VueOffline);
+Vue.use(VueTheMask);
 
 library.add(
   faCircle,

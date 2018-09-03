@@ -137,7 +137,7 @@ export default {
 .step-content {
   height: 100%;
   margin: 0px;
-  padding: 0px;
+  padding: 0px 60px;
   flex: auto;
   background: rgb(255, 255, 255);
   position: relative;

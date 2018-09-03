@@ -15,11 +15,16 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item>
-            <el-input
-              v-model="ipp.ipp_number"
-              name="number"
-              style="width: 100%;"
-              placeholder="Numero: XX-XX-XXXX-XX"/>
+            <div class="el-input">
+              <the-mask
+                :mask="'##-##-####-##'"
+                v-model="ipp.ipp_number"
+                name="number"
+                type="tel"
+                class="el-input__inner"
+                style="width: 100%;"
+                placeholder="Numero de IPP"/>
+            </div>
           </el-form-item>
         </el-col>
       </el-row>
@@ -110,7 +115,6 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <p>{{ ipp }}</p>
     </div>
   </div>
 </template>

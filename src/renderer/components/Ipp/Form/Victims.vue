@@ -22,13 +22,17 @@
       <el-row :gutter="20">
         <el-col :span="4">
           <el-form-item>
-            <el-input
-              v-model="newVictim.dni"
-              :disabled="newVictim.noDNI"
-              suffix-icon="icono-arg-dni"
-              name="dni"
-              style="width: 100%;"
-              placeholder="XX.XXX.XXX"/>
+            <div :class="['el-input', newVictim.noDNI ? 'is-disabled' : '']">
+              <the-mask
+                v-model="newVictim.dni"
+                :mask="['##.###.###', '#.###.###']"
+                :disabled="newVictim.noDNI"
+                suffix-icon="icono-arg-dni"
+                name="dni"
+                class="el-input__inner"
+                style="width: 100%;"
+                placeholder="DNI"/>
+            </div>
             <div>
               <el-checkbox
                 v-model="newVictim.noDNI"
@@ -138,7 +142,9 @@ export default {
         last_name: "",
         dni: "",
         adult: false,
-        address: ""
+        address: "",
+        noAddress: false,
+        noDNI: false
       },
       ipp: {
         victims: []

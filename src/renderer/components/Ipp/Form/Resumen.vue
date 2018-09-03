@@ -21,43 +21,50 @@
       <el-row :gutter="20">
         <el-col :span="8">
           <div class="label">Numero</div>
-          <div class="value">{{ ippForm.base.number }}</div>
+          <div class="value">{{ ippForm.base.ipp_number }}</div>
         </el-col>
         <el-col :span="8">
           <div class="label">Fecha del hecho</div>
           <div class="value">
             <span v-if="ippForm.base.commited_at">{{ ippForm.base.commited_at | moment("dddd DD [de] MMMM, YYYY") }}</span>
-            <span v-else>Sin fecha</span>
+            <span
+              v-else
+              class="no-data">Sin fecha</span>
           </div>
         </el-col>
         <el-col :span="8">
           <div class="label">Fecha de la denuncia</div>
           <div class="value">
             <span v-if="ippForm.base.reported_at">{{ ippForm.base.reported_at | moment("dddd DD [de] MMMM, YYYY") }}</span>
-            <span v-else>Sin fecha</span>
+            <span
+              v-else
+              class="no-data">Sin fecha</span>
           </div>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="8">
           <div class="label">Origen</div>
-          <div class="value">{{ ippForm.base.source.name || 'No especificado' }}</div>
+          <div :class="['value', ippForm.base.origin_id ? '' : 'no-data']">{{ ippForm.base.origin.name || 'No especificado' }}</div>
+          <div>
+            <small style="color: #999">Ciudad: {{ ippForm.base.origin.city }}</small>
+          </div>
         </el-col>
         <el-col :span="8">
           <div class="label">Estado</div>
-          <div class="value">{{ ippForm.base.state || 'Sin datos' }}</div>
+          <div :class="['value', ippForm.base.case_state_id ? '' : 'no-data']">{{ ippForm.base.case_state.name || 'Sin datos' }}</div>
         </el-col>
         <el-col :span="8">
           <div class="label">Comisaria</div>
           <div class="value">
             {{ ippForm.policeStation.policeStation.name || 'Sin datos' }}
-            <div>
-              <small style="color: #999">
-                {{ ippForm.policeStation.policeStation.neighborhood }},
-                {{ ippForm.policeStation.policeStation.city }},
-                {{ ippForm.policeStation.policeStation.state }}
-              </small>
-            </div>
+          </div>
+          <div>
+            <small style="color: #999">
+              {{ ippForm.policeStation.policeStation.neighborhood }},
+              {{ ippForm.policeStation.policeStation.city }},
+              {{ ippForm.policeStation.policeStation.state }}
+            </small>
           </div>
         </el-col>
       </el-row>
@@ -65,7 +72,7 @@
       <h3>Delitos</h3>
       <el-row
         v-for="(offense, index) in ippForm.policeStation.offenses"
-        :key="index"
+        :key="`offense-${index}`"
         :gutter="20">
         <el-col :span="24">
           {{ offense.name }} {{ offense.type }}
@@ -75,7 +82,7 @@
       <h3>Victimarios</h3>
       <el-row
         v-for="(victimizer, index) in ippForm.victimizers.victimizers"
-        :key="index"
+        :key="`victimizer-${index}`"
         :gutter="20">
         <el-col :span="8">
           {{ victimizer.first_name }} {{ victimizer.last_name }}
@@ -94,7 +101,7 @@
       <h3>Victimas</h3>
       <el-row
         v-for="(victim, index) in ippForm.victims.victims"
-        :key="index"
+        :key="`victim-${index}`"
         :gutter="20">
         <el-col :span="8">
           {{ victim.first_name }} {{ victim.last_name }}
@@ -113,7 +120,7 @@
       <h3>Observaciones</h3>
       <el-row
         v-for="(note, index) in ippForm.source.notes"
-        :key="index"
+        :key="`note-${index}`"
         :gutter="20">
         <el-col :span="24">
           {{ note.name }}
@@ -123,7 +130,7 @@
       <h3>Asignados</h3>
       <el-row
         v-for="(user, index) in ippForm.source.assignees"
-        :key="index"
+        :key="`assignee-${index}`"
         :gutter="20">
         <el-col :span="20">
           {{ user.name }}
@@ -137,11 +144,13 @@
 </template>
 
 <script>
+import { mask } from "vue-the-mask";
 import { createNamespacedHelpers as namespace } from "vuex";
 const { mapGetters: ippGetters, mapActions: ippActions } = namespace("ipp");
 
 export default {
   name: "IppResumen",
+  directives: { mask },
   data() {
     return {
       loading: false
@@ -172,5 +181,8 @@ export default {
 }
 .ipp-content-resumen .value {
   margin: 10px 0px;
+}
+.no-data {
+  color: #ccc;
 }
 </style>

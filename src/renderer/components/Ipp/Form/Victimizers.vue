@@ -22,14 +22,18 @@
       <el-row :gutter="20">
         <el-col :span="4">
           <el-form-item>
-            <el-input
-              v-model="newVictimizer.dni"
-              :disabled="newVictimizer.noDNI"
-              suffix-icon="icono-arg-dni"
-              name="dni"
-              style="width: 100%;"
-              placeholder="DNI: XX.XXX.XXX"
-              @change="validateDNI"/>
+            <div :class="['el-input', newVictimizer.noDNI ? 'is-disabled' : '']">
+              <the-mask
+                v-model="newVictimizer.dni"
+                :mask="['##.###.###', '#.###.###']"
+                :disabled="newVictimizer.noDNI"
+                suffix-icon="icono-arg-dni"
+                name="dni"
+                class="el-input__inner"
+                style="width: 100%;"
+                placeholder="DNI"
+                @change="validateDNI"/>
+            </div>
             <div>
               <el-checkbox
                 v-model="newVictimizer.noDNI"
