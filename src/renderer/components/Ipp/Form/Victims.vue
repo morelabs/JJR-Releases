@@ -143,6 +143,7 @@ export default {
         dni: "",
         adult: false,
         address: "",
+        role: "victim",
         noAddress: false,
         noDNI: false
       },

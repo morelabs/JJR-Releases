@@ -168,6 +168,7 @@ export default {
         adult: "",
         address: "",
         addressNumber: "",
+        role: "victimizer",
         noAddress: false,
         noDNI: false,
         dniValidated: false,
