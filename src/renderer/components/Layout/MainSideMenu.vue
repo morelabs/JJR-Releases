@@ -71,14 +71,6 @@
         display-name="IPPs"
         icon="el-icon-document"
         class-name="menu-item"/>
-      <side-menu-item
-        :collapsed="collapsed"
-        :route-name="{ name: 'files' }"
-        :is-main="false"
-        tooltip-content="Listado de expedientes"
-        display-name="Expedientes"
-        icon="el-icon-tickets"
-        class-name="menu-item"/>
       <h3><i class="icono-arg-marcador-ubicacion-2"></i> Reportes</h3>
       <side-menu-item
         :collapsed="collapsed"
@@ -94,6 +86,31 @@
         :is-main="false"
         tooltip-content="Estadisticas y reportes"
         display-name="Estadisticas"
+        icon="el-icon-menu"
+        class-name="menu-item"/>
+      <h3><i class="icono-arg-codigo-genetico"></i> Red</h3>
+      <side-menu-item
+        :collapsed="collapsed"
+        :route-name="{ path: '/red/organizaciones' }"
+        :is-main="false"
+        tooltip-content="Organismos e instituciones"
+        display-name="Organizaciones"
+        icon="el-icon-menu"
+        class-name="menu-item"/>
+      <side-menu-item
+        :collapsed="collapsed"
+        :route-name="{ path: '/red/programas' }"
+        :is-main="false"
+        tooltip-content="Programas de apoyo"
+        display-name="Programas"
+        icon="el-icon-menu"
+        class-name="menu-item"/>
+      <side-menu-item
+        :collapsed="collapsed"
+        :route-name="{ path: '/red/referentes' }"
+        :is-main="false"
+        tooltip-content="Referentes"
+        display-name="Referentes"
         icon="el-icon-menu"
         class-name="menu-item"/>
     </div>
