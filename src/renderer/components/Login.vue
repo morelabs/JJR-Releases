@@ -2,10 +2,7 @@
   <div id="wrapper">
     <div class="title">
       <img src="~@/assets/images/logo.png">
-      <h1>Justicia Penal Juvenil</h1>
-      <div style="color: #999; font-size: 15px;">Justicia restaurativa</div>
     </div>
-    <hr>
     <div class="login-container">
       <div v-if="hasError">
         <el-alert
@@ -154,7 +151,7 @@ hr {
   margin: 10px 0px;
 }
 .title img {
-  width: 80px;
+  width: 180px;
   margin: auto;
 }
 </style>

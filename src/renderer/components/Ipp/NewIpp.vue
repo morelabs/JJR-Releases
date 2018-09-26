@@ -10,12 +10,12 @@
             description="Informacion Basica"
             icon="icono-arg-firma-contrato icono-2x"/>
           <el-step
-            title="Involucrados I"
-            description="Victimarios"
+            title="Victimarios"
+            description="Datos personales"
             icon="icono-arg-comunidad icono-2x"/>
           <el-step
-            title="Involucrados II"
-            description="Victimas"
+            title="Victimas"
+            description="Datos personales"
             icon="icono-arg-comunidad icono-2x"/>
           <el-step
             title="Hechos"

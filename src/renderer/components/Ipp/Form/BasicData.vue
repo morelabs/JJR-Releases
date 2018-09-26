@@ -12,7 +12,28 @@
       </el-button>
     </div>
     <div class="ipp-step-inner">
+      <h3>Origen</h3>
       <el-row :gutter="20">
+        <el-col :span="12">
+          <el-form-item>
+            <el-select
+              v-model="ipp.origin_id"
+              clearable
+              filterable
+              placeholder="Seleccionar origen"
+              style="width: 100%;"
+              @change="setOrigin">
+              <el-option
+                v-for="item in allSources"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+                <span style="float: left">{{ item.name }}</span>
+                <span style="float: right; color: #8492a6; font-size: 13px">{{ item.city }}</span>
+              </el-option>  
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-col :span="12">
           <el-form-item>
             <div class="el-input">
@@ -25,6 +46,18 @@
                 style="width: 100%;"
                 placeholder="Numero de IPP"/>
             </div>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <h3>Datos del hecho</h3>
+      <el-row :gutter="20">
+        <el-col :span="24">
+          <el-form-item>
+            <el-input
+              v-model="ipp.event_address"
+              name="address"
+              style="width: 100%;"
+              placeholder="Direccion del hecho  "/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -75,29 +108,9 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <h3 style="margin-top: 20px">Origen</h3>
+      <h3>Estado</h3>
       <el-row :gutter="20">
-        <el-col :span="16">
-          <el-form-item>
-            <el-select
-              v-model="ipp.origin_id"
-              clearable
-              filterable
-              placeholder="Seleccionar origen"
-              style="width: 100%;"
-              @change="setOrigin">
-              <el-option
-                v-for="item in allSources"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-                <span style="float: left">{{ item.name }}</span>
-                <span style="float: right; color: #8492a6; font-size: 13px">{{ item.city }}</span>
-              </el-option>  
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="8">
+        <el-col :span="24">
           <el-form-item>
             <el-select
               v-model="ipp.case_state_id"
