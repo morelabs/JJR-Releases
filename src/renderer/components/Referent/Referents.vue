@@ -27,7 +27,7 @@
 <script>
 import { createNamespacedHelpers as namespace } from "vuex";
 const { mapGetters: referentGetters, mapActions: referentActions } = namespace(
-  "referents"
+  "referent"
 );
 
 export default {
