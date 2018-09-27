@@ -1,6 +1,5 @@
 const getters = {
-    referentList: state => state.referents
-  };
-  
-  export default getters;
-  
+  referentList: state => state.referents
+};
+
+export default getters;

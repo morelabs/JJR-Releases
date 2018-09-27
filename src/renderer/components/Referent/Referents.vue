@@ -73,6 +73,40 @@ export default {
         }
       ]
     };
+  },
+  created() {
+    this.loadReferents();
+  },
+  methods: {
+    ...referentActions(["fetchReferents"]),
+    loadReferents() {
+      this.loading = true;
+      this.fetchReferents({
+        criteria: this.criteria,
+        page: this.pagination.currentPage
+      })
+        .then(response => {
+          this.loading = false;
+          this.referents = response.referents;
+          this.pagination.total = response.meta.total;
+          this.pagination.currentPage = this.pagination.currentPage;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    search() {
+      console.log("search");
+    },
+    changePage(value) {
+      this.pagination.currentPage = value;
+      this.loadReferents();
+    },
+    onSearch(value) {
+      this.criteria = `${value}`.toLowerCase();
+      this.pagination.currentPage = 1;
+      this.loadReferents();
+    }
   }
 };
 </script>

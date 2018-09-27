@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "Admin"
+  name: "Network"
 };
 </script>
 
