@@ -7,11 +7,20 @@
         height="735"
         style="width: 100%">
         <el-table-column
-          prop="firstname"
+          prop="attributes.firstname"
           label="Nombre"/>
         <el-table-column
-          prop="lastname"
+          prop="attributes.lastname"
           label="Apellido"/>
+        <el-table-column
+          prop="attributes.phone"
+          label="Teléfono"/>
+        <el-table-column
+          prop="attributes.cellphone"
+          label="Celular"/>
+        <el-table-column
+          prop="attributes.email"
+          label="Email"/>
         <el-table-column>
           <template slot-scope="scope">
             <el-button
@@ -87,7 +96,7 @@ export default {
       })
         .then(response => {
           this.loading = false;
-          this.referents = response.referents;
+          this.referents = response.data;
           this.pagination.total = response.meta.total;
           this.pagination.currentPage = this.pagination.currentPage;
         })
