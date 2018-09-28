@@ -6,7 +6,9 @@
         <el-button type="warning">Editar</el-button>
       </router-link>
     </div>
-    <div class="data">
+    <div
+      v-if="referentId"
+      class="data">
       <p>Apellidos: {{ referent.lastname }}</p>
       <p>Nombres: {{ referent.firstname }}</p>
       <p>Cargo: {{ referent.position }}</p>
@@ -33,7 +35,8 @@ export default {
   data() {
     return {
       loading: false,
-      referent: {}
+      referent: {},
+      referentId: null
     };
   },
   created() {
@@ -46,6 +49,7 @@ export default {
       this.fetchReferent({ referentId: this.$route.params.id })
         .then(response => {
           this.referent = response.data.attributes;
+          this.referentId = response.data.id;
         })
         .catch(error => {
           console.log(error);
