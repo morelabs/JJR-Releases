@@ -7,6 +7,7 @@ import ipp from "./modules/ipp";
 import referent from "./modules/referent";
 import program from "./modules/program";
 import organization from "./modules/organization";
+import zone from "./modules/zone";
 
 Vue.use(Vuex);
 
@@ -17,7 +18,8 @@ export default new Vuex.Store({
     ipp,
     organization,
     program,
-    referent
+    referent,
+    zone
   },
   strict: process.env.NODE_ENV !== "production"
 });
