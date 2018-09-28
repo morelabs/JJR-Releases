@@ -42,11 +42,12 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css?family=Ubuntu");
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
 html,
 body {
   background-color: #fff !important;
   height: 100%;
-  font-family: Ubuntu;
+  font-family: "Montserrat", sans-serif;
   margin: 0px;
 }
 body {
