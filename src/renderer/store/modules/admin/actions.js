@@ -14,6 +14,19 @@ const fetchConfig = ({ commit }, { criteria }) => {
   });
 };
 
+const fetchListValues = ({ commit }, { list }) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`current_config/list_values?list=${list}`)
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
+
 const fetchUsers = ({ commit }, { criteria, page }) => {
   return new Promise((resolve, reject) => {
     axios
@@ -68,6 +81,7 @@ const updateUser = ({ commit }, { userId, payload }) => {
 
 export default {
   fetchConfig,
+  fetchListValues,
   fetchUsers,
   fetchUser,
   updateUser,

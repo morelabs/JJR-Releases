@@ -11,6 +11,9 @@ const mutations = {
   [types.LOAD_CONFIG_SUCCESS](state, data) {
     state.config = data.config;
   },
+  [types.LOAD_LOV_SUCCESS](state, data) {
+    state.listValues = data.listValues;
+  },
   [types.LOAD_USERS_SUCCESS](state, data) {
     state.users = data.users;
   },

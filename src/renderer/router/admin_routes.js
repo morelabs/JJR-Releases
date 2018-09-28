@@ -13,6 +13,12 @@ const admin_routes = [
     name: "adminUsers",
     component: Users,
     meta: { requireAuth: true, requireAdmin: true }
+  },
+  {
+    path: "listaValores",
+    name: "listValues",
+    component: Config,
+    meta: { requireAuth: true, requireAdmin: false }
   }
 ];
 
