@@ -14,7 +14,7 @@
       <p>Celular: {{ referent.cellphone }}</p>
       <p>Email: {{ referent.email }}</p>
       <p>Dirección: {{ referent.address }}</p>
-      <p>Ciudad: {{ referent.city }}</p>
+      <p>Ciudad: {{ referent.city.name }}</p>
       <p>Zonas: {{ referent.zones }}</p>
       <p>Rubros: {{ referent.areas }}</p>
     </div>
@@ -45,7 +45,6 @@ export default {
       this.loading = true;
       this.fetchReferent({ referentId: this.$route.params.id })
         .then(response => {
-          console.log("response", response);
           this.referent = response.data.attributes;
         })
         .catch(error => {
