@@ -18,6 +18,7 @@
       <p>Dirección: {{ referent.address }}</p>
       <p>Ciudad: {{ referent.city.name }}</p>
       <p>Zonas: {{ referent.zones }}</p>
+      <p>ID Zonas: {{ referent.zoneids }}</p>
       <p>Rubros: {{ referent.areas }}</p>
     </div>
   </div>

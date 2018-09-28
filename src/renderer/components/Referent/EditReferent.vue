@@ -61,7 +61,7 @@
         </el-form-item>
         <el-form-item label="Zonas">
           <el-select
-            v-model="referent.zones"
+            v-model="referent.zoneids"
             multiple
             filterable
             style="width: 100%"
@@ -113,7 +113,7 @@ export default {
     this.loadZones();
   },
   methods: {
-    ...referentActions(["fetchReferent"]),
+    ...referentActions(["fetchReferent", "updateReferent"]),
     ...listValuesActions(["fetchListValues"]),
     ...zoneActions(["fetchZones"]),
     loadReferent() {
@@ -170,10 +170,38 @@ export default {
         });
     },
     onSubmit() {
-      console.log("submit referent", this.referent);
+      this.submit();
     },
     onReset() {
       this.loadReferent();
+    },
+    submit() {
+      let payload = {
+        firstname: this.referent.firstname,
+        lastname: this.referent.lastname,
+        phone: this.referent.phone,
+        cellphone: this.referent.cellphone,
+        email: this.referent.email,
+        address: this.referent.address,
+        position: this.referent.position,
+        zone_ids: this.referent.zoneids,
+        areas: this.referent.areas
+      };
+      this.loading = true;
+      this.updateReferent({ referentId: this.referentId, payload: payload })
+        .then(response => {
+          this.$message.success("Se actualizo el referente");
+          this.$router.push({
+            name: "referent",
+            params: { id: this.referentId }
+          });
+        })
+        .catch(error => {
+          console.log("error grabando referente", error);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
   }
 };
