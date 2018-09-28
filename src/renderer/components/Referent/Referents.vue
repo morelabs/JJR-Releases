@@ -23,9 +23,13 @@
           label="Email"/>
         <el-table-column>
           <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="primary">Ir al referente</el-button>
+            <router-link :to="{ name: 'referent', params: { id: scope.row.id } }">
+              <el-button
+                size="mini"
+                type="primary">
+                Ver
+              </el-button>
+            </router-link>
           </template>
         </el-table-column>
       </el-table>
@@ -51,36 +55,7 @@ export default {
         currentPage: 1,
         total: 0
       },
-      columns: [
-        {
-          title: "Nombre",
-          dataIndex: "firstname",
-          key: "firstname",
-          width: "80%",
-          sorter: true,
-          scopedSlots: {
-            customRender: "firstname"
-          }
-        },
-        {
-          title: "Apellidos",
-          dataIndex: "lastname",
-          key: "lastname",
-          width: "80%",
-          sorter: true,
-          scopedSlots: {
-            customRender: "lastname"
-          }
-        },
-        {
-          title: "",
-          dataIndex: "",
-          width: "10%",
-          scopedSlots: {
-            customRender: "operation"
-          }
-        }
-      ]
+      columns: []
     };
   },
   created() {
