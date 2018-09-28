@@ -8,9 +8,9 @@ import NotFound from "@/components/NotFound";
 import Login from "@/components/Login";
 import Network from "@/components/Network/Network";
 import Admin from "@/components/Administration/Admin";
-import Users from "@/components/Administration/Users";
 import VictimizerMap from "@/components/Statistics/VictimizerMap";
 
+import admin_routes from "./admin_routes";
 import program_routes from "./program_routes";
 import organization_routes from "./organization_routes";
 import referents_routes from "./referent_routes";
@@ -18,17 +18,6 @@ import referents_routes from "./referent_routes";
 import ipp_routes from "./ipp_routes";
 
 Vue.use(Router);
-
-const adminRoutes = concat(
-  [],
-  [
-    {
-      path: "",
-      name: "adminUsers",
-      component: Users
-    }
-  ]
-);
 
 const networkRoutes = concat(
   program_routes,
@@ -53,7 +42,7 @@ const childrenRoutes = concat(
     {
       path: "/admin",
       component: Admin,
-      children: adminRoutes
+      children: admin_routes
     },
     {
       path: "/red",

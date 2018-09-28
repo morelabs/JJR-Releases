@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import auth from "./modules/auth";
+import admin from "./modules/admin";
 import ipp from "./modules/ipp";
 import referent from "./modules/referent";
 import program from "./modules/program";
@@ -12,6 +13,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   modules: {
     auth,
+    admin,
     ipp,
     organization,
     program,

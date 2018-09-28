@@ -2,8 +2,7 @@
   <div style="margin: 0px;">
     <div class="admin-header">
       <router-link :to="{ name: 'adminUsers' }">Usuarios</router-link>
-      <router-link :to="{ name: 'adminCollaborators' }">Colaboradores</router-link>
-      <router-link :to="{ name: 'adminInstitutions' }">Instituciones</router-link>
+      <router-link :to="{ name: 'adminConfig' }">Configuración</router-link>
     </div>
     <router-view/>
   </div>
