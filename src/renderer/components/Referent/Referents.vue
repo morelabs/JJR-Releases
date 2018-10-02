@@ -1,25 +1,30 @@
 <template>
   <div id="referents-list">
-    <div class="page-header">Listado Referentes</div>
+    <div class="page-header">
+      Listado Referentes
+      <router-link :to="{ name: 'newReferent' }">
+        <el-button type="warning">Nuevo Referente</el-button>
+      </router-link>
+    </div>
     <div class="list">
       <el-table
         :data="referents"
         height="735"
         style="width: 100%">
         <el-table-column
-          prop="attributes.firstname"
+          prop="firstname"
           label="Nombre"/>
         <el-table-column
-          prop="attributes.lastname"
+          prop="lastname"
           label="Apellido"/>
         <el-table-column
-          prop="attributes.phone"
+          prop="phone"
           label="Teléfono"/>
         <el-table-column
-          prop="attributes.cellphone"
+          prop="cellphone"
           label="Celular"/>
         <el-table-column
-          prop="attributes.email"
+          prop="email"
           label="Email"/>
         <el-table-column>
           <template slot-scope="scope">
@@ -51,7 +56,7 @@ export default {
       referents: [],
       criteria: "",
       pagination: {
-        pageSize: 10,
+        pageSize: 1000,
         currentPage: 1,
         total: 0
       },
@@ -71,7 +76,7 @@ export default {
       })
         .then(response => {
           this.loading = false;
-          this.referents = response.data;
+          this.referents = response.referents;
           this.pagination.total = response.meta.total;
           this.pagination.currentPage = this.pagination.currentPage;
         })

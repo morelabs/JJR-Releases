@@ -7,7 +7,7 @@
       </router-link>
     </div>
     <div
-      v-if="referentId"
+      v-if="referent.id"
       class="data">
       <p>Apellidos: {{ referent.lastname }}</p>
       <p>Nombres: {{ referent.firstname }}</p>
@@ -18,7 +18,6 @@
       <p>Dirección: {{ referent.address }}</p>
       <p>Ciudad: {{ referent.city.name }}</p>
       <p>Zonas: {{ referent.zones }}</p>
-      <p>ID Zonas: {{ referent.zoneids }}</p>
       <p>Rubros: {{ referent.areas }}</p>
     </div>
   </div>
@@ -36,8 +35,7 @@ export default {
   data() {
     return {
       loading: false,
-      referent: {},
-      referentId: null
+      referent: {}
     };
   },
   created() {
@@ -49,8 +47,7 @@ export default {
       this.loading = true;
       this.fetchReferent({ referentId: this.$route.params.id })
         .then(response => {
-          this.referent = response.data.attributes;
-          this.referentId = response.data.id;
+          this.referent = response.referent;
         })
         .catch(error => {
           console.log(error);
