@@ -1,25 +1,27 @@
-# jpj_frontend
+# JPJ Desktop App
 
-> Justicia Restaurativa
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8120e0c235604150ad7729ff92d220bd)](https://www.codacy.com?utm_source=git@bitbucket.org&utm_medium=referral&utm_content=morelabs/jpj-frontend&utm_campaign=Badge_Grade)
 
-#### Build Setup
+## Local Setup
 
-``` bash
+```bash
 # install dependencies
-npm install
+yarn install
 
 # serve with hot reload at localhost:9080
-npm run dev
+API_URL=http://localhost:3000 yarn dev
 
 # build electron application for production
-npm run build
-
+yarn build
 
 # lint all JS/Vue component files in `src/`
-npm run lint
-
+yarn lint
 ```
 
 ---
 
-This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue)@[4c6ee7b](https://github.com/SimulatedGREG/electron-vue/tree/4c6ee7bf4f9b4aa647a22ec1c1ca29c2e59c3645) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
+This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
+
+---
+
+Desarrollado por Morelabs ® 2018 - Argentina
