@@ -2,9 +2,22 @@
   <div id="referents-list">
     <div class="page-header">
       Listado Referentes
+    </div>
+    <div class="controls">
       <router-link :to="{ name: 'newReferent' }">
         <el-button type="warning">Nuevo Referente</el-button>
       </router-link>
+      <el-input
+        v-model="criteria"
+        style="width: 30%"
+        placeholder="Buscar..."
+        @keyup.enter.native="search">
+        <template slot="prepend">Buscar referentes:</template>
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          @click="search"/>
+      </el-input>
     </div>
     <div class="list">
       <el-table
@@ -39,6 +52,18 @@
         </el-table-column>
       </el-table>
     </div>
+    <div class="footer">
+      <el-pagination
+        :total="pagination.totalEntries"
+        :current-page="pagination.currentPage"
+        :page-count="pagination.totalPages"
+        :page-size="pagination.pageSize"
+        :page-sizes="pagination.pageSizes"
+        background
+        layout="prev, pager, next, ->, jumper, sizes, total"
+        @size-change="changeSize"
+        @current-change="changePage"/>
+    </div>
   </div>
 </template>
 
@@ -56,9 +81,12 @@ export default {
       referents: [],
       criteria: "",
       pagination: {
-        pageSize: 1000,
+        pageSizes: [10, 20, 50, 100],
+        pageSize: 10,
+        offset: 0,
         currentPage: 1,
-        total: 0
+        totalEntries: 0,
+        totalPages: 0
       },
       columns: []
     };
@@ -72,13 +100,19 @@ export default {
       this.loading = true;
       this.fetchReferents({
         criteria: this.criteria,
-        page: this.pagination.currentPage
+        page: this.pagination.currentPage,
+        pageSize: this.pagination.pageSize
       })
         .then(response => {
           this.loading = false;
           this.referents = response.referents;
-          this.pagination.total = response.meta.total;
-          this.pagination.currentPage = this.pagination.currentPage;
+          this.pagination.pageSize = response.meta.per_page;
+          this.pagination.offset = response.meta.offset;
+          this.pagination.currentPage = response.meta.current_page;
+          this.pagination.totalEntries = response.meta.total_entries;
+          this.pagination.totalPages = response.meta.total_pages;
+          this.pagination.previousPage = response.meta.previous_page;
+          this.pagination.nextPage = response.meta.next_page;
         })
         .catch(error => {
           console.log(error);
@@ -86,9 +120,14 @@ export default {
     },
     search() {
       console.log("search");
+      this.onSearch(this.criteria);
     },
     changePage(value) {
       this.pagination.currentPage = value;
+      this.loadReferents();
+    },
+    changeSize(value) {
+      this.pagination.pageSize = value;
       this.loadReferents();
     },
     onSearch(value) {

@@ -1,10 +1,10 @@
 import * as types from "../types";
 import axios from "axios";
 
-const fetchReferents = ({ commit }, { criteria, page }) => {
+const fetchReferents = ({ commit }, { criteria, page, pageSize }) => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`referents?page=${page}&criteria=${criteria}`)
+      .get(`referents?page=${page}&criteria=${criteria}&limit=${pageSize}`)
       .then(response => {
         resolve(response.data);
       })

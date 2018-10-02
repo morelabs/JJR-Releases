@@ -5,6 +5,9 @@
       <router-link :to="{ name: 'editReferent', params: { id: $route.params.id } }">
         <el-button type="warning">Editar</el-button>
       </router-link>
+      <router-link :to="{ name: 'referents' }">
+        <el-button type="info">Volver</el-button>
+      </router-link>
     </div>
     <div
       v-if="referent.id"
