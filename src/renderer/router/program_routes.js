@@ -1,7 +1,7 @@
 import Programs from "@/components/Program/Programs";
-//import Program from "@/components/Program/Program";
-//import EditProgram from "@/components/Program/EditProgram";
-//import NewProgram from "@/components/Program/NewProgram";
+import Program from "@/components/Program/Program";
+import EditProgram from "@/components/Program/EditProgram";
+import NewProgram from "@/components/Program/NewProgram";
 
 const program_routes = [
   {
@@ -9,8 +9,7 @@ const program_routes = [
     name: "programs",
     component: Programs,
     meta: { requireAuth: true, requireAdmin: false }
-  }
-  /*,
+  },
   {
     path: "programas/nuevo",
     name: "newProgram",
@@ -28,7 +27,7 @@ const program_routes = [
     name: "editProgram",
     component: EditProgram,
     meta: { requireAuth: true, requireAdmin: true }
-  }*/
+  }
 ];
 
 export default program_routes;
