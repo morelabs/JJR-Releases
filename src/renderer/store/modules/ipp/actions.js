@@ -13,6 +13,20 @@ const checkDNI = ({ commit, state }, { dni }) => {
   });
 };
 
+const fetchIpps = ({ commit }, { criteria, page, pageSize }) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`ipp_cases?page=${page}&criteria=${criteria}&limit=${pageSize}`)
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
+
 export default {
-  checkDNI
+  checkDNI,
+  fetchIpps
 };
