@@ -2,7 +2,7 @@
   <div style="padding: 20px">
     <h3>Listas de valores</h3>
     <el-tabs
-      v-if="config.id"
+      v-if="config"
       v-model="activeName"
       type="card">
       <el-tab-pane
@@ -10,7 +10,11 @@
         name="ipp">
         <el-row :gutter="20">
           <el-col :span="4" ><div class="lov-name">Observaciones</div></el-col>
-          <el-col :span="16"><div class="lov-values">{{ config.attributes.ippobservations }}</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.ipp_observation_list }}</div></el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="4" ><div class="lov-name">Definiciones</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.ipp_definition_list }}</div></el-col>
         </el-row>
       </el-tab-pane>
       <el-tab-pane
@@ -18,35 +22,35 @@
         name="organizations">
         <el-row :gutter="20">
           <el-col :span="4" ><div class="lov-name">Tipo de recursos</div></el-col>
-          <el-col :span="16"><div class="lov-values">{{ config.attributes.organizationresourcetypes }}</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.organization_resource_type_list }}</div></el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="4" ><div class="lov-name">Ambitos</div></el-col>
-          <el-col :span="16"><div class="lov-values">{{ config.attributes.organizationscopes }}</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.organization_scope_list }}</div></el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="4" ><div class="lov-name">Descripciones</div></el-col>
-          <el-col :span="16"><div class="lov-values">{{ config.attributes.organizationdescriptions }}</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.organization_description_list }}</div></el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="4" ><div class="lov-name">Caracteristicas</div></el-col>
-          <el-col :span="16"><div class="lov-values">{{ config.attributes.organizationcharacteristics }}</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.organization_characteristic_list }}</div></el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="4" ><div class="lov-name">Objetivos</div></el-col>
-          <el-col :span="16"><div class="lov-values">{{ config.attributes.organizationaims }}</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.organization_aim_list }}</div></el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="4" ><div class="lov-name">Palabras Clave</div></el-col>
-          <el-col :span="16"><div class="lov-values">{{ config.attributes.organizationkeywords }}</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.organization_keyword_list }}</div></el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="4" ><div class="lov-name">Condiciones de ingreso</div></el-col>
-          <el-col :span="16"><div class="lov-values">{{ config.attributes.organizationentryconditions }}</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.organization_entry_condition_list }}</div></el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="4" ><div class="lov-name">Formas de ingreso</div></el-col>
-          <el-col :span="16"><div class="lov-values">{{ config.attributes.organizationentrymodes }}</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.organization_entry_mode_list }}</div></el-col>
         </el-row>
       </el-tab-pane>
       <el-tab-pane
@@ -54,15 +58,15 @@
         name="programs">
         <el-row :gutter="20">
           <el-col :span="4" ><div class="lov-name">Tareas</div></el-col>
-          <el-col :span="16"><div class="lov-values">{{ config.attributes.programtasks }}</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.program_task_list }}</div></el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="4" ><div class="lov-name">Requisitos</div></el-col>
-          <el-col :span="16"><div class="lov-values">{{ config.attributes.programrequirements }}</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.program_requirement_list }}</div></el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="4" ><div class="lov-name">Habilidades</div></el-col>
-          <el-col :span="16"><div class="lov-values">{{ config.attributes.programskills }}</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.program_skill_list }}</div></el-col>
         </el-row>
       </el-tab-pane>
       <el-tab-pane
@@ -70,11 +74,11 @@
         name="referents">
         <el-row :gutter="20">
           <el-col :span="4" ><div class="lov-name">Rubros</div></el-col>
-          <el-col :span="16"><div class="lov-values">{{ config.attributes.referentareas }}</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.referent_area_list }}</div></el-col>
         </el-row>
         <el-row :gutter="20">
           <el-col :span="4" ><div class="lov-name">Cargos</div></el-col>
-          <el-col :span="16"><div class="lov-values">{{ config.attributes.referentpositions }}</div></el-col>
+          <el-col :span="16"><div class="lov-values">{{ config.referent_position_list }}</div></el-col>
         </el-row>
       </el-tab-pane>
     </el-tabs>
@@ -106,7 +110,7 @@ export default {
       })
         .then(response => {
           this.loading = false;
-          this.config = response.data;
+          this.config = response.main_config;
         })
         .catch(error => {
           console.log(error);
