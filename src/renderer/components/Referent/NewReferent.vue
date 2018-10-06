@@ -44,7 +44,7 @@ export default {
         areas: this.referent.areas
       };
       this.loading = true;
-      this.addReferent({ referentId: this.referent.id, payload: payload })
+      this.addReferent(payload)
         .then(response => {
           this.$message.success("Se creó el referente");
           this.$router.push({
