@@ -61,16 +61,19 @@
           prop="event_date"
           label="Fecha del hecho"/>
         <el-table-column
-          prop="minors"
-          label="Imputados menores"/>
+          prop="victims"
+          label="Víctimas"/>
         <el-table-column
-          prop="adults"
-          label="Imputados mayores"/>
+          prop="victimizers"
+          label="Víctimarios"/>
+        <el-table-column
+          prop="crimes"
+          label="Delitos"/>
         <el-table-column
           prop="definition"
           label="Definicion"/>
         <el-table-column
-          prop="case_state.name"
+          prop="state"
           label="Estado"/>
         <el-table-column>
           <template slot-scope="scope">
