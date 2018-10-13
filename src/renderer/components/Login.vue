@@ -1,7 +1,9 @@
 <template>
   <div id="wrapper">
     <div class="title">
-      <img src="~@/assets/images/logo.png">
+      <img
+        style="margin-top: 70px;"
+        src="~@/assets/images/logo.png">
     </div>
     <div class="login-container">
       <div v-if="hasError">
@@ -40,9 +42,15 @@
             @click.native.prevent="authenticate()">Submit</el-button>
         </el-form-item>
       </el-form>
-      <div style="font-size: 12px; color: #999; clear: both; overflow: auto;">
-        <div style="float: left">{{ name }}</div>
-        <div style="float: right"> v.{{ version }}</div>
+      <hr>
+      <div style="text-align: center;">
+        <p>Versión: {{ version }}</p>
+        <img
+          src="~@/assets/images/logo_funrepar.png"
+          width="60">
+        <img
+          src="~@/assets/images/logo_morelabs.png"
+          width="200">
       </div>
     </div>
     <div
