@@ -4,7 +4,7 @@
     class="map-wrapper">
     <div
       id="map"
-      style="height: 40em; width: 100%"></div>
+      style="height: 38em; width: 100%"></div>
   </div>
 </template>
 
@@ -277,7 +277,8 @@ export default {
             ]
           }
         ]
-      }
+      },
+      markers: []
     };
   },
   created() {
@@ -296,7 +297,24 @@ export default {
       }, 3000);
     },
     addPoints() {
-      console.log("Add pointed passed as props");
+      console.log("Add pointed passed as props", this.points);
+      this.buildMarkers();
+    },
+    clearMarkers() {
+      for (var i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(null);
+      }
+    },
+    buildMarkers() {
+      this.markers = [];
+      for (var i = 0; i < this.points.length; i++) {
+        var marker = new google.maps.Marker({
+          position: { lat: this.points[i][2], lng: this.points[i][1] },
+          map: this.map,
+          title: this.points[i][0]
+        });
+        this.markers.push(marker);
+      }
     }
   }
 };
