@@ -1,8 +1,8 @@
 {
-  "name": "jpj",
+  "name": "jjr",
   "version": "1.0.0",
   "author": "Jorge Moreno <jmoren@gmail.com>",
-  "description": "Justicia Restaurativa",
+  "description": "Justicia Juvenil Restaurativa",
   "license": null,
   "main": "./dist/electron/main.js",
   "scripts": {
@@ -23,8 +23,8 @@
     "publish:win": "build --win -p always"
   },
   "build": {
-    "productName": "JPJ",
-    "appId": "org.morelabs.jpj",
+    "productName": "JJR",
+    "appId": "org.morelabs.jjr",
     "directories": {
       "output": "build"
     },

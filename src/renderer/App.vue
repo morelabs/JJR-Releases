@@ -11,7 +11,7 @@ import { createNamespacedHelpers as namespace } from "vuex";
 const { mapActions: authActions, mapGetters: authGetters } = namespace("auth");
 
 export default {
-  name: "JpjFrontend",
+  name: "JjrFrontend",
   data() {
     return {
       onlineState: navigator.onLine,
