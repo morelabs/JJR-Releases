@@ -1,106 +1,82 @@
 <template>
-  <div id="ipps-list">
-    <div class="page-header">Listado IPPs</div>
-    <div class="list">
-      <el-table
-        :data="ipps"
-        height="735"
-        style="width: 100%">
-        <el-table-column label="Fecha">
-          <template slot-scope="scope">
-            {{ scope.row.created_at | moment("dddd DD [de] MMMM, YYYY") }}
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="number"
-          label="Numero"/>
-        <el-table-column
-          prop="state"
-          label="Estado"/>
-        <el-table-column>
-          <template slot-scope="scope">
+  <el-container>
+    <el-header>
+      <div class="page-header">
+        Listado de IPPs
+      </div>
+    </el-header>
+    <el-main>
+      <div id="ipps-list">
+        <div class="controls">
+          <router-link :to="{ name: 'newIpp' }">
+            <el-button type="warning">Nuevo IPP</el-button>
+          </router-link>
+          <el-input
+            v-model="criteria"
+            style="width: 30%"
+            placeholder="Buscar..."
+            @keyup.enter.native="search">
+            <template slot="prepend">Buscar ipp por numero:</template>
             <el-button
-              size="mini"
-              type="primary">Ir al expediente</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
-  </div>
-</template>
-<template>
-  <div id="ipps-list">
-    <div class="page-header">
-      Listado de IPPs
-    </div>
-    <div class="controls">
-      <router-link :to="{ name: 'newIpp' }">
-        <el-button type="warning">Nuevo IPP</el-button>
-      </router-link>
-      <el-input
-        v-model="criteria"
-        style="width: 30%"
-        placeholder="Buscar..."
-        @keyup.enter.native="search">
-        <template slot="prepend">Buscar ipp por numero:</template>
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="search"/>
-      </el-input>
-    </div>
-    <div class="list">
-      <el-table
-        :data="ipps"
-        height="735"
-        style="width: 100%">
-        <el-table-column
-          prop="ipp_number"
-          label="Nro IPP"/>
-        <el-table-column
-          prop="event_date"
-          label="Fecha del hecho"/>
-        <el-table-column
-          prop="victims"
-          label="Víctimas"/>
-        <el-table-column
-          prop="victimizers"
-          label="Víctimarios"/>
-        <el-table-column
-          prop="crimes"
-          label="Delitos"/>
-        <el-table-column
-          prop="definition"
-          label="Definicion"/>
-        <el-table-column
-          prop="state"
-          label="Estado"/>
-        <el-table-column>
-          <template slot-scope="scope">
-            <router-link :to="{ name: 'ipp', params: { id: scope.row.id } }">
-              <el-button
-                size="mini"
-                type="primary">
-                Ver
-              </el-button>
-            </router-link>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div>
-    <div class="footer">
-      <el-pagination
-        :total="pagination.totalEntries"
-        :current-page="pagination.currentPage"
-        :page-count="pagination.totalPages"
-        :page-size="pagination.pageSize"
-        :page-sizes="pagination.pageSizes"
-        background
-        layout="prev, pager, next, ->, jumper, sizes, total"
-        @size-change="changeSize"
-        @current-change="changePage"/>
-    </div>
-  </div>
+              slot="append"
+              icon="el-icon-search"
+              @click="search"/>
+          </el-input>
+        </div>
+        <div class="list">
+          <el-table
+            :data="ipps"
+            height="735"
+            style="width: 100%">
+            <el-table-column
+              prop="ipp_number"
+              label="Nro IPP"/>
+            <el-table-column
+              prop="event_date"
+              label="Fecha del hecho"/>
+            <el-table-column
+              prop="victims"
+              label="Víctimas"/>
+            <el-table-column
+              prop="victimizers"
+              label="Víctimarios"/>
+            <el-table-column
+              prop="crimes"
+              label="Delitos"/>
+            <el-table-column
+              prop="definition"
+              label="Definicion"/>
+            <el-table-column
+              prop="state"
+              label="Estado"/>
+            <el-table-column>
+              <template slot-scope="scope">
+                <router-link :to="{ name: 'ipp', params: { id: scope.row.id } }">
+                  <el-button
+                    size="mini"
+                    type="primary">
+                    Ver expediente
+                  </el-button>
+                </router-link>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+        <div class="footer">
+          <el-pagination
+            :total="pagination.totalEntries"
+            :current-page="pagination.currentPage"
+            :page-count="pagination.totalPages"
+            :page-size="pagination.pageSize"
+            :page-sizes="pagination.pageSizes"
+            background
+            layout="prev, pager, next, ->, jumper, sizes, total"
+            @size-change="changeSize"
+            @current-change="changePage"/>
+        </div>
+      </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script>

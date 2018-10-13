@@ -68,7 +68,7 @@
         :route-name="{ name: 'ipps' }"
         :is-main="false"
         tooltip-content="Listado de IPP"
-        display-name="IPPs"
+        display-name="IPPs / Expedientes"
         icon="el-icon-document"
         class-name="menu-item"/>
       <h3><i class="icono-arg-marcador-ubicacion-2"></i> Reportes</h3>
