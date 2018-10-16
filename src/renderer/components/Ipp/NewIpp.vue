@@ -2,66 +2,58 @@
   <div class="ipp-form">
     <div class="step-indicator">
       <div style="padding: 20px 10px;">
-        <el-steps
-          :active="active"
-          align-center>
+        <el-steps :active="active" align-center>
           <el-step
             title="Inicio"
             description="Informacion Basica"
-            icon="icono-arg-firma-contrato icono-2x"/>
+            icon="icono-arg-firma-contrato icono-2x"
+          />
           <el-step
             title="Victimarios"
             description="Datos personales"
-            icon="icono-arg-comunidad icono-2x"/>
+            icon="icono-arg-comunidad icono-2x"
+          />
           <el-step
             title="Victimas"
             description="Datos personales"
-            icon="icono-arg-comunidad icono-2x"/>
+            icon="icono-arg-comunidad icono-2x"
+          />
           <el-step
             title="Hechos"
             description="Datos de los hechos"
-            icon="icono-arg-seguridad icono-2x"/>
+            icon="icono-arg-seguridad icono-2x"
+          />
           <el-step
             title="Origen"
             description="Monitoreo y asignacion"
-            icon="icono-arg-justicia icono-2x"/>
+            icon="icono-arg-justicia icono-2x"
+          />
           <el-step
             title="Resumen"
             description="Monitoreo y asignacion"
-            icon="icono-arg-tramite icono-2x"/>
+            icon="icono-arg-tramite icono-2x"
+          />
         </el-steps>
       </div>
     </div>
     <div class="step-content">
       <el-form>
-        <div
-          v-if="active === 1"
-          class="ipp-form-wrapper">
+        <div v-if="active === 1" class="ipp-form-wrapper">
           <basic-data @next="(value) => moveTo(value)"/>
         </div>
-        <div
-          v-if="active === 2"
-          class="ipp-form-wrapper">
+        <div v-if="active === 2" class="ipp-form-wrapper">
           <victimizers @next="(value) => moveTo(value)"/>
         </div>
-        <div
-          v-if="active === 3"
-          class="ipp-form-wrapper">
+        <div v-if="active === 3" class="ipp-form-wrapper">
           <victims @next="(value) => moveTo(value)"/>
         </div>
-        <div
-          v-if="active === 4"
-          class="ipp-form-wrapper">
+        <div v-if="active === 4" class="ipp-form-wrapper">
           <police-station @next="(value) => moveTo(value)"/>
         </div>
-        <div
-          v-if="active === 5"
-          class="ipp-form-wrapper">
+        <div v-if="active === 5" class="ipp-form-wrapper">
           <ipp-source @next="(value) => moveTo(value)"/>
         </div>
-        <div
-          v-if="active === 6"
-          class="ipp-form-wrapper">
+        <div v-if="active === 6" class="ipp-form-wrapper">
           <ipp-resumen @next="(value) => moveTo(value)"/>
         </div>
       </el-form>
@@ -79,7 +71,7 @@ import IppResumen from "./Form/Resumen";
 
 import { createNamespacedHelpers as namespace } from "vuex";
 const { mapActions: ippActions } = namespace("ipp");
-
+const { mapGetters: authGetters } = namespace("auth");
 export default {
   name: "NewIpp",
   components: {
@@ -111,11 +103,29 @@ export default {
   data() {
     return {
       active: 1,
-      hasChanges: false
+      hasChanges: false,
+      enabled: false
     };
   },
+  computed: {
+    ...authGetters(["user"])
+  },
+  created() {
+    this.loadData();
+  },
   methods: {
-    ...ippActions(["resetIpp"]),
+    ...ippActions(["resetIpp", "loadIppData"]),
+    loadData() {
+      let userId = this.user.id;
+      this.loadIppData({ userId })
+        .then(response => {
+          console.log(response);
+          this.enabled = true;
+        })
+        .catch(error => {
+          this.enabled = false;
+        });
+    },
     moveTo(value) {
       this.hasChanges = true;
       this.active = value;

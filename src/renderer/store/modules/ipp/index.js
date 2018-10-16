@@ -2,6 +2,7 @@ import actions from "./actions";
 import getters from "./getters";
 
 const initialState = {
+  data: {},
   form: {
     base: {},
     victims: {},
@@ -12,6 +13,9 @@ const initialState = {
 };
 
 const mutations = {
+  ["LOAD_IPP_DATA"](state, data) {
+    state.ipp.data = data;
+  },
   ["IPP_SET_BASE"](state, data) {
     state.form.base = data;
   },

@@ -1,4 +1,19 @@
 import axios from "axios";
+import * as types from "../types";
+
+const loadIppData = ({ commit, state }, { userId }) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`/ipps/config_data?user_id=${userId}`)
+      .then(response => {
+        commit(types.LOAD_IPP_DATA, response);
+        resolve();
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
 
 const checkDNI = ({ commit, state }, { dni }) => {
   return new Promise((resolve, reject) => {
@@ -40,6 +55,7 @@ const fetchIpp = ({ commit }, { ippId }) => {
 };
 
 export default {
+  loadIppData,
   checkDNI,
   fetchIpps,
   fetchIpp
