@@ -29,10 +29,10 @@
               placeholder="Seleccionar delito"
               style="width: 100%;">
               <el-option
-                v-for="item in allOffenses"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"/>
+                v-for="item in data.crimes"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"/>
             </el-select>
           </el-form-item>
         </el-col>
@@ -45,10 +45,10 @@
               placeholder="Seleccionr grado"
               style="width: 100%;">
               <el-option
-                v-for="item in allOffenseTypes"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"/>
+                v-for="(item, index) in data.crime_status"
+                :key="index"
+                :label="item"
+                :value="item"/>
             </el-select>
           </el-form-item>
         </el-col>
@@ -62,7 +62,7 @@
         </el-col>
       </el-row>
       <el-table
-        :data="ipp.offenses"
+        :data="ippFormPoliceStation.crimes"
         style="width: 100%">
         <el-table-column width="70">
           <template slot-scope="scope">
@@ -71,7 +71,7 @@
         </el-table-column>
         <el-table-column label="Delito">
           <template slot-scope="scope">
-            {{ offenseName(scope.row.id) }}
+            {{ scope.row.name }}
           </template>
         </el-table-column>
         <el-table-column label="Grado">
@@ -93,46 +93,21 @@
         <el-col :span="12">
           <el-form-item>
             <el-select
-              v-model="ipp.policeStation.id"
+              v-model="newPoliceStation.id"
               clearable
               filterable
               placeholder="Seleccionar Comisaria"
               style="width: 100%;"
               @change="setPoliceStation">
               <el-option
-                v-for="(item, index) in allPoliceStations"
+                v-for="(item, index) in data.police_stations"
                 :key="index"
                 :label="item.name"
                 :value="item.id">
                 <span style="float: left">{{ item.name }}</span>
-                <span style="float: right; color: #8492a6; font-size: 13px">{{ item.neighborhood }}</span>
+                <span style="float: right; color: #8492a6; font-size: 13px">{{ item.city_name }}</span>
               </el-option>
             </el-select>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row
-        v-if="ipp.policeStation.id"
-        :gutter="20">
-        <el-col :span="4">
-          <el-form-item label="Barrio">
-            <el-input
-              v-model="ipp.policeStation.neighborhood"
-              readonly/>
-          </el-form-item>
-        </el-col>
-        <el-col :span="4">
-          <el-form-item label="Localidad">
-            <el-input
-              v-model="ipp.policeStation.city"
-              readonly/>
-          </el-form-item>
-        </el-col>
-        <el-col :span="4">
-          <el-form-item label="Provincia">
-            <el-input
-              v-model="ipp.policeStation.state"
-              readonly/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -149,113 +124,67 @@ export default {
   name: "PeopleInvolved",
   data() {
     return {
-      newOffense: { id: "", type: "" },
-      allOffenses: [
-        { value: 1, label: "Robo a mano armada" },
-        { value: 2, label: "Hurto" },
-        { value: 3, label: "Secuestro" }
-      ],
-      allOffenseTypes: [
-        { value: "tentativa", label: "Tentativa" },
-        { value: "cosumado", label: "Consumado" }
-      ],
-      allPoliceStations: [
-        {
-          id: 1,
-          name: "Comisaria 3ra.",
-          neighborhood: "Las Lomas",
-          city: "San Isidro",
-          state: "Buenos Aires"
-        },
-        {
-          id: 2,
-          name: "Comisaria 1ra.",
-          neighborhood: "Beccar alto",
-          city: "San Isidro",
-          state: "Buenos Aires"
-        },
-        {
-          id: 3,
-          name: "Comisaria 11ra.",
-          neighborhood: "Bajo San Isidro",
-          city: "San Isidro",
-          state: "Buenos Aires"
-        },
-        {
-          id: 4,
-          name: "Comisaria 12ra.",
-          neighborhood: "San Isidro Centro",
-          city: "San Isidro",
-          state: "Buenos Aires"
-        },
-        {
-          id: 5,
-          name: "Comisaria de la mujer",
-          neighborhood: "Bajo San Isidro",
-          city: "San Isidro",
-          state: "Buenos Aires"
-        }
-      ],
-      ipp: {
-        offenses: [],
-        policeStation: {
-          id: "",
-          name: "",
-          city: "",
-          neighborhood: "",
-          state: ""
-        }
+      newOffense: {
+        id: "",
+        name: "",
+        type: ""
+      },
+      newPoliceStation: {
+        id: ""
       }
     };
   },
   computed: {
-    ...ippGetters(["ippFormPoliceStation"]),
+    ...ippGetters(["ippFormPoliceStation", "data"]),
     valid() {
-      return this.ipp.offenses.length > 0 && this.ipp.policeStation.id;
+      return (
+        this.ippFormPoliceStation.crimes.length > 0 &&
+        this.ippFormPoliceStation.police_station.id
+      );
     }
   },
   created() {
-    this.parseFromStorage();
+    extend(this.newPoliceStation, this.ippFormPoliceStation.police_station);
   },
   methods: {
-    ...ippActions(["setIppPolice"]),
-    parseFromStorage() {
-      extend(this.ipp, this.ippFormPoliceStation);
-    },
+    ...ippActions([
+      "setIppPolice",
+      "addPoliceStation",
+      "removePoliceStation",
+      "addCrime",
+      "removeCrime"
+    ]),
     goBack() {
       this.$emit("next", 3);
     },
     goNext() {
       if (this.valid) {
-        console.log("IPP", this.ipp);
-        this.setIppPolice(this.ipp);
         this.$emit("next", 5);
       }
     },
     setPoliceStation(val) {
-      console.log("Val", val);
       if (val.toString().trim()) {
-        this.ipp.policeStation = this.allPoliceStations.find(p => p.id === val);
+        let ps = this.data.police_stations.find(p => p.id === val);
+        this.addPoliceStation({ police_station: ps });
       } else {
-        this.ipp.policeStation = {
-          id: "",
-          name: "",
-          city: "",
-          neighborhood: "",
-          state: ""
-        };
+        this.removePoliceStation({ policeStationId: val });
       }
     },
-    addOffense() {
-      this.ipp.offenses.push(clone(this.newOffense));
+    addOffense(val) {
+      let crime = this.data.crimes.find(s => this.newOffense.id === s.id);
+      extend(crime, { type: this.newOffense.type });
+      this.addCrime({ crime });
+      this.resetCrime();
     },
-    removeOffense(offense) {
-      let index = this.ipp.offenses.indexOf(offense);
-      this.ipp.offenses.splice(index, 1);
+    removeOffense(crime) {
+      this.removeCrime({ crimeId: crime.id });
     },
-    offenseName(id) {
-      console.log("ID", id);
-      return this.allOffenses.find(o => o.value === id).label;
+    resetCrime() {
+      this.newOffense = {
+        id: "",
+        name: "",
+        type: ""
+      };
     }
   }
 };

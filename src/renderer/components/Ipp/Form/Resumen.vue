@@ -1,5 +1,7 @@
 <template>
-  <div class="ipp-form-container">
+  <div
+    v-loading="loading"
+    class="ipp-form-container">
     <div class="ipp-step-header">
       <el-button
         type="primary"
@@ -11,7 +13,8 @@
       Revision
       <el-button
         type="danger"
-        style="float: right">
+        style="float: right"
+        @click="saveIpp()">
         Guardar
         <fw-icon icon="save"/>
       </el-button>
@@ -42,13 +45,11 @@
           </div>
         </el-col>
       </el-row>
+      <hr>
       <el-row :gutter="20">
         <el-col :span="8">
           <div class="label">Origen</div>
           <div :class="['value', ippForm.base.origin_id ? '' : 'no-data']">{{ ippForm.base.origin.name || 'No especificado' }}</div>
-          <div>
-            <small style="color: #999">Ciudad: {{ ippForm.base.origin.city }}</small>
-          </div>
         </el-col>
         <el-col :span="8">
           <div class="label">Estado</div>
@@ -57,41 +58,34 @@
         <el-col :span="8">
           <div class="label">Comisaria</div>
           <div class="value">
-            {{ ippForm.policeStation.policeStation.name || 'Sin datos' }}
-          </div>
-          <div>
-            <small style="color: #999">
-              {{ ippForm.policeStation.policeStation.neighborhood }},
-              {{ ippForm.policeStation.policeStation.city }},
-              {{ ippForm.policeStation.policeStation.state }}
-            </small>
+            {{ ippForm.policeStation.police_station.name || 'Sin datos' }}
           </div>
         </el-col>
       </el-row>
       <hr>
       <h3>Delitos</h3>
       <el-row
-        v-for="(offense, index) in ippForm.policeStation.offenses"
+        v-for="(crime, index) in ippForm.policeStation.crimes"
         :key="`offense-${index}`"
         :gutter="20">
         <el-col :span="24">
-          {{ offense.name }} {{ offense.type }}
+          {{ crime.name }} <div style="float: right; color: red;">{{ crime.type }}</div>
         </el-col>
       </el-row>
       <hr>
       <h3>Victimarios</h3>
       <el-row
-        v-for="(victimizer, index) in ippForm.victimizers.victimizers"
+        v-for="(victimizer, index) in ippForm.victimizers"
         :key="`victimizer-${index}`"
         :gutter="20">
         <el-col :span="8">
-          {{ victimizer.first_name }} {{ victimizer.last_name }}
+          {{ victimizer.firstname }} {{ victimizer.lastname }}
         </el-col>
         <el-col :span="4">
-          {{ victimizer.dni || 'Sin DNI' }}
+          {{ victimizer.document_number || 'Sin DNI' }}
         </el-col>
         <el-col :span="4">
-          {{ victimizer.adult }}
+          {{ victimizer.gender }}
         </el-col>
         <el-col :span="8">
           {{ victimizer.address || 'Sin direccion' }}
@@ -100,43 +94,38 @@
       <hr>
       <h3>Victimas</h3>
       <el-row
-        v-for="(victim, index) in ippForm.victims.victims"
+        v-for="(victim, index) in ippForm.victims"
         :key="`victim-${index}`"
         :gutter="20">
         <el-col :span="8">
-          {{ victim.first_name }} {{ victim.last_name }}
+          {{ victim.firstname }} {{ victim.lastname }}
         </el-col>
         <el-col :span="4">
-          {{ victim.dni || 'Sin DNI' }}
+          {{ victim.document_number || 'Sin DNI' }}
         </el-col>
         <el-col :span="4">
-          {{ victim.adult }}
+          {{ victim.gender }}
         </el-col>
         <el-col :span="8">
           {{ victim.address || 'Sin direccion' }}
         </el-col>
       </el-row>
       <hr>
-      <h3>Observaciones</h3>
-      <el-row
-        v-for="(note, index) in ippForm.source.notes"
-        :key="`note-${index}`"
-        :gutter="20">
-        <el-col :span="24">
-          {{ note.name }}
+      <el-row :gutter="20">
+        <el-col :span="12">
+          <h3>Observaciones</h3>
+          <el-row
+            v-for="(note, index) in ippForm.source.observations"
+            :key="`note-${index}`"
+            :gutter="20">
+            <el-col :span="24">
+              <p>{{ note }}</p>
+            </el-col>
+          </el-row>
         </el-col>
-      </el-row>
-      <hr>
-      <h3>Asignados</h3>
-      <el-row
-        v-for="(user, index) in ippForm.source.assignees"
-        :key="`assignee-${index}`"
-        :gutter="20">
-        <el-col :span="20">
-          {{ user.name }}
-        </el-col>
-        <el-col :span="4">
-          {{ user.role }}
+        <el-col :span="12">
+          <h3>Definicion</h3>
+          <span style="color: red"><b>{{ ippForm.source.definition }}</b></span>
         </el-col>
       </el-row>
     </div>
@@ -160,15 +149,52 @@ export default {
     ...ippGetters(["ippForm"])
   },
   methods: {
+    ...ippActions(["addIpp"]),
     saveIpp() {
+      this.loading = true;
       let payload = this.parseData();
-      console.log("Save ipp", payload);
+      this.addIpp({ ipp: payload })
+        .then(response => {
+          this.$route.push({
+            name: "Ipp",
+            params: { id: response.ipp_case.id }
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     parseData() {
-      console.log(this.ippForm);
+      return {
+        ipp_number: this.ippForm.base.ipp_number,
+        event_address: this.ippForm.base.event_address,
+        event_date: this.ippForm.base.event_date,
+        event_hour: this.ippForm.base.event_hour,
+        police_station_id: this.ippForm.policeStation.police_station.id,
+        definition: this.ippForm.source.definition,
+        case_state_id: this.ippForm.base.case_state.id,
+        origin_id: this.ippForm.base.origin.id,
+        ipp_case_crimes_attributes: this.ippForm.policeStation.crimes.map(c => {
+          return { crime_id: c.id, crime_status: c.type };
+        }),
+        subjects_attributes: this.setSubjects()
+      };
     },
     goBack() {
       this.$emit("next", 5);
+    },
+    setSubjects() {
+      let list = [];
+      _.map(this.ippForm.victimizers, c =>
+        list.push({ person_id: c.id, role: "victimizer" })
+      );
+      _.map(this.ippForm.victims, c =>
+        list.push({ person_id: c.id, role: "victim" })
+      );
+      return list;
     }
   }
 };

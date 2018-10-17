@@ -28,25 +28,25 @@
               clearable
               filterable
               placeholder="Seleccionar nota"
-              style="width: 100%;">
+              style="width: 100%;"
+              @change="addNote">
               <el-option
-                v-for="item in allNotes"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"/>
+                v-for="(item, index) in data.observations"
+                :key="index"
+                :label="item"
+                :value="item"/>
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
-          <el-button @click="addNote()">Agregar</el-button>
-        </el-col>
       </el-row>
       <el-table
-        :data="ipp.notes"
+        :data="ippFormSource.observations"
         style="100%">
-        <el-table-column
-          label="Nota"
-          prop="name"/>
+        <el-table-column>
+          <template slot-scope="scope">
+            {{ scope.row }}
+          </template>
+        </el-table-column>
         <el-table-column>
           <template slot-scope="scope">
             <a
@@ -55,48 +55,26 @@
           </template>
         </el-table-column>
       </el-table>
-      <h3 style="margin-top: 40px">Asignados</h3>
+      <h3 style="margin-top: 50px;">Definicion</h3>
       <el-row :gutter="20">
-        <el-col :span="16">
+        <el-col :span="12">
           <el-form-item>
             <el-select
-              v-model="newAssignee"
+              v-model="newDefinition"
               clearable
               filterable
-              placeholder="Seleccionar usuario"
-              style="width: 100%;">
+              placeholder="Seleccionar"
+              style="width: 100%;"
+              @change="setDefinition">
               <el-option
-                v-for="item in allUsers"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-                <span style="float: left">{{ item.name }}</span>
-                <span style="float: right; color: #8492a6; font-size: 13px">{{ item.role }}</span>
-              </el-option>
+                v-for="(item, index) in data.definitions"
+                :key="index"
+                :label="item"
+                :value="item"/>
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
-          <el-button @click="addUser()">Agregar</el-button>
-        </el-col>
       </el-row>
-      <el-table
-        :data="ipp.assignees"
-        style="100%">
-        <el-table-column
-          label="Nombre"
-          prop="name"/>
-        <el-table-column
-          label="Rol"
-          prop="role"/>
-        <el-table-column>
-          <template slot-scope="scope">
-            <a
-              href="#" 
-              @click="removeUser(scope.row)"><i class="el-icon-delete"/></a>
-          </template>
-        </el-table-column>
-      </el-table>
     </div>
   </div>
 </template>
@@ -110,17 +88,9 @@ export default {
   name: "PeopleInvolved",
   data() {
     return {
-      newNote: "",
-      newAssignee: "",
-      ipp: {
-        assignees: [],
-        notes: []
-      },
-      allNotes: [
-        { id: 1, name: "Acordado" },
-        { id: 2, name: "Probando" },
-        { id: 3, name: "Otro tipo de acuerdo" }
-      ],
+      newNote: {},
+      newAssignee: {},
+      newDefinition: "",
       allUsers: [
         { id: 1, name: "Soledad Villamil", role: "Admin" },
         { id: 2, name: "Pedro Aznar", role: "Colaborador" },
@@ -130,36 +100,46 @@ export default {
     };
   },
   computed: {
-    ...ippGetters(["ippFormSource"]),
+    ...ippGetters(["ippFormSource", "data"]),
     valid() {
-      return this.ipp.notes.length > 0 && this.ipp.assignees.length > 0;
+      return (
+        this.ippFormSource.observations.length > 0 &&
+        this.ippFormSource.definition
+      );
     }
   },
   created() {
-    this.parseFromStorage();
+    this.newDefinition = clone(this.ippFormSource.definition);
   },
   methods: {
-    ...ippActions(["setIppSource"]),
-    parseFromStorage() {
-      extend(this.ipp, this.ippFormSource);
-    },
+    ...ippActions([
+      "setIppSource",
+      "addObservation",
+      "removeObservation",
+      "addDefinition",
+      "removeDefinition"
+    ]),
     goBack() {
       this.$emit("next", 4);
     },
     goNext() {
       if (this.valid) {
-        this.setIppSource(this.ipp);
         this.$emit("next", 6);
       }
     },
+    setDefinition(val) {
+      if (val.toString().trim()) {
+        this.addDefinition({ definition: val });
+      } else {
+        this.removeDefinition();
+      }
+    },
     addNote() {
-      let note = this.allNotes.find(n => this.newNote === n.id);
-      this.ipp.notes.push(note);
+      this.addObservation({ observation: this.newNote });
       this.newNote = "";
     },
     removeNote(note) {
-      const index = this.ipp.notes.indexOf(note);
-      this.ipp.notes.splice(index, 1);
+      this.removeObservation({ observation: note });
     },
     addUser() {
       let user = this.allUsers.find(u => u.id === this.newAssignee);

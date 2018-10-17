@@ -1,43 +1,80 @@
 import actions from "./actions";
 import getters from "./getters";
+import * as types from "../types";
 
 const initialState = {
   data: {},
   form: {
     base: {},
-    victims: {},
-    victimizers: {},
-    source: {},
-    policeStation: {}
+    victims: [],
+    victimizers: [],
+    source: {
+      observations: [],
+      definition: ""
+    },
+    policeStation: {
+      police_station: {},
+      crimes: []
+    }
   }
 };
 
 const mutations = {
-  ["LOAD_IPP_DATA"](state, data) {
-    state.ipp.data = data;
+  [types.LOAD_IPP_DATA](state, data) {
+    state.data = data;
   },
-  ["IPP_SET_BASE"](state, data) {
+  [types.ADD_PERSON](state, { person, role }) {
+    state.form[role].push(person);
+  },
+  [types.REMOVE_PERSON](state, { personId, role }) {
+    let p = state.form[role].find(v => v.id == personId);
+    let index = state.form[role].indexOf(p);
+    state.form[role].splice(index, 1);
+  },
+  [types.ADD_CRIME](state, crime) {
+    state.form.policeStation.crimes.push(crime);
+  },
+  [types.REMOVE_CRIME](state, crimeId) {
+    let crime = state.form.policeStation.crimes.find(
+      v => v.crime.id == crimeId
+    );
+    let index = state.form.policeStation.crimes.indexOf(crime);
+    state.form.policeStation.crimes.splice(index, 1);
+  },
+  [types.ADD_POLICE_STATION](state, ps) {
+    state.form.policeStation.police_station = ps;
+  },
+  [types.REMOVE_POLICE_STATION](state) {
+    state.form.policeStation.police_station = {};
+  },
+  [types.IPP_SET_BASE](state, data) {
     state.form.base = data;
   },
-  ["IPP_SET_VICTIMS"](state, data) {
-    state.form.victims = data;
+  [types.REMOVE_OBSERVATION](state, observation) {
+    let index = state.form.source.observations.indexOf(observation);
+    state.form.source.observations.splice(index, 1);
   },
-  ["IPP_SET_VICTIMIZERS"](state, data) {
-    state.form.victimizers = data;
+  [types.ADD_OBSERVATION](state, observation) {
+    state.form.source.observations.push(observation);
   },
-  ["IPP_SET_SOURCE"](state, data) {
-    state.form.source = data;
+  [types.ADD_DEFINITION](state, definition) {
+    state.form.source.definition = definition;
   },
-  ["IPP_SET_POLICE"](state, data) {
-    state.form.policeStation = data;
+  [types.REMOVE_DEFINITION](state) {
+    state.form.source.definition = "";
   },
-  ["IPP_RESET"](state) {
+  [types.RESET_IPP](state) {
     state.form = {
       base: {},
-      victims: {},
-      victimizers: {},
-      source: {},
-      policeStation: {}
+      victims: [],
+      victimizers: [],
+      source: {
+        observations: []
+      },
+      policeStation: {
+        police_station: {},
+        crimes: []
+      }
     };
   }
 };
@@ -45,27 +82,11 @@ const mutations = {
 // Add non asynchronous actions
 Object.assign(actions, {
   async setIppBase({ commit }, data) {
-    commit("IPP_SET_BASE", data);
-    return data;
-  },
-  async setIppVictims({ commit }, data) {
-    commit("IPP_SET_VICTIMS", data);
-    return data;
-  },
-  async setIppVictimizers({ commit }, data) {
-    commit("IPP_SET_VICTIMIZERS", data);
-    return data;
-  },
-  async setIppSource({ commit }, data) {
-    commit("IPP_SET_SOURCE", data);
-    return data;
-  },
-  async setIppPolice({ commit }, data) {
-    commit("IPP_SET_POLICE", data);
+    commit(types.IPP_SET_BASE, data);
     return data;
   },
   async resetIpp({ commit }) {
-    commit("IPP_RESET");
+    commit(types.RESET_IPP);
   }
 });
 

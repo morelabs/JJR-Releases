@@ -99,14 +99,12 @@ export default {
       });
     },
     toggleCollapse(value) {
-      console.log("Collapse value", value);
       this.collapsed = value;
     },
     openSearchModal() {
       this.$refs.search.openSearch();
     },
     toggleModal() {
-      console.log("Toggle modal", this.showModal);
       if (this.showModal) {
         this.message = "Volvimos a conectarnos!";
         setTimeout(() => {

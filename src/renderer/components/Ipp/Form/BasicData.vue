@@ -24,7 +24,7 @@
               style="width: 100%;"
               @change="setOrigin">
               <el-option
-                v-for="item in allSources"
+                v-for="item in data.origins"
                 :key="item.id"
                 :label="item.name"
                 :value="item.id">
@@ -120,7 +120,7 @@
               style="width: 100%;"
               @change="setCase">
               <el-option
-                v-for="item in allStates"
+                v-for="item in data.case_states"
                 :key="item.id"
                 :label="item.name"
                 :value="item.id"/>
@@ -179,7 +179,7 @@ export default {
     };
   },
   computed: {
-    ...ippGetters(["ippFormBase"]),
+    ...ippGetters(["ippFormBase", "data"]),
     valid() {
       return (
         this.ipp.ipp_number && this.ipp.origin_id && this.ipp.case_state_id
@@ -209,10 +209,10 @@ export default {
       }
     },
     setOrigin(val) {
-      this.ipp.origin = this.allSources.find(s => val === s.id);
+      this.ipp.origin = this.data.origins.find(s => val === s.id);
     },
     setCase(val) {
-      this.ipp.case_state = this.allStates.find(s => val === s.id);
+      this.ipp.case_state = this.data.case_states.find(s => val === s.id);
     },
     minDateSet() {
       return this.event_date <= this.report_date;

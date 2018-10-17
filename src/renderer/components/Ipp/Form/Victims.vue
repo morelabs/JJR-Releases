@@ -8,7 +8,7 @@
         <fw-icon icon="chevron-left"/>
         Volver
       </el-button>
-      Cargar Victimas
+      Cargar Victimarios
       <el-button
         :disabled="!valid"
         type="primary"
@@ -20,15 +20,15 @@
     </div>
     <div class="ipp-step-inner">
       <el-row :gutter="20">
-        <el-col :span="4">
+        <el-col :span="10">
           <el-form-item>
             <div :class="['el-input', newVictim.noDNI ? 'is-disabled' : '']">
               <the-mask
-                v-model="newVictim.dni"
+                v-model="newVictim.document_number"
                 :mask="['##.###.###', '#.###.###']"
                 :disabled="newVictim.noDNI"
                 suffix-icon="icono-arg-dni"
-                name="dni"
+                name="document_number"
                 class="el-input__inner"
                 style="width: 100%;"
                 placeholder="DNI"/>
@@ -37,34 +37,66 @@
               <el-checkbox
                 v-model="newVictim.noDNI"
                 label="Sin DNI"
-                @change="cleanField('dni')"/>
+                @change="cleanField('document_number')"/>
             </div>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="2">
+          <el-button
+            :disabled="newVictim.noDNI"
+            style="width: 100%"
+            @click="validateDNI()"><i class="el-icon-check"/></el-button>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item style="width: 100%;">
+            <el-radio-group
+              v-model="newVictim.gender"
+              :disabled="!dniPresent"
+              style="width: 100%;">
+              <el-radio-button label="Fem"/>
+              <el-radio-button label="Masc"/>
+              <el-radio-button label="Otro"/>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item style="width: 100%;">
+            <el-date-picker
+              v-model="newVictim.birth_date"
+              :clearable="true"
+              :disabled="!dniPresent"
+              :format="dateFormat"
+              style="width: 100%;"
+              name="birth_date"
+              placeholder="Fecha de nacimiento"/>
+            <div>
+              <el-checkbox
+                v-model="newVictim.adult"
+                label="es menor?"
+                @change="cleanField('birth_date')"/>
+            </div>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="12">
           <el-form-item>
             <el-input
-              v-model="newVictim.first_name"
+              v-model="newVictim.firstname"
+              :disabled="!dniPresent"
               name="name"
               style="width: 100%;"
               placeholder="Nombre"/>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="12">
           <el-form-item>
             <el-input
-              v-model="newVictim.last_name"
+              v-model="newVictim.lastname"
+              :disabled="!dniPresent"
               name="last_name"
               style="width: 100%;"
               placeholder="Apellido"/>
-          </el-form-item>
-        </el-col>
-        <el-col :span="4">
-          <el-form-item>
-            <el-radio-group v-model="newVictim.adult">
-              <el-radio-button label="Adulto"/>
-              <el-radio-button label="Menor"/>
-            </el-radio-group>
           </el-form-item>
         </el-col>
       </el-row>
@@ -73,21 +105,34 @@
           <el-form-item>
             <el-input
               v-model="newVictim.address"
+              :disabled="newVictim.noAddress || !dniPresent"
               name="address"
               style="width: 100%;"
               placeholder="Direccion completa"/>
+            <div>
+              <el-checkbox
+                v-model="newVictim.noAddress"
+                label="Direccion desconocida"
+                @change="cleanField('address')"/>
+            </div>
           </el-form-item>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="2">
+          <el-button
+            :disabled="newVictim.noAddress"
+            style="width: 100%"
+            @click="validateAddress()"><i class="el-icon-check"></i></el-button>
+        </el-col>
+        <el-col :span="2">
           <el-button
             :disabled="!dataValidated"
             style="width: 100%"
-            @click="addVictim()">Agregar</el-button>
+            @click="addVictimizer()"><i class="el-icon-plus"></i></el-button>
         </el-col>
       </el-row>
       <hr>
       <el-table
-        :data="ipp.victims"
+        :data="ippFormVictims"
         style="width: 100%">
         <el-table-column width="70">
           <template slot-scope="scope">
@@ -96,12 +141,12 @@
         </el-table-column>
         <el-table-column label="Nombre">
           <template slot-scope="scope">
-            {{ scope.row.first_name }} {{ scope.row.last_name }}
+            {{ scope.row.firstname }} {{ scope.row.lastname }}
           </template>
         </el-table-column>
         <el-table-column label="DNI">
           <template slot-scope="scope">
-            {{ scope.row.dni || "--------" }}
+            {{ scope.row.document_number || "--------" }}
           </template>
         </el-table-column>
         <el-table-column label="Direccion">
@@ -109,16 +154,16 @@
             {{ scope.row.address || "--------" }}
           </template>
         </el-table-column>
-        <el-table-column label="Edad">
+        <el-table-column label="Genero">
           <template slot-scope="scope">
-            {{ scope.row.adult === "Adulto" ? "Adulto (+18)" : "Menor (-18)" }}
+            {{ scope.row.gender === "F" ? "Femenino" : "Masculino" }}
           </template>
         </el-table-column>
         <el-table-column width="70">
           <template slot-scope="scope">
             <a
               href="#"
-              @click="removeVictim(scope.row)"><i class="el-icon-delete"/>
+              @click="removeVictimizer(scope.row)"><i class="el-icon-delete"/>
             </a>
           </template>
         </el-table-column>
@@ -137,69 +182,144 @@ export default {
   data() {
     return {
       showForm: false,
+      dniError: "",
+      dateFormat: "dddd dd, MMMM yyyy",
       newVictim: {
-        first_name: "",
-        last_name: "",
-        dni: "",
-        adult: false,
+        id: "",
+        firstname: "",
+        lastname: "",
+        document_number: "",
+        birth_date: "",
+        gender: "",
         address: "",
         role: "victim",
         noAddress: false,
-        noDNI: false
-      },
-      ipp: {
-        victims: []
+        noDNI: false,
+        dniValidated: false,
+        addressValidated: false
       }
     };
   },
   computed: {
     ...ippGetters(["ippFormVictims"]),
     valid() {
-      return this.ipp.victims.length > 0;
+      return this.ippFormVictims.length > 0;
     },
     dataValidated() {
-      return this.newVictim.first_name && this.newVictim.last_name;
+      let hasName =
+        this.newVictim.firstname.trim() !== "" &&
+        this.newVictim.lastname.trim() !== "";
+      let dniValid = this.newVictim.noDNI || this.newVictim.dniValidated;
+      let addressValid =
+        this.newVictim.noAddress || this.newVictim.addressValidated;
+
+      return hasName && dniValid && addressValid;
+    },
+    dniPresent() {
+      return (
+        (this.newVictim.document_number && this.newVictim.dniValidated) ||
+        this.newVictim.noDNI
+      );
     }
   },
-  created() {
-    this.parseFromStorage();
-  },
   methods: {
-    ...ippActions(["setIppVictims"]),
-    parseFromStorage() {
-      extend(this.ipp, this.ippFormVictims);
-    },
+    ...ippActions([
+      "setIppVictimizers",
+      "checkDNI",
+      "addPerson",
+      "removePerson"
+    ]),
     goBack() {
       this.$emit("next", 2);
     },
     goNext() {
       if (this.valid) {
-        this.setIppVictims(this.ipp);
         this.$emit("next", 4);
       }
-    },
-    cleanField(field) {
-      this.newVictim[field] = "";
     },
     toggleForm() {
       this.showForm = !this.showForm;
     },
+    cleanField(field) {
+      this.newVictim[field] = "";
+    },
+    validateDNI() {
+      if (this.isValidFormat() && this.isNotSelected()) {
+        this.checkDNI({ dni: this.newVictim.document_number })
+          .then(response => {
+            extend(this.newVictim, response.person);
+            this.addVictim();
+          })
+          .catch(error => {
+            console.log(error);
+            this.newVictim.dniValidated = true;
+          });
+      } else {
+        this.$message({
+          type: "error",
+          message: this.dniError
+        });
+      }
+    },
+    validateAddress() {
+      this.newVictim.addressValidated = true;
+    },
     addVictim() {
-      this.ipp.victims.push(clone(this.newVictim));
+      this.addPerson({ person: this.newVictim, role: "victims" })
+        .then(response => {
+          let vict = clone(this.newVictim);
+          this.$message({
+            type: "success",
+            message: `Se agrego a ${vict.firstname} ${vict.lastname}`
+          });
+          this.resetForm();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    removeVictimizer(vict) {
+      this.removePerson({ personId: vict.id, role: "victims" }).then(() => {
+        console.log("Victima removido");
+      });
+    },
+    isNotSelected() {
+      let p = this.ippFormVictims.find(
+        v => v.document_number == this.newVictim.document_number
+      );
+      if (p) {
+        console.log("No p");
+        this.dniError = "El dni ingresado ya esta seleccionado";
+        return false;
+      }
+      return true;
+    },
+    isValidFormat() {
+      if (!this.newVictim.document_number) {
+        this.dniError = "No hay DNI";
+        return false;
+      }
+      let leng = this.newVictim.document_number.length;
+      if (leng < 7) {
+        this.dniError = "El formato es invalido";
+        return false;
+      }
+      return true;
+    },
+    resetForm() {
       this.newVictim = {
-        name: "",
-        dni: "",
-        adult: false,
+        id: "",
+        firstname: "",
+        lastname: "",
+        document_number: "",
+        gender: "",
         address: "",
+        role: "victimizer",
         noAddress: false,
         noDNI: false,
         dniValidated: false,
         addressValidated: false
       };
-    },
-    removeVictim(vict) {
-      let index = this.ipp.victims.indexOf(vict);
-      this.ipp.victims.splice(index, 1);
     }
   }
 };
