@@ -176,6 +176,7 @@ export default {
         event_address: this.ippForm.base.event_address,
         event_date: this.ippForm.base.event_date,
         event_hour: this.ippForm.base.event_hour,
+        report_date: this.ippForm.base.report_date,
         police_station_id: this.ippForm.policeStation.police_station.id,
         definition: this.ippForm.source.definition,
         case_state_id: this.ippForm.base.case_state.id,
