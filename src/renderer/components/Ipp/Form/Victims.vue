@@ -230,11 +230,11 @@ export default {
       "removePerson"
     ]),
     goBack() {
-      this.$emit("next", 2);
+      this.$emit("next", 1);
     },
     goNext() {
       if (this.valid) {
-        this.$emit("next", 4);
+        this.$emit("next", 3);
       }
     },
     toggleForm() {

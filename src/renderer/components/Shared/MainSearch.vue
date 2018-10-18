@@ -32,9 +32,6 @@
               value="ipp"
               label="IPP"/>
             <el-option
-              value="expediente"
-              label="Expedientes"/>
-            <el-option
               value="contacto"
               label="Contacto"/>
           </el-select>
@@ -52,7 +49,6 @@
             @click="goTo(suggestion)">
             <span v-html="boldenSuggestion(suggestion, query)"></span>
             <div class="extra">
-              <span v-if="source === 'expediente'"> {{ suggestion.assignees || 'Peniente de asignacion' }}</span>
               <span v-if="source === 'contacto'">{{ suggestion.name || 'Sin datos' }}</span>
               <span v-if="source === 'ipp'">{{ suggestion.assignees || 'Peniente de asignacion' }}</span>
             </div>
@@ -70,7 +66,7 @@ export default {
     return {
       showForm: false,
       loading: false,
-      source: "expediente",
+      source: "ipp",
       query: "",
       autoCompleteStyle: {
         vueSimpleSuggest: "position-relative",
@@ -81,11 +77,10 @@ export default {
       },
       fields: {
         contacto: "email",
-        expediente: "value",
         ipp: "number"
       },
       list: {
-        expediente: [
+        ipp: [
           {
             id: 1,
             value: "123123123123",
@@ -93,22 +88,22 @@ export default {
           },
           {
             id: 2,
-            value: "143123123123",
+            number: "143123123123",
             assignees: ""
           },
           {
             id: 3,
-            value: "153123123123",
+            number: "153123123123",
             assignees: "Juan, Pedro, Soledad"
           },
           {
             id: 4,
-            value: "173123123123",
+            number: "173123123123",
             assignees: "Juan, Pedro, Soledad"
           },
           {
             id: 5,
-            value: "1235123123123",
+            number: "1235123123123",
             assignees: ""
           }
         ],
@@ -117,8 +112,7 @@ export default {
           { id: 2, email: "andres@mail.com", name: "Andres Moreno" },
           { id: 3, email: "jose@mail.com", name: "Jose Moreno" },
           { id: 4, email: "jose.andres@mail.com", name: "J. Andres Moreno" }
-        ],
-        ipp: []
+        ]
       }
     };
   },
@@ -146,8 +140,8 @@ export default {
         this.loading = true;
         let field = this.fields[this.source];
         setTimeout(() => {
-          let result = this.list[this.source].filter(l => {
-            return l[field].includes(value);
+          let result = this.list[this.source].filter(option => {
+            return String(option[field]).includes(String(value));
           });
           this.loading = false;
           resolve(result);

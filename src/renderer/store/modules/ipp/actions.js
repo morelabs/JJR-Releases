@@ -59,7 +59,6 @@ const addIpp = ({ commit }, { ipp }) => {
     axios
       .post("ipp_cases", { ipp_case: ipp })
       .then(response => {
-        commit(types.RESET_IPP);
         resolve(response.data);
       })
       .catch(error => {

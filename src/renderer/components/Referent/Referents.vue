@@ -2,27 +2,26 @@
   <el-container>
     <el-header>
       <div class="page-header">
-        Listado Referentes
-      </div>
-    </el-header>
-    <el-main>
-      <div id="referents-list">
+        <h2>Referentes</h2>
         <div class="controls">
           <router-link :to="{ name: 'newReferent' }">
             <el-button type="warning">Nuevo Referente</el-button>
           </router-link>
           <el-input
             v-model="criteria"
-            style="width: 30%"
+            style="width: 300px"
             placeholder="Buscar..."
             @keyup.enter.native="search">
-            <template slot="prepend">Buscar referentes:</template>
             <el-button
               slot="append"
               icon="el-icon-search"
               @click="search"/>
           </el-input>
         </div>
+      </div>
+    </el-header>
+    <el-main>
+      <div id="referents-list">
         <div class="list">
           <el-table
             :data="referents"
@@ -30,20 +29,24 @@
             style="width: 100%">
             <el-table-column
               prop="firstname"
-              label="Nombre"/>
+              label="Nombre"
+              width="200"/>
             <el-table-column
               prop="lastname"
-              label="Apellido"/>
+              label="Apellido"
+              width="200"/>
             <el-table-column
               prop="phone"
-              label="Teléfono"/>
+              label="Teléfono"
+              width="130"/>
             <el-table-column
               prop="cellphone"
-              label="Celular"/>
+              label="Celular"
+              width="130"/>
             <el-table-column
               prop="email"
               label="Email"/>
-            <el-table-column>
+            <el-table-column width="80">
               <template slot-scope="scope">
                 <router-link :to="{ name: 'referent', params: { id: scope.row.id } }">
                   <el-button

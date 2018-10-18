@@ -143,9 +143,9 @@ export default {
     return {
       dateFormat: "dddd dd, MMMM yyyy",
       pickerOptions: {
-        start: "08:30",
+        start: "00:00",
         step: "00:15",
-        end: "18:30"
+        end: "23:59"
       },
       pickerReportOptions: {
         disabledDate: time => {
@@ -163,19 +163,7 @@ export default {
         origin: {},
         case_state_id: "",
         case_state: {}
-      },
-      allSources: [
-        { id: 1, name: "Fiscalia 1", city: "San Isidro" },
-        { id: 2, name: "Fiscalia 2", city: "San Isidro" },
-        { id: 3, name: "Fiscalia 3", city: "San Isidro" },
-        { id: 4, name: "Fiscalia 4", city: "San Isidro" },
-        { id: 5, name: "Fiscalia 5", city: "San Isidro" }
-      ],
-      allStates: [
-        { id: 1, name: "En curso" },
-        { id: 2, name: "Probation" },
-        { id: 3, name: "Alegatos" }
-      ]
+      }
     };
   },
   computed: {
@@ -197,7 +185,7 @@ export default {
     goNext() {
       if (this.valid) {
         this.setIppBase(this.ipp);
-        this.$emit("next", 2);
+        this.$emit("next", 1);
       }
     },
     cleanDate(field) {

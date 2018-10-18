@@ -1,23 +1,22 @@
 <template>
   <div id="programs-list">
     <div class="page-header">
-      Listado Programas
-    </div>
-    <div class="controls">
-      <router-link :to="{ name: 'newProgram' }">
-        <el-button type="warning">Nuevo Programa</el-button>
-      </router-link>
-      <el-input
-        v-model="criteria"
-        style="width: 30%"
-        placeholder="Buscar..."
-        @keyup.enter.native="search">
-        <template slot="prepend">Buscar programas:</template>
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="search"/>
-      </el-input>
+      <h2>Programas de apoyo</h2>
+      <div class="controls">
+        <router-link :to="{ name: 'newProgram' }">
+          <el-button type="warning">Nuevo Programa</el-button>
+        </router-link>
+        <el-input
+          v-model="criteria"
+          style="width: 300px"
+          placeholder="Buscar..."
+          @keyup.enter.native="search">
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="search"/>
+        </el-input>
+      </div>
     </div>
     <div class="list">
       <el-table

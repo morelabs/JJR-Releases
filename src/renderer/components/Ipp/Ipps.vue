@@ -2,27 +2,23 @@
   <el-container>
     <el-header>
       <div class="page-header">
-        Listado de IPPs
-      </div>
-    </el-header>
-    <el-main>
-      <div id="ipps-list">
+        <h2>Listado de IPPs</h2>
         <div class="controls">
-          <router-link :to="{ name: 'newIpp' }">
-            <el-button type="warning">Nuevo IPP</el-button>
-          </router-link>
           <el-input
             v-model="criteria"
-            style="width: 30%"
-            placeholder="Buscar..."
+            style="width: 500px"
+            placeholder="Buscar ipp"
             @keyup.enter.native="search">
-            <template slot="prepend">Buscar ipp por numero:</template>
             <el-button
               slot="append"
               icon="el-icon-search"
               @click="search"/>
           </el-input>
         </div>
+      </div>
+    </el-header>
+    <el-main>
+      <div id="ipps-list">
         <div class="list">
           <el-table
             :data="ipps"
@@ -34,15 +30,24 @@
             <el-table-column
               prop="event_date"
               label="Fecha del hecho"/>
-            <el-table-column
-              prop="victims"
-              label="Víctimas"/>
-            <el-table-column
-              prop="victimizers"
-              label="Víctimarios"/>
-            <el-table-column
-              prop="crimes"
-              label="Delitos"/>
+            <el-table-column label="Víctimas">
+              <template slot-scope="scope">
+                <p
+                  v-for="(vict, index) in scope.row.victims"
+                  :key="index">
+                  {{ vict.person.firstname }} {{ vict.person.lastname }}
+                </p>
+              </template>
+            </el-table-column>
+            <el-table-column label="Víctimarios">
+              <template slot-scope="scope">
+                <p
+                  v-for="(vict, index) in scope.row.victimizers"
+                  :key="index">
+                  {{ vict.person.firstname }} {{ vict.person.lastname }}
+                </p>
+              </template>
+            </el-table-column>
             <el-table-column
               prop="definition"
               label="Definicion"/>

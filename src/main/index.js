@@ -24,8 +24,6 @@ function createWindow() {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 900,
-    width: 1650,
     minWidth: 1450,
     minHeight: 800,
     useContentSize: true,
@@ -41,8 +39,10 @@ function createWindow() {
     mainWindow = null;
   });
   mainWindow.once("ready-to-show", () => {
-    mainWindow.show();
     mainWindow.maximize();
+    setTimeout(() => {
+      mainWindow.show();  
+    }, 5000);   
   });
 }
 

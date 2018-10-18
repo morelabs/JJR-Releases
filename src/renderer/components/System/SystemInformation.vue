@@ -5,32 +5,25 @@
         :class="collapsed ? 'collapsed': ''"
         class="group-left">
         <div class="item">2018 &#174; <span v-if="!collapsed">Morelabs</span></div>
+        <div
+          v-if="!collapsed"
+          class="item">
+          <div class="item">{{ appName }} - {{ version }}</div>
+          <div class="item">
+            <el-tooltip
+              :content="'Estado de la conexion: ' + (online ? 'OK' : 'ERROR')"
+              effect="dark"
+              placement="top">
+              <fw-icon
+                :class="online ? 'green' : 'red'"
+                icon="circle"/>
+            </el-tooltip>
+          </div>
+        </div>
         <!-- <div class="item">Vue.js: <b>{{ vue }}</b></div>
         <div class="item">Electron: <b>{{ electron }}</b></div>
         <div class="item">Node: <b>{{ node }}</b></div>
         <div class="item">Platforma: <b>{{ platform }}</b></div> -->
-      </div>
-      <div class="group-right">
-        <div class="item">
-          Entraste como
-          <span class="highlight">
-            {{ user.first_name }} {{ user.last_name }}
-          </span>
-          <span v-if="user.signed_in">
-            a las {{ user.signed_in | moment("HH:mm [hs]") }} del {{ user.signed_in | moment("DD/MM/Y") }}
-          </span>
-        </div>
-        <div class="item">{{ appName }} - v{{ version }}</div>
-        <div class="item">
-          <el-tooltip
-            :content="'Estado de la conexion: ' + (online ? 'OK' : 'ERROR')"
-            effect="dark"
-            placement="top">
-            <fw-icon
-              :class="online ? 'green' : 'red'"
-              icon="circle"/>
-          </el-tooltip>
-        </div>
       </div>
     </div>
   </div>

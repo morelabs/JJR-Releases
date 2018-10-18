@@ -171,15 +171,25 @@ hr {
 }
 
 /* Page titles */
-.page-header {
-  height: 3em;
-  line-height: 3em;
-  border-bottom: solid 1px #f1f1f1;
-  text-align: center;
-  font-size: 20px;
-  padding: 10px 20px;
+.el-header {
+  height: initial !important;
 }
 
+.page-header {
+  height: 60px;
+  line-height: 60px;
+  border-bottom: solid 1px #eee;
+  padding: 0px 20px 30px 20px;
+}
+
+.page-header h2 {
+  float: left;
+  margin: 10px 0px;
+}
+.page-header .controls {
+  float: right;
+  margin: 10px 0px;
+}
 .no-connection {
   background: #f1f1f1;
   color: #333;

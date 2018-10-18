@@ -66,7 +66,7 @@
         style="width: 100%">
         <el-table-column width="70">
           <template slot-scope="scope">
-            <i class="icono-arg-conexion"></i>
+            <i class="el-icon-document"></i>
           </template>
         </el-table-column>
         <el-table-column label="Delito">
@@ -155,11 +155,11 @@ export default {
       "removeCrime"
     ]),
     goBack() {
-      this.$emit("next", 3);
+      this.$emit("next", 2);
     },
     goNext() {
       if (this.valid) {
-        this.$emit("next", 5);
+        this.$emit("next", 4);
       }
     },
     setPoliceStation(val) {

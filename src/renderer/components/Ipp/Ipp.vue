@@ -1,14 +1,14 @@
 <template>
   <div id="ipps-data">
     <div class="page-header">
-      <span>Datos del Ipp</span>
-      <router-link :to="{ name: 'ipps' }">
-        <el-button type="info">Volver</el-button>
-      </router-link>
+      <h2>IPP - Nro. <span v-if="ipp.id">{{ ipp.ipp_number }}</span></h2>
+      <div class="controls">
+        <router-link :to="{ name: 'ipps' }">
+          <el-button type="info">Volver</el-button>
+        </router-link>
+      </div>
     </div>
-    <div
-      v-if="ipp.id"
-      class="data">
+    <div class="data">
       <p>Numero: {{ ipp.ipp_number }}</p>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div id="organizations-list">
-    <div class="page-header">Listado Organizaciones</div>
+    <div class="page-header"><h2>Organizaciones e Instituciones</h2></div>
     <div class="list">
       <el-table
         :data="organizations"

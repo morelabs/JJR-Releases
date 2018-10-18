@@ -31,7 +31,7 @@
               style="width: 100%;"
               @change="addNote">
               <el-option
-                v-for="(item, index) in data.observations"
+                v-for="(item, index) in observations"
                 :key="index"
                 :label="item"
                 :value="item"/>
@@ -91,6 +91,7 @@ export default {
       newNote: {},
       newAssignee: {},
       newDefinition: "",
+      observations: [],
       allUsers: [
         { id: 1, name: "Soledad Villamil", role: "Admin" },
         { id: 2, name: "Pedro Aznar", role: "Colaborador" },
@@ -110,6 +111,7 @@ export default {
   },
   created() {
     this.newDefinition = clone(this.ippFormSource.definition);
+    this.observations = clone(this.data.observations);
   },
   methods: {
     ...ippActions([
@@ -120,11 +122,11 @@ export default {
       "removeDefinition"
     ]),
     goBack() {
-      this.$emit("next", 4);
+      this.$emit("next", 3);
     },
     goNext() {
       if (this.valid) {
-        this.$emit("next", 6);
+        this.$emit("next", 5);
       }
     },
     setDefinition(val) {
@@ -135,11 +137,15 @@ export default {
       }
     },
     addNote() {
-      this.addObservation({ observation: this.newNote });
-      this.newNote = "";
+      this.addObservation({ observation: this.newNote }).then(() => {
+        let indx = this.observations.indexOf(this.newNote);
+        this.observations.splice(indx, 1);
+        this.newNote = "";
+      });
     },
     removeNote(note) {
       this.removeObservation({ observation: note });
+      _.sortBy(this.observations.push(note), n => n);
     },
     addUser() {
       let user = this.allUsers.find(u => u.id === this.newAssignee);

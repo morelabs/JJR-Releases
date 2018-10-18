@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <div class="page-header">Mapa de hechos</div>
+      <div class="page-header"><h2>Mapa de hechos</h2></div>
     </el-header>
     <el-main>
       <shared-map
@@ -14,13 +14,17 @@
       <el-row :gutter="20">
         <el-col :span="6">
           <el-card class="box-card">
-            <div class="text item">
-              <p>IPP: <b>14-00-001978-18</b> - Origen: <b>Fiscalía</b></p>
-              <p>Hecho: <b>22/03/2018</b> - Denuncia: <b>22/03/2018</b></p>
-              <p>Comisaría: <b>11</b></p>
-              <p>Estado: <b>No punible - Archivado</b></p>
-              <p>Definición: <b>Participa del programa</b></p>
+            <div
+              slot="header"
+              class="clearfix">
+              <span>IPP: <b>14-00-001978-18</b></span>
             </div>
+            <p class="line"><small>Origen</small><br><b>Fiscalía</b></p>
+            <p class="line"><small>Hecho</small><br><b>22/03/2018</b></p>
+            <p class="line"><small>Denuncia</small><br><b>22/03/2018</b></p>
+            <p class="line"><small>Comisaría</small><b>11</b></p>
+            <p class="line"><small>Estado</small><br><b>No punible - Archivado</b></p>
+            <p class="line"><small>Definición</small><br><b>Participa del programa</b></p>
           </el-card>
         </el-col>
         <el-col :span="6">
@@ -31,8 +35,8 @@
               <span>Victimas</span>
             </div>
             <div class="text item">
-              <ul>
-                <li>Lucia del Pilar	BORDA (MENOR)</li>
+              <ul class="no-style">
+                <li>Lucia del Pilar	BORDA</li>
               </ul>
             </div>
           </el-card>
@@ -45,9 +49,9 @@
               <span>Victimarios</span>
             </div>
             <div class="text item">
-              <ul>
-                <li>Morena Yanella SARLY (MENOR)</li>
-                <li>Adrian CORREA	(MENOR)</li>
+              <ul class="no-style">
+                <li>Morena Yanella SARLY</li>
+                <li>Adrian CORREA</li>
               </ul>
             </div>
           </el-card>
@@ -60,8 +64,8 @@
               <span>Delitos</span>
             </div>
             <div class="text item">
-              <ul>
-                <li>Lesiones leves - Consumado</li>
+              <ul class="no-style">
+                <li>Lesiones leves</li>
               </ul>
             </div>
           </el-card>
@@ -83,3 +87,25 @@ export default {
   }
 };
 </script>
+
+<style type="text/css">
+.box-card {
+  height: 400px;
+  overflow: scroll;
+}
+.el-card__body {
+  padding: 0px 10px !important;
+}
+p.line {
+  margin: 10px;
+}
+ul.no-style {
+  list-style: all;
+  padding: 0px;
+  margin: 0px 20px;
+}
+ul li {
+  margin: 10px 0px;
+  color: #999;
+}
+</style>

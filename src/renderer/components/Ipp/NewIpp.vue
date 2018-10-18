@@ -5,31 +5,27 @@
         <el-steps 
           :active="active" 
           align-center
+          wait-status="wait"
+          process-status="finish"
           finish-status="success">
           <el-step
             title="Inicio"
-            icon="icono-arg-firma-contrato icono-2x"
-          />
+            icon="icono-arg-firma-contrato icono-2x"/>
           <el-step
             title="Victimarios"
-            icon="icono-arg-comunidad icono-2x"
-          />
+            icon="icono-arg-comunidad icono-2x"/>
           <el-step
             title="Victimas"
-            icon="icono-arg-comunidad icono-2x"
-          />
+            icon="icono-arg-comunidad icono-2x"/>
           <el-step
             title="Hechos"
-            icon="icono-arg-seguridad icono-2x"
-          />
+            icon="icono-arg-seguridad icono-2x"/>
           <el-step
             title="Origen"
-            icon="icono-arg-justicia icono-2x"
-          />
+            icon="icono-arg-justicia icono-2x"/>
           <el-step
             title="Resumen"
-            icon="icono-arg-tramite icono-2x"
-          />
+            icon="icono-arg-tramite icono-2x"/>
         </el-steps>
       </div>
     </div>
@@ -38,32 +34,32 @@
       class="step-content">
       <el-form>
         <div 
-          v-if="active === 1" 
+          v-if="active === 0" 
           class="ipp-form-wrapper">
           <basic-data @next="(value) => moveTo(value)"/>
         </div>
         <div 
-          v-if="active === 2" 
+          v-if="active === 1" 
           class="ipp-form-wrapper">
           <victimizers @next="(value) => moveTo(value)"/>
         </div>
         <div 
-          v-if="active === 3" 
+          v-if="active === 2" 
           class="ipp-form-wrapper">
           <victims @next="(value) => moveTo(value)"/>
         </div>
         <div 
-          v-if="active === 4" 
+          v-if="active === 3" 
           class="ipp-form-wrapper">
           <police-station @next="(value) => moveTo(value)"/>
         </div>
         <div 
-          v-if="active === 5" 
+          v-if="active === 4" 
           class="ipp-form-wrapper">
           <ipp-source @next="(value) => moveTo(value)"/>
         </div>
         <div 
-          v-if="active === 6" 
+          v-if="active === 5" 
           class="ipp-form-wrapper">
           <ipp-resumen @next="(value) => moveTo(value)"/>
         </div>
@@ -113,7 +109,7 @@ export default {
   },
   data() {
     return {
-      active: 1,
+      active: 0,
       hasChanges: false,
       enabled: false
     };
@@ -130,7 +126,6 @@ export default {
       let userId = this.user.user_id;
       this.loadIppData({ userId })
         .then(response => {
-          console.log(response);
           this.enabled = true;
         })
         .catch(error => {

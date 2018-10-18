@@ -19,7 +19,9 @@
         <fw-icon icon="save"/>
       </el-button>
     </div>
-    <div class="ipp-step-inner ipp-content-resumen">
+    <div
+      v-if="!loading"
+      class="ipp-step-inner ipp-content-resumen">
       <h3>Informacion Basica</h3>
       <el-row :gutter="20">
         <el-col :span="8">
@@ -149,16 +151,17 @@ export default {
     ...ippGetters(["ippForm"])
   },
   methods: {
-    ...ippActions(["addIpp"]),
+    ...ippActions(["addIpp", "resetIpp"]),
     saveIpp() {
       this.loading = true;
       let payload = this.parseData();
       this.addIpp({ ipp: payload })
         .then(response => {
-          this.$route.push({
-            name: "Ipp",
+          this.$router.push({
+            name: "ipp",
             params: { id: response.ipp_case.id }
           });
+          this.resetIpp();
         })
         .catch(error => {
           console.log(error);
@@ -184,7 +187,7 @@ export default {
       };
     },
     goBack() {
-      this.$emit("next", 5);
+      this.$emit("next", 4);
     },
     setSubjects() {
       let list = [];
