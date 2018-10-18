@@ -52,7 +52,7 @@
               prop="definition"
               label="Definicion"/>
             <el-table-column
-              prop="state"
+              prop="case_state.name"
               label="Estado"/>
             <el-table-column>
               <template slot-scope="scope">
