@@ -127,7 +127,7 @@
           <el-button
             :disabled="!dataValidated"
             style="width: 100%"
-            @click="addVictimizer()"><i class="el-icon-plus"></i></el-button>
+            @click="addVictim()"><i class="el-icon-plus"></i></el-button>
         </el-col>
       </el-row>
       <hr>
@@ -163,7 +163,7 @@
           <template slot-scope="scope">
             <a
               href="#"
-              @click="removeVictimizer(scope.row)"><i class="el-icon-delete"/>
+              @click="removeVictim(scope.row)"><i class="el-icon-delete"/>
             </a>
           </template>
         </el-table-column>
@@ -223,12 +223,7 @@ export default {
     }
   },
   methods: {
-    ...ippActions([
-      "setIppVictimizers",
-      "checkDNI",
-      "addPerson",
-      "removePerson"
-    ]),
+    ...ippActions(["setIppVictims", "checkDNI", "addPerson", "removePerson"]),
     goBack() {
       this.$emit("next", 1);
     },
@@ -278,7 +273,7 @@ export default {
           console.log(error);
         });
     },
-    removeVictimizer(vict) {
+    removeVictim(vict) {
       this.removePerson({ personId: vict.id, role: "victims" }).then(() => {
         console.log("Victima removido");
       });
@@ -314,7 +309,7 @@ export default {
         document_number: "",
         gender: "",
         address: "",
-        role: "victimizer",
+        role: "victim",
         noAddress: false,
         noDNI: false,
         dniValidated: false,
