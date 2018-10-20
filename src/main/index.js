@@ -40,9 +40,7 @@ function createWindow() {
   });
   mainWindow.once("ready-to-show", () => {
     mainWindow.maximize();
-    setTimeout(() => {
-      mainWindow.show();  
-    }, 5000);   
+    mainWindow.show();
   });
 }
 

@@ -26,41 +26,28 @@
             style="width: 100%">
             <el-table-column
               prop="ipp_number"
-              label="Nro IPP"/>
+              label="Nro IPP"
+              width="170"/>
             <el-table-column
               prop="event_date"
-              label="Fecha del hecho"/>
-            <el-table-column label="Víctimas">
-              <template slot-scope="scope">
-                <p
-                  v-for="(vict, index) in scope.row.victims"
-                  :key="index">
-                  {{ vict.person.firstname }} {{ vict.person.lastname }}
-                </p>
-              </template>
-            </el-table-column>
-            <el-table-column label="Víctimarios">
-              <template slot-scope="scope">
-                <p
-                  v-for="(vict, index) in scope.row.victimizers"
-                  :key="index">
-                  {{ vict.person.firstname }} {{ vict.person.lastname }}
-                </p>
-              </template>
-            </el-table-column>
+              label="Fecha del hecho"
+              width="170"/>
             <el-table-column
               prop="definition"
-              label="Definicion"/>
-            <el-table-column
-              prop="case_state.name"
-              label="Estado"/>
-            <el-table-column>
+              label="Definicion"
+              width="220"/>
+            <el-table-column label="Estado">
+              <template slot-scope="scope">
+                {{ scope.row.case_state.name }}
+              </template>
+            </el-table-column>
+            <el-table-column width="100">
               <template slot-scope="scope">
                 <router-link :to="{ name: 'ipp', params: { id: scope.row.id } }">
                   <el-button
                     size="mini"
                     type="primary">
-                    Ver expediente
+                    Ver
                   </el-button>
                 </router-link>
               </template>
