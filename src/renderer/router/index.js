@@ -16,6 +16,7 @@ import organization_routes from "./organization_routes";
 import referents_routes from "./referent_routes";
 
 import ipp_routes from "./ipp_routes";
+import subject_routes from "./subject_routes";
 
 Vue.use(Router);
 
@@ -54,7 +55,8 @@ const childrenRoutes = concat(
       component: Dashboard
     }
   ],
-  ipp_routes
+  ipp_routes,
+  subject_routes
 );
 
 const routes = [

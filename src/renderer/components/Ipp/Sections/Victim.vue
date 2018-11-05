@@ -2,6 +2,15 @@
   <div class="person-info">
     <p>{{ fullname }}</p>
     <p>DNI: {{ victim.person.document_number || "-----" }}</p>
+    <p>
+      <router-link :to="{ name: 'subject', params: { id: victim.id } }">
+        <el-button
+          size="mini"
+          type="primary">
+          Ver expediente
+        </el-button>
+      </router-link>
+    </p>
   </div>
 </template>
 

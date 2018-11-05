@@ -1,7 +1,16 @@
 <template>
   <div class="person-info">
     <p>{{ fullname }}</p>
-    <p>DNI: {{ victimizer.person.document_number }}</p>
+    <p>DNI: {{ victimizer.person.document_number || "-----" }}</p>
+    <p>
+      <router-link :to="{ name: 'subject', params: { id: victimizer.id } }">
+        <el-button
+          size="mini"
+          type="primary">
+          Ver expediente
+        </el-button>
+      </router-link>
+    </p>
   </div>
 </template>
 
