@@ -8,7 +8,7 @@
         <fw-icon icon="chevron-left"/>
         Volver
       </el-button>
-      Cargar Victimarios
+      Cargar Víctimas
       <el-button
         :disabled="!valid"
         type="primary"
@@ -68,12 +68,14 @@
               :format="dateFormat"
               style="width: 100%;"
               name="birth_date"
-              placeholder="Fecha de nacimiento"/>
+              placeholder="Fecha de nacimiento"
+              @change="checkMinor()"/>
             <div>
-              <el-checkbox
-                v-model="newVictim.adult"
-                label="es menor?"
-                @change="cleanField('birth_date')"/>
+              <el-switch
+                v-model="newVictim.minor"
+                active-text="Menor"
+                inactive-text="Adulto"
+                @change="checkMinor()"/>
             </div>
           </el-form-item>
         </el-col>
@@ -196,7 +198,8 @@ export default {
         noAddress: false,
         noDNI: false,
         dniValidated: false,
-        addressValidated: false
+        addressValidated: false,
+        minor: null
       }
     };
   },
@@ -259,8 +262,20 @@ export default {
     validateAddress() {
       this.newVictim.addressValidated = true;
     },
+    checkMinor() {
+      if (
+        (this.newVictim.birth_date != null) &
+        (this.newVictim.birth_date != "")
+      ) {
+        this.newVictim.minor = this.getAge(this.newVictim.birth_date) < 18;
+      }
+    },
     addVictim() {
-      this.addPerson({ person: this.newVictim, role: "victims" })
+      this.addPerson({
+        person: this.newVictim,
+        role: "victims",
+        minor: this.newVictim.minor
+      })
         .then(response => {
           let vict = clone(this.newVictim);
           this.$message({
@@ -313,8 +328,19 @@ export default {
         noAddress: false,
         noDNI: false,
         dniValidated: false,
-        addressValidated: false
+        addressValidated: false,
+        minor: null
       };
+    },
+    getAge(dateString) {
+      let today = new Date();
+      let birthDate = new Date(dateString);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      let m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
     }
   }
 };

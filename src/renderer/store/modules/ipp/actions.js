@@ -67,15 +67,17 @@ const addIpp = ({ commit }, { ipp }) => {
   });
 };
 
-const addPerson = ({ commit }, { person, role }) => {
+const addPerson = ({ commit }, { person, role, minor }) => {
   return new Promise((resolve, reject) => {
     if (person.id) {
+      person.minor = minor;
       commit(types.ADD_PERSON, { person: person, role: role });
       resolve(true);
     } else {
       axios
         .post("people", { person: person })
         .then(response => {
+          person.minor = minor;
           commit(types.ADD_PERSON, {
             person: response.data.person,
             role: role

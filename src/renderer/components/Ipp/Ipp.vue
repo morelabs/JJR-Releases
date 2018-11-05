@@ -127,7 +127,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #ipps-data {
   background: #fff;
   height: 100%;

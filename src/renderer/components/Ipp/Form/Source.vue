@@ -104,7 +104,6 @@ export default {
     ...ippGetters(["ippFormSource", "data"]),
     valid() {
       return (
-        this.ippFormSource.observations.length > 0 &&
         this.ippFormSource.definition
       );
     }

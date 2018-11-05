@@ -70,7 +70,7 @@
         v-for="(crime, index) in ippForm.policeStation.crimes"
         :key="`offense-${index}`"
         :gutter="20">
-        <el-col :span="24">
+        <el-col :span="20">
           {{ crime.name }} <div style="float: right; color: red;">{{ crime.type }}</div>
         </el-col>
       </el-row>
@@ -193,10 +193,10 @@ export default {
     setSubjects() {
       let list = [];
       _.map(this.ippForm.victimizers, c =>
-        list.push({ person_id: c.id, role: "victimizer" })
+        list.push({ person_id: c.id, role: "victimizer", minor: c.minor })
       );
       _.map(this.ippForm.victims, c =>
-        list.push({ person_id: c.id, role: "victim" })
+        list.push({ person_id: c.id, role: "victim", minor: c.minor })
       );
       return list;
     }
