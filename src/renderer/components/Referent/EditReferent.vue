@@ -1,18 +1,26 @@
 <template>
-  <div id="referents-data">
+  <div
+    v-if="referent.id"
+    class="page">
     <div class="page-header">
-      <span>Editar Referente</span>
-      <router-link :to="{ name: 'referent', params: { id: $route.params.id } }">
-        <el-button type="info">Volver</el-button>
-      </router-link>
+      <router-link
+        :to="{ name: 'referents', params: { id: $route.params.id } }"
+        style="float: left; margin: 5px 20px 5px 0px; font-size: 20px;"><i class="el-icon-back"></i></router-link>
+      <h2>
+        Red
+        <span class="sep"><i class="el-icon-arrow-right"/></span>
+        Referente
+        <span class="sep"><i class="el-icon-arrow-right"/></span>
+        Editar
+      </h2>
     </div>
-    <div
-      v-if="referent.id"
-      class="data">
-      <referent-form
-        :referent="referent"
-        @save="submit"
-        @reset="loadReferent"/>
+    <div class="page-content">
+      <div class="page-form">
+        <referent-form
+          :referent="referent"
+          @save="submit"
+          @reset="loadReferent"/>
+      </div>
     </div>
   </div>
 </template>

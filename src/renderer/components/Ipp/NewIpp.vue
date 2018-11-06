@@ -1,13 +1,12 @@
 <template>
-  <div class="ipp-form">
-    <div class="step-indicator">
-      <div style="padding: 20px 10px;">
+  <div class="page">
+    <div class="page-header steps">
+      <div class="steps-indicator">
         <el-steps 
           :active="active" 
           align-center
           wait-status="wait"
-          process-status="finish"
-          finish-status="success">
+          process-status="finish">
           <el-step
             title="Inicio"
             icon="icono-arg-firma-contrato icono-2x"/>
@@ -31,7 +30,7 @@
     </div>
     <div
       v-loading="!enabled"
-      class="step-content">
+      class="page-content step-content">
       <el-form>
         <div 
           v-if="active === 0" 
@@ -141,23 +140,50 @@ export default {
 </script>
 
 <style>
-.ipp-form {
+.page .page-header.steps {
+  height: 6em;
+  line-height: 2em;
+}
+.page .page-header .steps-indicator {
+  margin: 20px 0px;
+}
+.page .page-content.step-content {
+  top: 8em;
+  bottom: 1em;
+  margin: 0px 20px 0px 60px;
+}
+
+.ipp-step-header {
+  height: 2em;
+  line-height: 2em;
+  border-bottom: solid 2px #f1f1f1;
+  margin-bottom: 10px;
+  padding: 10px 5px;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.ipp-step-inner {
+  margin-top: 10px;
+  padding: 5px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+/* .ipp-form {
   height: 100%;
   padding: 5px;
 }
-.step-indicator {
-  padding: 10px;
-  border-bottom: solid 2px #f1f1f1;
-  height: 120px;
+.ipp-form-header {
+  position: absolute;
+  width: 100%;
+  height: 6em;
 }
 .step-content {
-  height: 100%;
-  margin: 0px;
-  padding: 0px 60px;
-  flex: auto;
-  background: rgb(255, 255, 255);
-  position: relative;
-  overflow: scroll;
+  height: 6em !important;
+  line-height: 6em;
+  padding: 0px;
 }
 .ipp-form {
   background: #fff;
@@ -192,5 +218,5 @@ export default {
   position: relative;
   overflow-y: scroll;
   overflow-x: hidden;
-}
+} */
 </style>

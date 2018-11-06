@@ -4,51 +4,75 @@
     :model="referent"
     label-position="top" 
     label-width="120px">
-    <el-form-item label="Nombres">
-      <el-input v-model="referent.firstname"/>
-    </el-form-item>
-    <el-form-item label="Apellidos">
-      <el-input v-model="referent.lastname"/>
-    </el-form-item>
-    <el-form-item label="Telefono">
-      <el-input v-model="referent.phone"/>
-    </el-form-item>
-    <el-form-item label="Celular">
-      <el-input v-model="referent.cellphone"/>
-    </el-form-item>
-    <el-form-item label="Email">
-      <el-input v-model="referent.email"/>
-    </el-form-item>
-    <el-form-item label="Direccion">
-      <el-input v-model="referent.address"/>
-    </el-form-item>
-    <el-form-item label="Cargo">
-      <el-select
-        v-model="referent.position"
-        filterable
-        style="width: 100%"
-        placeholder="Select">
-        <el-option
-          v-for="item in positionOptions"
-          :key="item"
-          :label="item"
-          :value="item"/>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="Rubros">
-      <el-select
-        v-model="referent.areas"
-        multiple
-        filterable
-        style="width: 100%"
-        placeholder="Select">
-        <el-option
-          v-for="item in areaOptions"
-          :key="item"
-          :label="item"
-          :value="item"/>
-      </el-select>
-    </el-form-item>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <el-form-item label="Nombres">
+          <el-input v-model="referent.firstname"/>
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item label="Apellidos">
+          <el-input v-model="referent.lastname"/>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <el-form-item label="Telefono">
+          <el-input v-model="referent.phone"/>
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item label="Celular">
+          <el-input v-model="referent.cellphone"/>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <el-form-item label="Email">
+          <el-input v-model="referent.email"/>
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item label="Direccion">
+          <el-input v-model="referent.address"/>
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="12">
+        <el-form-item label="Cargo">
+          <el-select
+            v-model="referent.position"
+            filterable
+            style="width: 100%"
+            placeholder="Select">
+            <el-option
+              v-for="item in positionOptions"
+              :key="item"
+              :label="item"
+              :value="item"/>
+          </el-select>
+        </el-form-item>
+      </el-col>
+      <el-col :span="12">
+        <el-form-item label="Rubros">
+          <el-select
+            v-model="referent.areas"
+            multiple
+            filterable
+            style="width: 100%"
+            placeholder="Select">
+            <el-option
+              v-for="item in areaOptions"
+              :key="item"
+              :label="item"
+              :value="item"/>
+          </el-select>
+        </el-form-item>
+      </el-col>
+    </el-row>
     <el-form-item label="Zonas">
       <el-select
         v-model="referent.zoneids"
@@ -63,6 +87,7 @@
           :value="item.id"/>
       </el-select>
     </el-form-item>
+    <hr>
     <el-form-item>
       <el-button
         type="success"

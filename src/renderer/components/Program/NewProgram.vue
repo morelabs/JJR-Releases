@@ -1,17 +1,24 @@
 <template>
-  <div id="programs-data">
+  <div class="page">
     <div class="page-header">
-      <span>Nuevo Programa</span>
-      <router-link :to="{ name: 'programs' }">
-        <el-button type="info">Volver</el-button>
-      </router-link>
+      <router-link
+        :to="{ name: 'programs' }"
+        style="float: left; margin: 5px 20px 5px 0px; font-size: 20px;"><i class="el-icon-back"></i></router-link>
+      <h2>
+        Red
+        <span class="sep"><i class="el-icon-arrow-right"/></span>
+        Programa
+        <span class="sep"><i class="el-icon-arrow-right"/></span>
+        Nuevo
+      </h2>
     </div>
-    <div
-      class="data">
-      <program-form
-        :program="program"
-        @save="submit"
-        @reset="reset"/>
+    <div class="page-content">
+      <div class="page-form">
+        <program-form
+          :program="program"
+          @save="submit"
+          @reset="reset"/>
+      </div>
     </div>
   </div>
 </template>

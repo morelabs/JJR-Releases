@@ -1,21 +1,31 @@
 <template>
-  <div id="programs-data">
+  <div
+    v-if="program.id"
+    class="page">
     <div class="page-header">
-      <span>Datos del Programa</span>
-      <router-link :to="{ name: 'editProgram', params: { id: $route.params.id } }">
-        <el-button type="warning">Editar</el-button>
-      </router-link>
-      <router-link :to="{ name: 'programs' }">
-        <el-button type="info">Volver</el-button>
-      </router-link>
+      <router-link
+        :to="{ name: 'programs' }"
+        style="float: left; margin: 5px 20px 5px 0px; font-size: 20px;"><i class="el-icon-back"></i></router-link>
+      <h2>
+        Red
+        <span class="sep"><i class="el-icon-arrow-right"/></span>
+        Programa
+        <span class="sep"><i class="el-icon-arrow-right"/></span>
+        {{ program.name }}
+      </h2>
+      <div class="controls">
+        <router-link :to="{ name: 'editProgram', params: { id: $route.params.id } }">
+          <el-button type="warning">Editar</el-button>
+        </router-link>
+      </div>
     </div>
-    <div
-      v-if="program.id"
-      class="data">
-      <p>Nombre: {{ program.name }}</p>
-      <p>Tareas: {{ program.tasks }}</p>
-      <p>Requerimientos: {{ program.requirements }}</p>
-      <p>Habilidades: {{ program.skills }}</p>
+    <div class="page-content">
+      <div class="list">
+        <p>Nombre: {{ program.name }}</p>
+        <p>Tareas: {{ program.tasks }}</p>
+        <p>Requerimientos: {{ program.requirements }}</p>
+        <p>Habilidades: {{ program.skills }}</p>
+      </div>
     </div>
   </div>
 </template>

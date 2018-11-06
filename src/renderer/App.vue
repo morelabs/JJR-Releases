@@ -43,29 +43,35 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css?family=Ubuntu");
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
-html,
+
+html {
+  height: 100%;
+}
 body {
   background-color: #fff !important;
   height: 100%;
-  font-family: "Montserrat", sans-serif;
   margin: 0px;
+  font-family: "Ubuntu", sans-serif;
+  overflow: hidden;
 }
-body {
-  -ms-overflow-style: scrollbar;
-  -webkit-app-region: drag;
-}
+
 #app {
-  height: 100%;
-  overflow-y: scroll;
+  min-height: 100%;
 }
-footer {
-  position: absolute;
-  width: 100%;
-  bottom: 0px;
-  height: 2.2em;
-  line-height: 2.2em;
-  z-index: 1000;
-  font-size: 13px;
-  background: transparent;
+a {
+  text-decoration: none;
+  color: #888;
+}
+a:active,
+a:focus {
+  outline: none;
+  border: none;
+}
+hr {
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 40px 0px;
 }
 </style>

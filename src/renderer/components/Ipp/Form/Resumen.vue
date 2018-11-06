@@ -116,18 +116,16 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <h3>Observaciones</h3>
-          <el-row
+          <p
             v-for="(note, index) in ippForm.source.observations"
             :key="`note-${index}`"
             :gutter="20">
-            <el-col :span="24">
-              <p>{{ note }}</p>
-            </el-col>
-          </el-row>
+            {{ note }}
+          </p>
         </el-col>
         <el-col :span="12">
           <h3>Definicion</h3>
-          <span style="color: red"><b>{{ ippForm.source.definition }}</b></span>
+          <p style="color: red"><b>{{ ippForm.source.definition }}</b></p>
         </el-col>
       </el-row>
     </div>

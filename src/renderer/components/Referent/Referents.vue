@@ -1,79 +1,80 @@
 <template>
-  <el-container>
-    <el-header>
-      <div class="page-header">
-        <h2>Referentes</h2>
-        <div class="controls">
-          <router-link :to="{ name: 'newReferent' }">
-            <el-button type="warning">Nuevo Referente</el-button>
-          </router-link>
-          <el-input
-            v-model="criteria"
-            style="width: 300px"
-            placeholder="Buscar..."
-            @keyup.enter.native="search">
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="search"/>
-          </el-input>
-        </div>
+  <div class="page">
+    <div class="page-header">
+      <h2>
+        Red
+        <span class="sep"><i class="el-icon-arrow-right"/></span>
+        Referentes
+        <router-link
+          :to="{ name: 'newReferent' }"
+          class="el-button el-button--default is-circle">
+          <i class="el-icon-plus"/>
+        </router-link>
+      </h2>
+      <div class="controls">
+        <el-input
+          v-model="criteria"
+          style="width: 300px"
+          placeholder="Buscar..."
+          @keyup.enter.native="search">
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="search"/>
+        </el-input>
       </div>
-    </el-header>
-    <el-main>
-      <div id="referents-list">
-        <div class="list">
-          <el-table
-            :data="referents"
-            height="735"
-            style="width: 100%">
-            <el-table-column
-              prop="firstname"
-              label="Nombre"
-              width="200"/>
-            <el-table-column
-              prop="lastname"
-              label="Apellido"
-              width="200"/>
-            <el-table-column
-              prop="phone"
-              label="Teléfono"
-              width="130"/>
-            <el-table-column
-              prop="cellphone"
-              label="Celular"
-              width="130"/>
-            <el-table-column
-              prop="email"
-              label="Email"/>
-            <el-table-column width="80">
-              <template slot-scope="scope">
-                <router-link :to="{ name: 'referent', params: { id: scope.row.id } }">
-                  <el-button
-                    size="mini"
-                    type="primary">
-                    Ver
-                  </el-button>
-                </router-link>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-        <div class="footer">
-          <el-pagination
-            :total="pagination.totalEntries"
-            :current-page="pagination.currentPage"
-            :page-count="pagination.totalPages"
-            :page-size="pagination.pageSize"
-            :page-sizes="pagination.pageSizes"
-            background
-            layout="prev, pager, next, ->, jumper, sizes, total"
-            @size-change="changeSize"
-            @current-change="changePage"/>
-        </div>
+    </div>
+    <div class="page-content">
+      <div class="list">
+        <el-table
+          :data="referents"
+          style="width: 100%">
+          <el-table-column
+            prop="firstname"
+            label="Nombre"
+            width="200"/>
+          <el-table-column
+            prop="lastname"
+            label="Apellido"
+            width="200"/>
+          <el-table-column
+            prop="phone"
+            label="Teléfono"
+            width="130"/>
+          <el-table-column
+            prop="cellphone"
+            label="Celular"
+            width="130"/>
+          <el-table-column
+            prop="email"
+            label="Email"/>
+          <el-table-column width="80">
+            <template slot-scope="scope">
+              <router-link :to="{ name: 'referent', params: { id: scope.row.id } }">
+                <el-button
+                  size="mini"
+                  type="primary">
+                  Ver
+                </el-button>
+              </router-link>
+            </template>
+          </el-table-column>
+        </el-table>
       </div>
-    </el-main>
-  </el-container>
+    </div>
+    <div class="page-footer">
+      <el-pagination
+        :total="pagination.totalEntries"
+        :current-page="pagination.currentPage"
+        :page-count="pagination.totalPages"
+        :page-size="pagination.pageSize"
+        :page-sizes="pagination.pageSizes"
+        background
+        layout="prev, pager, next, ->, jumper, sizes, total"
+        @size-change="changeSize"
+        @current-change="changePage"/>
+    </div>
+  </div>
 </template>
 
 <script>

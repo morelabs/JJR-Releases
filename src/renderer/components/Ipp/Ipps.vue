@@ -1,74 +1,69 @@
 <template>
-  <el-container>
-    <el-header>
-      <div class="page-header">
-        <h2>Listado de IPPs</h2>
-        <div class="controls">
-          <el-input
-            v-model="criteria"
-            style="width: 500px"
-            placeholder="Buscar ipp"
-            @keyup.enter.native="search">
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="search"/>
-          </el-input>
-        </div>
+  <div class="page">
+    <div class="page-header">
+      <h2>Listado de IPPs</h2>
+      <div class="controls">
+        <el-input
+          v-model="criteria"
+          style="width: 500px"
+          placeholder="Buscar ipp"
+          @keyup.enter.native="search">
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="search"/>
+        </el-input>
       </div>
-    </el-header>
-    <el-main>
-      <div id="ipps-list">
-        <div class="list">
-          <el-table
-            :data="ipps"
-            height="735"
-            style="width: 100%">
-            <el-table-column
-              prop="ipp_number"
-              label="Nro IPP"
-              width="170"/>
-            <el-table-column
-              prop="event_date"
-              label="Fecha del hecho"
-              width="170"/>
-            <el-table-column
-              prop="definition"
-              label="Definicion"
-              width="220"/>
-            <el-table-column label="Estado">
-              <template slot-scope="scope">
-                {{ scope.row.case_state.name }}
-              </template>
-            </el-table-column>
-            <el-table-column width="100">
-              <template slot-scope="scope">
-                <router-link :to="{ name: 'ipp', params: { id: scope.row.id } }">
-                  <el-button
-                    size="mini"
-                    type="primary">
-                    Ver
-                  </el-button>
-                </router-link>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-        <div class="footer">
-          <el-pagination
-            :total="pagination.totalEntries"
-            :current-page="pagination.currentPage"
-            :page-count="pagination.totalPages"
-            :page-size="pagination.pageSize"
-            :page-sizes="pagination.pageSizes"
-            background
-            layout="prev, pager, next, ->, jumper, sizes, total"
-            @size-change="changeSize"
-            @current-change="changePage"/>
-        </div>
+    </div>
+    <div class="page-content">
+      <div class="list">
+        <el-table
+          :data="ipps"
+          style="width: 100%">
+          <el-table-column
+            prop="ipp_number"
+            label="Nro IPP"
+            width="170"/>
+          <el-table-column
+            prop="event_date"
+            label="Fecha del hecho"
+            width="170"/>
+          <el-table-column
+            prop="definition"
+            label="Definicion"
+            width="220"/>
+          <el-table-column label="Estado">
+            <template slot-scope="scope">
+              {{ scope.row.case_state.name }}
+            </template>
+          </el-table-column>
+          <el-table-column width="100">
+            <template slot-scope="scope">
+              <router-link :to="{ name: 'ipp', params: { id: scope.row.id } }">
+                <el-button
+                  size="mini"
+                  type="primary">
+                  Ver
+                </el-button>
+              </router-link>
+            </template>
+          </el-table-column>
+        </el-table>
       </div>
-    </el-main>
-  </el-container>
+    </div>
+    <div class="page-footer">
+      <el-pagination
+        :total="pagination.totalEntries"
+        :current-page="pagination.currentPage"
+        :page-count="pagination.totalPages"
+        :page-size="pagination.pageSize"
+        :page-sizes="pagination.pageSizes"
+        background
+        layout="prev, pager, next, ->, jumper, sizes, total"
+        @size-change="changeSize"
+        @current-change="changePage"/>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -140,14 +135,3 @@ export default {
   }
 };
 </script>
-
-<style>
-#ipps-list {
-  background: #fff;
-  height: 100%;
-}
-
-.list {
-  padding: 0px 20px;
-}
-</style>

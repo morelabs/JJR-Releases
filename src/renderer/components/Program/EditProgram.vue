@@ -1,18 +1,26 @@
 <template>
-  <div id="programs-data">
+  <div
+    v-if="program.id"
+    class="page">
     <div class="page-header">
-      <span>Editar Programa</span>
-      <router-link :to="{ name: 'program', params: { id: $route.params.id } }">
-        <el-button type="info">Volver</el-button>
-      </router-link>
+      <router-link
+        :to="{ name: 'program', params: { id: $route.params.id } }"
+        style="float: left; margin: 5px 20px 5px 0px; font-size: 20px;"><i class="el-icon-back"></i></router-link>
+      <h2>
+        Red
+        <span class="sep"><i class="el-icon-arrow-right"/></span>
+        Programa
+        <span class="sep"><i class="el-icon-arrow-right"/></span>
+        Editar
+      </h2>
     </div>
-    <div
-      v-if="program.id"
-      class="data">
-      <program-form
-        :program="program"
-        @save="submit"
-        @reset="loadProgram"/>
+    <div class="page-content">
+      <div class="page-form">
+        <program-form
+          :program="program"
+          @save="submit"
+          @reset="loadProgram"/>
+      </div>
     </div>
   </div>
 </template>

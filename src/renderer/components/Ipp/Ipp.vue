@@ -1,5 +1,5 @@
 <template>
-  <div id="ipps-data">
+  <div class="page">
     <div class="page-header">
       <h2>IPP - Nro. <span v-if="ipp.id">{{ ipp.ipp_number }}</span></h2>
       <div class="controls">
@@ -8,57 +8,59 @@
         </router-link>
       </div>
     </div>
-    <div class="data">
-      <div class="ipp-top-info">
-        <el-row :gutter="20">
-          <el-col :span="8">
-            <el-card class="box-card">
-              <h4>Asignados</h4>
-            </el-card>
-          </el-col>
-          <el-col :span="8">
-            <el-card class="box-card">
-              <h4>Estado actual</h4>
-              <p v-if="ipp.case_state">{{ ipp.case_state.name }}</p>
-            </el-card>
-          </el-col>
-          <el-col :span="8">
-            <el-card class="box-card">
-              <h4>Proxima fecha importante</h4>
-            </el-card>
-          </el-col>
-        </el-row>
-      </div>
-      <div class="ipp-content">
-        <el-tabs 
-          v-model="activeName"
-          :stretch="true"
-          @tab-click="handleClick">
-          <el-tab-pane
-            label="Victimarios"
-            name="first">
-            <ul>
-              <li
-                v-for="(vict, index) in ipp.victimizers"
-                :key="index"><victimizer :victimizer="vict"/></li>
-            </ul>
-          </el-tab-pane>
-          <el-tab-pane
-            label="Victimas"
-            name="second">
-            <ul>
-              <li
-                v-for="(vict, index) in ipp.victims"
-                :key="index"><victim :victim="vict"/></li>
-            </ul>
-          </el-tab-pane>
-          <el-tab-pane
-            label="Asignados"
-            name="third">Asignados</el-tab-pane>
-          <el-tab-pane
-            label="Informacion"
-            name="fourth">Otra informacion</el-tab-pane>
-        </el-tabs>
+    <div class="page-content no-bottom">
+      <div class="list">
+        <div class="ipp-top-info">
+          <el-row :gutter="20">
+            <el-col :span="8">
+              <el-card class="box-card">
+                <h4>Asignados</h4>
+              </el-card>
+            </el-col>
+            <el-col :span="8">
+              <el-card class="box-card">
+                <h4>Estado actual</h4>
+                <p v-if="ipp.case_state">{{ ipp.case_state.name }}</p>
+              </el-card>
+            </el-col>
+            <el-col :span="8">
+              <el-card class="box-card">
+                <h4>Proxima fecha importante</h4>
+              </el-card>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="ipp-content">
+          <el-tabs 
+            v-model="activeName"
+            :stretch="true"
+            @tab-click="handleClick">
+            <el-tab-pane
+              label="Victimarios"
+              name="first">
+              <ul>
+                <li
+                  v-for="(vict, index) in ipp.victimizers"
+                  :key="index"><victimizer :victimizer="vict"/></li>
+              </ul>
+            </el-tab-pane>
+            <el-tab-pane
+              label="Victimas"
+              name="second">
+              <ul>
+                <li
+                  v-for="(vict, index) in ipp.victims"
+                  :key="index"><victim :victim="vict"/></li>
+              </ul>
+            </el-tab-pane>
+            <el-tab-pane
+              label="Asignados"
+              name="third">Asignados</el-tab-pane>
+            <el-tab-pane
+              label="Informacion"
+              name="fourth">Otra informacion</el-tab-pane>
+          </el-tabs>
+        </div>
       </div>
     </div>
   </div>

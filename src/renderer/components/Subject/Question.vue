@@ -4,7 +4,7 @@
     class="question-data">
     <el-row :gutter="20">
       <el-col :span="16">
-        {{ question.question.label }}
+        <label>{{ question.question.label }}</label>
       </el-col>
       <el-col :span="4">
         {{ question.answer.value || "S/D" }}
@@ -42,10 +42,13 @@ export default {
 <style lang="css" scoped>
 .question-data {
   border-top: solid 1px #eee;
-  padding: 5px 0px;
+  padding: 15px 0px;
 }
 .conclusion {
   font-weight: bold;
   text-transform: uppercase;
+}
+.conclusion label {
+  color: #334EA1;
 }
 </style>

@@ -1,17 +1,26 @@
 <template>
-  <div id="referents-data">
+  <div
+    id="referents-data"
+    class="page">
     <div class="page-header">
-      <span>Nuevo Referente</span>
-      <router-link :to="{ name: 'referents' }">
-        <el-button type="info">Volver</el-button>
-      </router-link>
+      <router-link
+        :to="{ name: 'referents' }"
+        style="float: left; margin: 5px 20px 5px 0px; font-size: 20px;"><i class="el-icon-back"></i></router-link>
+      <h2>
+        Red
+        <span class="sep"><i class="el-icon-arrow-right"/></span>
+        Referentes
+        <span class="sep"><i class="el-icon-arrow-right"/></span>
+        Nuevo
+      </h2>
     </div>
-    <div
-      class="data">
-      <referent-form
-        :referent="referent"
-        @save="submit"
-        @reset="reset"/>
+    <div class="page-content">
+      <div class="page-form">
+        <referent-form
+          :referent="referent"
+          @save="submit"
+          @reset="reset"/>
+      </div>
     </div>
   </div>
 </template>

@@ -1,7 +1,86 @@
 "use strict";
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, Menu, ipcMain } from "electron";
+const electron = require("electron");
+
 const log = require("electron-log");
 const { autoUpdater } = require("electron-updater");
+
+let enabledCommands = false;
+
+const menuTemplate = [
+  {
+    label: "Expedientes",
+    submenu: [
+      {
+        label: "Nuevo IPP",
+        accelerator: "CmdOrCtrl+Alt+N",
+        click: () => {
+          sendMessageToFront("command", "newIpp");
+        }
+      },
+      { type: "separator" },
+      {
+        label: "Buscador",
+        accelerator: "CmdOrCtrl+Alt+F",
+        click: () => {
+          sendMessageToFront("command", "gsearch");
+        }
+      }
+    ]
+  },
+  {
+    label: "Herramientas",
+    submenu: [
+      {
+        label: "Actualizar",
+        accelerator: "CmdOrCtrl+Alt+U",
+        click: () => {
+          console.log("Here we call the updater");
+        }
+      }
+    ]
+  }
+];
+
+if (process.platform === "darwin") {
+  menuTemplate.unshift({
+    label: "JJR",
+    submenu: [
+      {
+        label: `Sobre JJR`,
+        role: "about"
+      },
+      { type: "separator" },
+      {
+        label: "Ayuda",
+        accelerator: "CmdOrCtrl+Shift+H",
+        click: () => {
+          electron.shell.openExternal("http://electron.atom.io");
+        }
+      },
+      { type: "separator" },
+      {
+        label: "Salir",
+        role: "quit"
+      }
+    ]
+  });
+}
+
+if (process.env.NODE_ENV === "development") {
+  let sub = menuTemplate[2].submenu;
+  sub.push({
+    type: "separator"
+  });
+  sub.push({
+    label: "Dev Tools",
+    role: "toggledevtools"
+  });
+}
+
+function sendMessageToFront(ev, text) {
+  mainWindow.webContents.send(ev, { event: ev, message: text });
+}
 
 /**
  * Set `__static` path to static files in production
@@ -35,6 +114,10 @@ function createWindow() {
 
   mainWindow.loadURL(winURL);
 
+  let menu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(menu);
+  mainWindow.setMenu(menu);
+
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
@@ -44,7 +127,9 @@ function createWindow() {
   });
 }
 
-app.on("ready", createWindow);
+app.on("ready", () => {
+  createWindow();
+});
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {

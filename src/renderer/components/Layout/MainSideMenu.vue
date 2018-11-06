@@ -35,7 +35,7 @@
           @confirm-logout="confirmLogout()"/>
       </div>
     </el-tooltip>
-    <search-button @open-search="openSearchModal()"/>
+    <!-- <search-button @open-search="openSearchModal()"/> -->
     <br>
     <div class="menu-items">
       <side-menu-item
@@ -48,7 +48,7 @@
         class-name="menu-item dashboard"/>
       <side-menu-item
         :collapsed="collapsed"
-        :route-name="{ path: '/admin' }"
+        :route-name="{ path: '/admin/usuarios' }"
         :is-main="true"
         tooltip-content="Administracion"
         display-name="Administracion"
@@ -71,7 +71,7 @@
         display-name="IPPs / Expedientes"
         icon="el-icon-document"
         class-name="menu-item"/>
-      <h3><i class="icono-arg-marcador-ubicacion-2"></i> Reportes</h3>
+      <!-- <h3><i class="icono-arg-marcador-ubicacion-2"></i> Reportes</h3>
       <side-menu-item
         :collapsed="collapsed"
         :route-name="{ name: 'victimizerMap' }"
@@ -87,7 +87,7 @@
         tooltip-content="Estadisticas y reportes"
         display-name="Estadisticas"
         icon="el-icon-menu"
-        class-name="menu-item"/>
+        class-name="menu-item"/> -->
       <h3><i class="icono-arg-codigo-genetico"></i> Red</h3>
       <side-menu-item
         :collapsed="collapsed"
@@ -114,17 +114,23 @@
         icon="el-icon-menu"
         class-name="menu-item"/>
     </div>
+    <div class="footer">
+      <system-information
+        :online="onlineState"
+        :collapsed="collapsed"/>
+    </div>
   </div>
 </template>
 
 <script>
+import SystemInformation from "@/components/System/SystemInformation";
 import LogoutButton from "./LogoutButton";
 import SearchButton from "./SearchButton";
 import SideMenuItem from "./SideMenuItem";
 
 export default {
   name: "MainSideMenu",
-  components: { LogoutButton, SearchButton, SideMenuItem },
+  components: { LogoutButton, SearchButton, SideMenuItem, SystemInformation },
   props: {
     user: {
       type: Object,
@@ -133,7 +139,8 @@ export default {
   },
   data() {
     return {
-      collapsed: false
+      collapsed: false,
+      onlineState: navigator.onLine || false
     };
   },
   methods: {
@@ -152,6 +159,13 @@ export default {
 </script>
 
 <style>
+.footer {
+  bottom: 2em;
+  font-size: 13px;
+  background: transparent;
+  position: absolute;
+}
+
 .el-aside.main-side-menu a.item .collapsed,
 .el-aside.main-side-menu a.dashboard .collapsed {
   display: none;
@@ -300,5 +314,10 @@ export default {
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   font-size: 17px;
+}
+
+.no-connection {
+  background: #f1f1f1;
+  color: #333;
 }
 </style>

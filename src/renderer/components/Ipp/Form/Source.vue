@@ -7,12 +7,11 @@
         @click="goBack()">
         <fw-icon icon="chevron-left"/>
         Volver
-      </el-button>
-      Origen y usuarios
+      </el-button>Origen y usuarios
       <el-button
         :disabled="!valid"
         type="primary"
-        style="float: right"
+        style="float: right" 
         @click="goNext()">
         Siguiente
         <fw-icon icon="chevron-right"/>
@@ -34,24 +33,25 @@
                 v-for="(item, index) in observations"
                 :key="index"
                 :label="item"
-                :value="item"/>
+                :value="item"
+              />
             </el-select>
           </el-form-item>
         </el-col>
       </el-row>
-      <el-table
-        :data="ippFormSource.observations"
+      <el-table 
+        :data="ippFormSource.observations" 
         style="100%">
         <el-table-column>
-          <template slot-scope="scope">
-            {{ scope.row }}
-          </template>
+          <template slot-scope="scope">{{ scope.row }}</template>
         </el-table-column>
         <el-table-column>
           <template slot-scope="scope">
-            <a
+            <a 
               href="#" 
-              @click="removeNote(scope.row)"><i class="el-icon-delete"/></a>
+              @click="removeNote(scope.row)">
+              <i class="el-icon-delete"/>
+            </a>
           </template>
         </el-table-column>
       </el-table>
@@ -65,12 +65,14 @@
               filterable
               placeholder="Seleccionar"
               style="width: 100%;"
-              @change="setDefinition">
+              @change="setDefinition"
+            >
               <el-option
                 v-for="(item, index) in data.definitions"
                 :key="index"
                 :label="item"
-                :value="item"/>
+                :value="item"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -103,9 +105,7 @@ export default {
   computed: {
     ...ippGetters(["ippFormSource", "data"]),
     valid() {
-      return (
-        this.ippFormSource.definition
-      );
+      return this.ippFormSource.definition;
     }
   },
   created() {

@@ -1,11 +1,17 @@
 <template>
-  <div id="programs-list">
+  <div class="page">
     <div class="page-header">
-      <h2>Programas de apoyo</h2>
-      <div class="controls">
-        <router-link :to="{ name: 'newProgram' }">
-          <el-button type="warning">Nuevo Programa</el-button>
+      <h2>
+        Red
+        <span class="sep"><i class="el-icon-arrow-right"/></span>
+        Programas de apoyo
+        <router-link
+          :to="{ name: 'newProgram' }"
+          class="el-button el-button--default is-circle">
+          <i class="el-icon-plus"/>
         </router-link>
+      </h2>
+      <div class="controls">
         <el-input
           v-model="criteria"
           style="width: 300px"
@@ -18,28 +24,29 @@
         </el-input>
       </div>
     </div>
-    <div class="list">
-      <el-table
-        :data="programs"
-        height="735"
-        style="width: 100%">
-        <el-table-column
-          prop="name"
-          label="Nombre"/>
-        <el-table-column>
-          <template slot-scope="scope">
-            <router-link :to="{ name: 'program', params: { id: scope.row.id } }">
-              <el-button
-                size="mini"
-                type="primary">
-                Ver
-              </el-button>
-            </router-link>
-          </template>
-        </el-table-column>
-      </el-table>
+    <div class="page-content">
+      <div class="list">
+        <el-table
+          :data="programs"
+          style="width: 100%">
+          <el-table-column
+            prop="name"
+            label="Nombre"/>
+          <el-table-column>
+            <template slot-scope="scope">
+              <router-link :to="{ name: 'program', params: { id: scope.row.id } }">
+                <el-button
+                  size="mini"
+                  type="primary">
+                  Ver
+                </el-button>
+              </router-link>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
     </div>
-    <div class="footer">
+    <div class="page-footer">
       <el-pagination
         :total="pagination.totalEntries"
         :current-page="pagination.currentPage"
@@ -125,14 +132,3 @@ export default {
   }
 };
 </script>
-
-<style>
-#programs-list {
-  background: #fff;
-  height: 100%;
-}
-
-.list {
-  padding: 0px 20px;
-}
-</style>

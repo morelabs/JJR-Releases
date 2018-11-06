@@ -1,12 +1,12 @@
 <template>
-  <div style="margin: 0px;">
+  <!-- <div style="margin: 0px;">
     <div class="network-header">
       <router-link :to="{ name: 'organizations' }">Organizaciones</router-link>
       <router-link :to="{ name: 'programs' }">Programas</router-link>
       <router-link :to="{ name: 'referents' }">Referentes</router-link>
-    </div>
-    <router-view/>
-  </div>
+    </div> -->
+  <router-view/>
+  <!-- </div> -->
 </template>
 
 <script>

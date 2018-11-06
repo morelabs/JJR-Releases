@@ -1,6 +1,10 @@
 <template>
-  <div style="padding: 20px">
-    <h3>Usuarios</h3>
+  <div class="list">
+    <table>
+      <tr>
+        <td>Jorge</td>
+      </tr>
+    </table>
   </div>
 </template>
 

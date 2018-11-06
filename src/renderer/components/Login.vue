@@ -43,14 +43,18 @@
         </el-form-item>
       </el-form>
       <hr>
-      <div style="text-align: center;">
+      <div style="text-align: center; clear: both;">
         <p>Versión: {{ version }}</p>
-        <img
-          src="~@/assets/images/logo_funrepar.png"
-          width="60">
-        <img
-          src="~@/assets/images/logo_morelabs.png"
-          width="200">
+        <div>
+          <img
+            src="~@/assets/images/logo_funrepar.png"
+            height="40">
+        </div>
+        <div>
+          <img
+            src="~@/assets/images/logo_morelabs.png"
+            height="30">
+        </div>
       </div>
     </div>
     <div

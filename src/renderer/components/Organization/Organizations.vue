@@ -1,25 +1,33 @@
 <template>
-  <div id="organizations-list">
-    <div class="page-header"><h2>Organizaciones e Instituciones</h2></div>
-    <div class="list">
-      <el-table
-        :data="organizations"
-        height="735"
-        style="width: 100%">
-        <el-table-column
-          prop="name"
-          label="Nombre"/>
-        <el-table-column
-          prop="vacants"
-          label="Vacantes"/>
-        <el-table-column>
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="primary">Ir a la organización</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+  <div class="page">
+    <div class="page-header">
+      <h2>
+        Red
+        <span class="sep"><i class="el-icon-arrow-right"/></span>
+        Organizaciones e Instituciones
+      </h2>
+    </div>
+    <div class="page-content">
+      <div class="list">
+        <el-table
+          :data="organizations"
+          height="735"
+          style="width: 100%">
+          <el-table-column
+            prop="name"
+            label="Nombre"/>
+          <el-table-column
+            prop="vacants"
+            label="Vacantes"/>
+          <el-table-column>
+            <template slot-scope="scope">
+              <el-button
+                size="mini"
+                type="primary">Ir a la organización</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
     </div>
   </div>
 </template>
