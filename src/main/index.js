@@ -9,6 +9,28 @@ let enabledCommands = false;
 
 const menuTemplate = [
   {
+    label: "JJR",
+    submenu: [
+      {
+        label: `Sobre JJR`,
+        role: "about"
+      },
+      { type: "separator" },
+      {
+        label: "Ayuda",
+        accelerator: "CmdOrCtrl+Shift+H",
+        click: () => {
+          electron.shell.openExternal("http://electron.atom.io");
+        }
+      },
+      { type: "separator" },
+      {
+        label: "Salir",
+        role: "quit"
+      }
+    ]
+  },
+  {
     label: "Expedientes",
     submenu: [
       {
@@ -41,31 +63,6 @@ const menuTemplate = [
     ]
   }
 ];
-
-if (process.platform === "darwin") {
-  menuTemplate.unshift({
-    label: "JJR",
-    submenu: [
-      {
-        label: `Sobre JJR`,
-        role: "about"
-      },
-      { type: "separator" },
-      {
-        label: "Ayuda",
-        accelerator: "CmdOrCtrl+Shift+H",
-        click: () => {
-          electron.shell.openExternal("http://electron.atom.io");
-        }
-      },
-      { type: "separator" },
-      {
-        label: "Salir",
-        role: "quit"
-      }
-    ]
-  });
-}
 
 if (process.env.NODE_ENV === "development") {
   let sub = menuTemplate[2].submenu;
