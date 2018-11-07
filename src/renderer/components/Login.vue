@@ -91,9 +91,6 @@ export default {
       return this.credentials.username && this.credentials.password;
     }
   },
-  created() {
-    this.getRegionFromStorage();
-  },
   methods: {
     ...authActions(["login"]),
     authenticate() {
@@ -123,9 +120,6 @@ export default {
         .finally(() => {
           this.loading = false;
         });
-    },
-    getRegionFromStorage() {
-      this.credentials.region = localStorage.getItem("region");
     }
   }
 };

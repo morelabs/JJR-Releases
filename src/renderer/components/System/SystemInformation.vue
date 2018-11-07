@@ -65,9 +65,6 @@ export default {
     version() {
       return appPackage.version;
     }
-  },
-  created() {
-    this.region = localStorage.getItem("region").replace(/_/, " ");
   }
 };
 </script>

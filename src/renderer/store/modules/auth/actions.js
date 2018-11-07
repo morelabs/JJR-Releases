@@ -18,7 +18,6 @@ const checkUser = ({ commit, state }) => {
 
 const login = ({ commit }, payload) => {
   return new Promise((resolve, reject) => {
-    localStorage.setItem("region", payload.region);
     axios
       .post("/login", { auth: payload })
       .then(response => {
