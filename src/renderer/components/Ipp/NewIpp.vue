@@ -142,7 +142,8 @@ export default {
 <style>
 .page .page-header.steps {
   height: 6em;
-  line-height: 2em;
+  line-height: 0em;
+  padding: 10px 0px;
 }
 .page .page-header .steps-indicator {
   margin: 20px 0px;
@@ -150,7 +151,7 @@ export default {
 .page .page-content.step-content {
   top: 8em;
   bottom: 1em;
-  margin: 0px 20px 0px 60px;
+  margin: 0px 40px 0px 60px;
 }
 
 .ipp-step-header {

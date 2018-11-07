@@ -62,22 +62,26 @@
         </el-col>
       </el-row>
       <el-row :gutter="20">
-        <el-col :span="12">
+        <el-col :span="8">
           <el-form-item>
             <el-date-picker
               v-model="ipp.event_date"
               :clearable="true"
               :disabled="ipp.eventDateDisabled"
               :format="dateFormat"
-              style="width: 67.5%;"
+              style="width: 100%;"
               name="event_date"
               placeholder="Fecha del hecho"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="8">
+          <el-form-item>
             <el-time-select
               v-model="ipp.event_hour"
               :clearable="true"
               :disabled="ipp.eventDateDisabled"
               :picker-options="pickerOptions"
-              style="width: 27.5%; float: right;"
+              style="width: 100%;"
               name="event_hour"
               placeholder="Hora del hecho"/>
             <div>
@@ -88,7 +92,7 @@
             </div>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="8">
           <el-form-item>
             <el-date-picker
               v-model="ipp.report_date"

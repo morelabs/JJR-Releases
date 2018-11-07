@@ -5,7 +5,9 @@ const electron = require("electron");
 const log = require("electron-log");
 const { autoUpdater } = require("electron-updater");
 
-let enabledCommands = false;
+ipcMain.on("checked", data => {
+  mainWindow.maximize();
+});
 
 const menuTemplate = [
   {
@@ -104,7 +106,6 @@ function createWindow() {
     minHeight: 800,
     useContentSize: true,
     titleBarStyle: "hidden",
-    show: false,
     backgroundColor: "#002b36",
     draggable: false
   });
@@ -116,10 +117,10 @@ function createWindow() {
   mainWindow.setMenu(menu);
 
   mainWindow.on("closed", () => {
-    mainWindow = null;
+    app.quit();
   });
+
   mainWindow.once("ready-to-show", () => {
-    mainWindow.maximize();
     mainWindow.show();
   });
 }
@@ -129,9 +130,7 @@ app.on("ready", () => {
 });
 
 app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
+  app.quit();
 });
 
 app.on("activate", () => {

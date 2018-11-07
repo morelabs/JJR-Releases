@@ -10,7 +10,7 @@
         <el-alert
           :closable="false"
           :center="true"
-          title="No estas logueado"
+          :title="message"
           type="error"
           show-icon/>
         <br>
@@ -80,6 +80,7 @@ export default {
       version: appPackage.version,
       envs: process.env,
       hasError: false,
+      message: null,
       credentials: {
         username: "",
         password: ""
@@ -109,11 +110,10 @@ export default {
           this.$router.push({ name: "dashboard" });
         })
         .catch(error => {
-          let message;
           if (error.message) {
-            message = error.message;
+            this.message = error.message;
           } else {
-            message = error.authentication[0];
+            this.message = error.authentication[0];
           }
           this.hasError = true;
         })

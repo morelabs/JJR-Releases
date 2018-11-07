@@ -14,17 +14,10 @@ import admin_routes from "./admin_routes";
 import program_routes from "./program_routes";
 import organization_routes from "./organization_routes";
 import referents_routes from "./referent_routes";
-
 import ipp_routes from "./ipp_routes";
 import subject_routes from "./subject_routes";
 
 Vue.use(Router);
-
-const networkRoutes = concat(
-  program_routes,
-  organization_routes,
-  referents_routes
-);
 
 const childrenRoutes = concat(
   [],
@@ -48,7 +41,7 @@ const childrenRoutes = concat(
     {
       path: "/red",
       component: Network,
-      children: networkRoutes
+      children: concat(program_routes, organization_routes, referents_routes)
     },
     {
       path: "*",
@@ -81,8 +74,9 @@ const routes = [
 const router = new Router({ routes });
 
 router.beforeEach((to, from, next) => {
-  if (!to.meta.auth) next();
-  else {
+  if (!to.meta.auth) {
+    next();
+  } else {
     const now = new Date().getTime();
     const token = localStorage.getItem("token") || "";
     try {

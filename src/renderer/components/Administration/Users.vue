@@ -13,3 +13,9 @@ export default {
   name: "AdminUsers"
 };
 </script>
+
+<style scoped>
+.list {
+  padding: 20px 40px;
+}
+</style>

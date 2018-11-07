@@ -41,8 +41,24 @@ const logout = ({ commit }) => {
   });
 };
 
+const checkConn = ({ commit }) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      axios
+        .get("/check")
+        .then(response => {
+          resolve(response);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    }, 5000);
+  });
+};
+
 export default {
   checkUser,
   login,
-  logout
+  logout,
+  checkConn
 };
