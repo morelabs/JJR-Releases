@@ -144,6 +144,7 @@ export default {
 
 .el-main {
   padding: 0px;
+  overflow-x: hidden;
 }
 .page {
   height: 100%;
