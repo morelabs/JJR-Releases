@@ -40,8 +40,22 @@ const updateSubject = ({ commit }, { subjectId, payload }) => {
   });
 };
 
+const updateAnswer = ({ commit }, { answerId, payload }) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .patch(`answers/${answerId}`, { answer: payload })
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
+
 export default {
   fetchSubject,
   updateSubject,
-  addSubject
+  addSubject,
+  updateAnswer
 };

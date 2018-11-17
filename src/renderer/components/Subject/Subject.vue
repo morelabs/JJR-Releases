@@ -57,19 +57,22 @@
             :stretch="true"
             @tab-click="handleClick">
             <el-tab-pane
-              v-for="(category_data, i) in subject.file_data"
-              :key="i"
-              :label="i"
-              :name="i">
+              v-for="(category_data, category_name, category_index) in subject.file_data"
+              :key="category_index"
+              :label="category_name"
+              :name="category_name">
               <div
-                v-for="(subcategory_data, j) in category_data"
-                :key="j">
-                <h3>{{ j == "" ? i : j }}</h3>
+                v-for="(subcategory_data, subcategory_name, subcategory_index) in category_data"
+                :key="subcategory_index">
+                <h3>{{ subcategory_name.trim() == "" ? category_name : subcategory_name }}</h3>
                 <div
-                  v-for="(item, k) in subcategory_data.questions"
-                  :key="k"
+                  v-for="(item, item_key) in subcategory_data.questions"
+                  :key="item_key"
                   class="question_slot">
-                  <question :question="item"/>
+                  <question
+                    :question="item.question"
+                    :answer="item.answer"
+                    :editable="subject.editable" />
                 </div>
               </div>
             </el-tab-pane>
