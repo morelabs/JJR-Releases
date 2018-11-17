@@ -11,7 +11,7 @@
       <el-col :span="4">
         <span v-if="editableQuestion()">
           <el-select
-            v-if="question.data_type == 'combo' && question.multiple"
+            v-if="useMultipleSelect"
             v-model="answer.value"
             multiple
             placeholder="Seleccione"
@@ -23,7 +23,7 @@
               :value="item"/>
           </el-select>
           <el-select
-            v-if="question.data_type == 'combo' && !question.multiple"
+            v-if="useSimpleSelect"
             v-model="answer.value"
             placeholder="Seleccione"
             @change="update">
@@ -45,7 +45,7 @@
             v-if="question.data_type == 'number'"
             v-model="answer.value"
             @change="update"/>
-          <span v-if="question.data_type != 'combo' && question.data_type != 'boolean' && question.data_type != 'number'">
+          <span v-if="dontRender">
             tipo {{ question.data_type }}
           </span>
         </span>
@@ -85,6 +85,28 @@ export default {
       loading: false,
       original_value: null
     };
+  },
+  computed: {
+    dontRender() {
+      return (
+        this.question.data_type != "combo" &&
+        this.question.data_type != "tag_list" &&
+        this.question.data_type != "boolean" &&
+        this.question.data_type != "number"
+      );
+    },
+    useSimpleSelect() {
+      return (
+        ["combo", "tag_list"].includes(this.question.data_type) &&
+        !this.question.multiple
+      );
+    },
+    useMultipleSelect() {
+      return (
+        ["combo", "tag_list"].includes(this.question.data_type) &&
+        this.question.multiple
+      );
+    }
   },
   created() {
     this.copyAnswer();
