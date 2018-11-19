@@ -1,20 +1,22 @@
 <template>
   <div
+    v-show="show_component"
     :class="question.item_type"
     class="question-data">
     <el-row
       v-loading="loading"
       :gutter="20">
-      <el-col :span="16">
+      <el-col :span="18">
         <label>{{ question.label }}</label>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="6">
         <span v-if="editableQuestion()">
           <el-select
             v-if="useMultipleSelect"
             v-model="answer.value"
             multiple
             placeholder="Seleccione"
+            style="width: 100%"
             @change="update">
             <el-option
               v-for="item in question.options"
@@ -26,6 +28,7 @@
             v-if="useSimpleSelect"
             v-model="answer.value"
             placeholder="Seleccione"
+            style="width: 100%"
             @change="update">
             <el-option
               v-for="item in question.options"
@@ -58,6 +61,7 @@
 </template>
 
 <script>
+import { clone } from "lodash";
 import { createNamespacedHelpers as namespace } from "vuex";
 const { mapActions: subjectActions } = namespace("subject");
 
@@ -74,6 +78,11 @@ export default {
       required: true,
       default: () => {}
     },
+    show: {
+      type: Boolean,
+      required: true,
+      default: true
+    },
     editable: {
       type: Boolean,
       required: true,
@@ -83,7 +92,8 @@ export default {
   data() {
     return {
       loading: false,
-      original_value: null
+      original_value: null,
+      show_component: false
     };
   },
   computed: {
@@ -109,12 +119,19 @@ export default {
     }
   },
   created() {
+    this.show_component = clone(this.show);
     this.copyAnswer();
   },
   methods: {
     ...subjectActions(["updateAnswer"]),
     editableQuestion() {
       return this.editable;
+    },
+    hideQuestion() {
+      this.show_component = false;
+    },
+    showQuestion() {
+      this.show_component = true;
     },
     copyAnswer() {
       this.original_value = this.answer.value;
@@ -144,7 +161,13 @@ export default {
         })
         .finally(() => {
           this.loading = false;
+          this.toggleDependentQuestions();
         });
+    },
+    toggleDependentQuestions() {
+      let question_ids = this.question.dependent_options.ids || [];
+      let show = this.question.dependent_options[this.answer.value] || false;
+      this.$emit("toggle", { ids: question_ids, show: show });
     }
   }
 };

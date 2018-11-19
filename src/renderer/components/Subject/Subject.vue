@@ -70,9 +70,13 @@
                   :key="item_key"
                   class="question_slot">
                   <question
+                    :ref="`question_${item.code}`"
+                    :class="`question_${item.code}`"
+                    :show="item.show"
                     :question="item.question"
                     :answer="item.answer"
-                    :editable="subject.editable" />
+                    :editable="subject.editable"
+                    @toggle="toggleQuestionComponent($event)"/>
                 </div>
               </div>
             </el-tab-pane>
@@ -84,7 +88,7 @@
 </template>
 
 <script>
-import { filter } from "lodash";
+import { filter, map } from "lodash";
 import Contact from "./Contact";
 import Responsible from "./Responsible";
 import Question from "./Question";
@@ -132,6 +136,17 @@ export default {
     },
     handleClick(element, event) {
       //console.log("Selected", element, event);
+    },
+    toggleQuestionComponent(data) {
+      let _this = this;
+      map(data.ids, questionId => {
+        let q = _this.$refs[`question_${questionId}`];
+        if (data.show) {
+          q ? q[0].showQuestion() : null;
+        } else {
+          q ? q[0].hideQuestion() : null;
+        }
+      });
     }
   }
 };
