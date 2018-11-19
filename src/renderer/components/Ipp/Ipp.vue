@@ -1,12 +1,12 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h2>IPP - Nro. <span v-if="ipp.id">{{ ipp.ipp_number }}</span></h2>
       <div class="controls">
         <router-link :to="{ name: 'ipps' }">
           <el-button type="info">Volver</el-button>
         </router-link>
       </div>
+      <h2>IPP - Nro. <span v-if="ipp.id">{{ ipp.ipp_number }}</span></h2>
     </div>
     <div class="page-content no-bottom">
       <div class="list">

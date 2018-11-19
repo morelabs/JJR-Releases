@@ -1,6 +1,6 @@
 <template>
-  <div style="padding: 20px">
-    <h3>Expediente {{ $route.params.id }}</h3>
+  <div class="page">
+    <div class="page-header"><h2>Expediente {{ $route.params.id }}</h2></div>
   </div>
 </template>
 

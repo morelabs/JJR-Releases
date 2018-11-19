@@ -1,17 +1,12 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h2>
-        Red
-        <span class="sep"><i class="el-icon-arrow-right"/></span>
-        Programas de apoyo
+      <div class="controls">
         <router-link
           :to="{ name: 'newProgram' }"
-          class="el-button el-button--default is-circle">
-          <i class="el-icon-plus"/>
+          class="el-button el-button--primary">
+          <i class="el-icon-plus"/> Nuevo
         </router-link>
-      </h2>
-      <div class="controls">
         <el-input
           v-model="criteria"
           style="width: 300px"
@@ -23,6 +18,11 @@
             @click="search"/>
         </el-input>
       </div>
+      <h2>
+        Red
+        <span class="sep"><i class="el-icon-arrow-right"/></span>
+        Programas de apoyo
+      </h2>
     </div>
     <div class="page-content">
       <div class="list">

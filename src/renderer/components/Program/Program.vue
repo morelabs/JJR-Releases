@@ -6,6 +6,11 @@
       <router-link
         :to="{ name: 'programs' }"
         style="float: left; margin: 5px 20px 5px 0px; font-size: 20px;"><i class="el-icon-back"></i></router-link>
+      <div class="controls">
+        <router-link :to="{ name: 'editProgram', params: { id: $route.params.id } }">
+          <el-button type="warning">Editar</el-button>
+        </router-link>
+      </div>
       <h2>
         Red
         <span class="sep"><i class="el-icon-arrow-right"/></span>
@@ -13,11 +18,6 @@
         <span class="sep"><i class="el-icon-arrow-right"/></span>
         {{ program.name }}
       </h2>
-      <div class="controls">
-        <router-link :to="{ name: 'editProgram', params: { id: $route.params.id } }">
-          <el-button type="warning">Editar</el-button>
-        </router-link>
-      </div>
     </div>
     <div class="page-content">
       <div class="list">

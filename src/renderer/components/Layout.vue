@@ -185,7 +185,7 @@ export default {
 }
 .page .page-header .controls {
   float: right;
-  margin-right: 90px;
+  margin-right: 70px;
 }
 
 .page .page-content .page-form .el-form-item {

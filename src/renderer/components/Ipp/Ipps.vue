@@ -1,7 +1,6 @@
 <template>
   <div class="page">
     <div class="page-header">
-      <h2>Listado de IPPs</h2>
       <div class="controls">
         <el-input
           v-model="criteria"
@@ -14,6 +13,7 @@
             @click="search"/>
         </el-input>
       </div>
+      <h2>Listado de IPPs</h2>
     </div>
     <div class="page-content">
       <div class="list">

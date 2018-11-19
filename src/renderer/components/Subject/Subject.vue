@@ -140,11 +140,11 @@ export default {
     toggleQuestionComponent(data) {
       let _this = this;
       map(data.ids, questionId => {
-        let q = _this.$refs[`question_${questionId}`];
+        let q = _this.$refs[`question_${questionId}`][0];
         if (data.show) {
-          q ? q[0].showQuestion() : null;
+          q.showQuestion();
         } else {
-          q ? q[0].hideQuestion() : null;
+          q.hideQuestion();
         }
       });
     }

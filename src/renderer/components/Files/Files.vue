@@ -1,5 +1,7 @@
 <template>
-  <div class="page-header">Expedientes</div>
+  <div class="page">
+    <div class="page-header"><h2>Expedientes</h2></div>
+  </div>
 </template>
 
 <script>
