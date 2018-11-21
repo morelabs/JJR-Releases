@@ -43,7 +43,7 @@ const updateSubject = ({ commit }, { subjectId, payload }) => {
 const getDynamicOptionList = ({ commit }, { answerId, optionList }) => {
   return new Promise((resolve, reject) => {
     axios
-      .get(`answers/${answerId}?list=${optionList}`)
+      .get(`answers/${answerId}/options?list=${optionList}`)
       .then(response => {
         resolve(response.data);
       })
