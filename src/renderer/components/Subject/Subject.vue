@@ -22,7 +22,7 @@
                 <h4>Datos personales</h4>
                 <p>Nombre: {{ fullname }}</p>
                 <p>DNI: {{ subject.person.document_number }}</p>
-                <p>Genero: {{ subject.person.gender == "Masc" ? "Masculino" : "Femenino" }}</p>
+                <p>Genero: {{ gender }}</p>
                 <p>Nacimiento: {{ subject.person.birth_date | moment("DD MMMM, YYYY") }}</p>
                 <p>Direccion: {{ subject.person.address }}</p>
               </el-card>
@@ -110,6 +110,14 @@ export default {
     fullname() {
       return `${this.subject.person.lastname},
         ${this.subject.person.firstname}`;
+    },
+    gender() {
+      let gender = "";
+      if ((this.subject.person.gender || "") != "") {
+        gender =
+          this.subject.person.gender == "Masc" ? "Masculino" : "Femenino";
+      }
+      return gender;
     },
     subjectType() {
       return `${this.subject.minor ? "Menor" : "Adulto"}`;
