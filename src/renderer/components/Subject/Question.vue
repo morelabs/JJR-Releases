@@ -7,7 +7,7 @@
       v-loading="loading"
       :gutter="20">
       <el-col :span="18">
-        <label>{{ question.label }}</label>
+        <label>{{ question.item_type == "data" ? `${question.item_number} - ` : null }} {{ question.label }}</label>
       </el-col>
       <el-col :span="6">
         <span v-if="editableQuestion()">
@@ -48,8 +48,46 @@
             v-if="question.data_type == 'number'"
             v-model="answer.value"
             @change="update"/>
-          <span v-if="dontRender">
-            tipo {{ question.data_type }}
+          <el-input
+            v-if="question.data_type == 'string'"
+            v-model="answer.value"
+            clearable
+            @change="update"/>
+          <span v-if="useJsonTable">
+            <div
+              v-for="(subquestion) in question.child_questions"
+              :key="subquestion.code"
+              :ref="subquestion.code"
+              class="subquestion_slot">
+              <span>{{ subquestion.label }}</span>
+              <el-input
+                v-if="subquestion.data_type == 'string'"
+                clearable/>
+              <el-select
+                v-if="['combo', 'tag_list'].includes(subquestion.data_type)"
+                placeholder="Seleccione"
+                style="width: 100%">
+                <el-option
+                  v-for="item in subquestion.options"
+                  :key="item"
+                  :label="item"
+                  :value="item"/>
+              </el-select>
+              <el-select
+                v-if="subquestion.data_type == 'sql_list'"
+                placeholder="Seleccione"
+                style="width: 100%">
+                <el-option
+                  v-for="item in getDynamicOptions(subquestion)"
+                  :key="item"
+                  :label="item"
+                  :value="item"/>
+              </el-select>
+            </div>
+            <el-button
+              type="success"
+              size="mini"
+              round>Agregar</el-button>
           </span>
         </span>
         <span v-else>
@@ -97,13 +135,8 @@ export default {
     };
   },
   computed: {
-    dontRender() {
-      return (
-        this.question.data_type != "combo" &&
-        this.question.data_type != "tag_list" &&
-        this.question.data_type != "boolean" &&
-        this.question.data_type != "number"
-      );
+    useJsonTable() {
+      return this.question.data_type == "json";
     },
     useSimpleSelect() {
       return (
@@ -123,7 +156,7 @@ export default {
     this.copyAnswer();
   },
   methods: {
-    ...subjectActions(["updateAnswer"]),
+    ...subjectActions(["updateAnswer", "getDynamicOptionList"]),
     editableQuestion() {
       return this.editable;
     },
@@ -168,6 +201,20 @@ export default {
       let question_ids = this.question.dependent_options.ids || [];
       let show = this.question.dependent_options[this.answer.value] || false;
       this.$emit("toggle", { ids: question_ids, show: show });
+    },
+    getDynamicOptions(subquestion) {
+      let answerId = this.answer.id;
+      let options = [];
+      this.getDynamicOptionList({ answerId, optionList: subquestion.options })
+        .then(response => {
+          console.log("response", response);
+          options = response.data;
+        })
+        .catch(error => {
+          console.log("error en getDynamicOptionList", error);
+        });
+      console.log("options", options);
+      return options;
     }
   }
 };
