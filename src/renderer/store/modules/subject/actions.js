@@ -40,6 +40,19 @@ const updateSubject = ({ commit }, { subjectId, payload }) => {
   });
 };
 
+const getDynamicOptionList = ({ commit }, { answerId, optionList }) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`answers/${answerId}?list=${optionList}`)
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
+
 const updateAnswer = ({ commit }, { answerId, payload }) => {
   return new Promise((resolve, reject) => {
     axios
@@ -57,5 +70,6 @@ export default {
   fetchSubject,
   updateSubject,
   addSubject,
+  getDynamicOptionList,
   updateAnswer
 };
