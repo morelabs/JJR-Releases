@@ -76,6 +76,8 @@
                     :question="item.question"
                     :answer="item.answer"
                     :editable="subject.editable"
+                    :subject-id="subject.id"
+                    :ipp-case-id="subject.ipp_case_id"
                     @toggle="toggleQuestionComponent($event)"/>
                 </div>
               </div>

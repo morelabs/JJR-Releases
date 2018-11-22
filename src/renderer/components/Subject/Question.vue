@@ -59,6 +59,8 @@
             <complex-question
               :child-questions="question.child_questions"
               :answer="answer"
+              :ipp-case-id="ippCaseId"
+              :subject-id="subjectId"
               @change="update"
             />
           </el-row>
@@ -97,6 +99,14 @@ export default {
       required: true,
       default: true
     },
+    ippCaseId: {
+      type: Number,
+      required: true
+    },
+    subjectId: {
+      type: Number,
+      required: true
+    },
     editable: {
       type: Boolean,
       required: true,
@@ -132,7 +142,7 @@ export default {
     this.copyAnswer();
   },
   methods: {
-    ...subjectActions(["updateAnswer", "getDynamicOptionList"]),
+    ...subjectActions(["updateAnswer"]),
     editableQuestion() {
       return this.editable;
     },

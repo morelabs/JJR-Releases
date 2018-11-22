@@ -41,6 +41,14 @@ export default {
     answerId: {
       type: Number,
       required: true
+    },
+    subjectId: {
+      type: Number,
+      required: true
+    },
+    ippCaseId: {
+      type: Number,
+      required: true
     }
   },
   data() {
@@ -58,6 +66,8 @@ export default {
     getDynamicOptions() {
       this.getDynamicOptionList({
         answerId: this.answerId,
+        subjectId: this.subjectId,
+        ippCaseId: this.ippCaseId,
         optionList: this.child.options
       })
         .then(response => {

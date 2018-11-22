@@ -9,6 +9,8 @@
         class="subquestion_slot">
         <child-question
           :child="subquestion"
+          :ipp-case-id="ippCaseId"
+          :subject-id="subjectId"
           :answer-id="answer.id" />
       </el-col>
       <el-col :span="bestSize">
@@ -68,6 +70,14 @@ export default {
       type: Object,
       required: true,
       default: () => {}
+    },
+    ippCaseId: {
+      type: Number,
+      required: true
+    },
+    subjectId: {
+      type: Number,
+      required: true
     }
   },
   data() {
