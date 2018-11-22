@@ -10,7 +10,7 @@
       v-model="child.value"
       placeholder="Seleccione">
       <el-option
-        v-for="item in [1, 2, 3, 4]"
+        v-for="item in child.options"
         :key="item"
         :label="item"
         :value="item"/>
@@ -61,7 +61,7 @@ export default {
         optionList: this.child.options
       })
         .then(response => {
-          console.log("response", this.child.label, response);
+          // console.log("response", this.child.label, response);
           this.values = response.data;
         })
         .catch(error => {
