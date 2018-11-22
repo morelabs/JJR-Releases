@@ -6,10 +6,10 @@
     <el-row
       v-loading="loading"
       :gutter="20">
-      <el-col :span="18">
+      <el-col :span="14">
         <label>{{ question.item_type == "data" ? `${question.item_number} - ` : null }} {{ question.label }}</label>
       </el-col>
-      <el-col :span="6">
+      <el-col :span="10">
         <span v-if="editableQuestion()">
           <el-select
             v-if="useMultipleSelect"
@@ -53,21 +53,22 @@
             v-model="answer.value"
             clearable
             @change="update"/>
+          <el-row
+            v-if="useJsonTable"
+            class="json-table">
+            <complex-question
+              :child-questions="question.child_questions"
+              :answer="answer"
+              @change="update"
+            />
+          </el-row>
         </span>
         <span v-else>
           {{ answer.value || "S/D" }}
         </span>
       </el-col>
     </el-row>
-    <el-row
-      v-if="useJsonTable"
-      class="json-table">
-      <complex-question
-        :child-questions="question.child_questions"
-        :answer="answer"
-        @change="update"
-      />
-    </el-row>
+    
   </div>
 </template>
 

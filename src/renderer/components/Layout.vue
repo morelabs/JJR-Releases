@@ -73,6 +73,7 @@ export default {
     ...authGetters(["user"])
   },
   created() {
+    // listen network connection
     this.$on("online", function() {
       this.onlineState = true;
       this.toggleModal();
@@ -81,7 +82,17 @@ export default {
       this.onlineState = false;
       this.toggleModal();
     });
-    ipcRenderer.on("command", (ev, data) => {
+
+    // Manage updates
+    ipcRenderer.send("start-connection", {});
+
+    ipcRenderer.on("message", (event, data) => {
+      console.log(data);
+      this.message = data;
+    });
+
+    // manage menu commands
+    ipcRenderer.on("command", (event, data) => {
       if (data.message === "gsearch") {
         this.openSearchModal();
       } else {
@@ -112,6 +123,9 @@ export default {
         this.message = "";
         this.showModal = true;
       }
+    },
+    checkUpdate() {
+      ipcRenderer.send("start-connection");
     }
   }
 };

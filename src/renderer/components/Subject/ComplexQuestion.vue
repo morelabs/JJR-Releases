@@ -1,86 +1,63 @@
 <template>
   <div>
     <el-row :gutter="20">
-      <el-col :span="12">
-        <el-row :gutter="20">
-          <el-col
-            v-for="(subquestion) in childQuestions"
-            :span="4"
-            :key="subquestion.code"
-            :ref="subquestion.code"
-            class="subquestion_slot">
-            <h5>{{ subquestion.label }}</h5>
-            <el-input
-              v-if="subquestion.data_type == 'string'"
-              v-model="subquestion.value"
-              clearable/>
-            <el-select
-              v-if="['combo', 'tag_list'].includes(subquestion.data_type)"
-              v-model="subquestion.value"
-              placeholder="Seleccione">
-              <el-option
-                v-for="item in subquestion.options"
-                :key="item"
-                :label="item"
-                :value="item"/>
-            </el-select>
-            <el-select
-              v-if="subquestion.data_type == 'sql_list'"
-              v-model="subquestion.value"
-              placeholder="Seleccione">
-              <el-option
-                v-for="item in getDynamicOptions(subquestion)"
-                :key="item"
-                :label="item"
-                :value="item"/>
-            </el-select>
-          </el-col>
-        </el-row>
-        <el-button
-          :disabled="completed"
-          type="success"
-          size="mini"
-          round
-          @click="addSubAnswer()">Agregar</el-button>
+      <el-col
+        v-for="(subquestion) in childQuestions"
+        :span="bestSize"
+        :key="subquestion.code"
+        :ref="subquestion.code"
+        class="subquestion_slot">
+        <child-question
+          :child="subquestion"
+          :answer-id="answer.id" />
       </el-col>
-      <el-col :span="12">
-        <el-table
-          :data="answer.value.values"
-          style="width: 100%">
-          <el-table-column
-            v-for="(item, index) in childQuestions"
-            :key="index"
-            :prop="item.label"
-            :label="item.label"
-            width="150"/>
-          <el-table-column
-            label=""
-            width="120">
-            <template slot-scope="scope">
-              <el-button
-                type="text"
-                size="small"
-                @click.native.prevent="removeSubAnswer(scope.$index)">Quitar</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-        <el-button
-          v-if="modified"
-          type="success"
-          round
-          @click="saveAnswer()">Grabar</el-button>
+      <el-col :span="bestSize">
+        <div style="margin-top: 26px;">
+          <el-button
+            :disabled="completed"
+            type="primary"
+            style="width: 100%"
+            @click="addSubAnswer()">Agregar</el-button>
+        </div>
       </el-col>
     </el-row>
+    <el-row
+      v-for="(item, index) in answer.value.values"
+      :gutter="20"
+      :key="index">
+      <el-col
+        v-for="(value, key, index2) in item"
+        :key="index2"
+        :span="bestSize"
+        style="border-bottom: solid 1px #eee;">
+        <div style="padding: 5px 10px">{{ value }}</div>
+      </el-col>
+      <el-col :span="bestSize">
+        <el-button
+          type="info"
+          size="small"
+          plain
+          style="width: 100%; margin-top: -5px;"
+          @click.native.prevent="removeSubAnswer(index)">Quitar</el-button>
+      </el-col>
+    </el-row>
+    <div style="margin-top: 10px;">
+      <el-button
+        v-if="modified"
+        type="danger"
+        style="width: 100%;"
+        @click="saveAnswer()">Grabar</el-button>
+    </div>
   </div>
 </template>
 
 <script>
 import { clone, compact } from "lodash";
-import { createNamespacedHelpers as namespace } from "vuex";
-const { mapActions: subjectActions } = namespace("subject");
+import ChildQuestion from "./ChildQuestion";
 
 export default {
   name: "ComplexQuestion",
+  components: { ChildQuestion },
   props: {
     childQuestions: {
       type: Array,
@@ -99,6 +76,10 @@ export default {
     };
   },
   computed: {
+    bestSize() {
+      let col = Math.floor(24 / (this.childQuestions.length + 1));
+      return col;
+    },
     completed() {
       return (
         compact(this.childQuestions.map(child => !!child.value)).length !==
@@ -107,19 +88,6 @@ export default {
     }
   },
   methods: {
-    ...subjectActions(["getDynamicOptionList"]),
-    getDynamicOptions(subquestion) {
-      let answerId = this.answer.id;
-      let options = [];
-      this.getDynamicOptionList({ answerId, optionList: subquestion.options })
-        .then(response => {
-          //console.log("response", response);
-          return response.data;
-        })
-        .catch(error => {
-          console.log("error en getDynamicOptionList", error);
-        });
-    },
     addSubAnswer() {
       let newAnswer = {};
       this.childQuestions.forEach(child => {
@@ -135,7 +103,6 @@ export default {
       this.modified = true;
     },
     saveAnswer() {
-      console.log("answer", this.answer);
       this.$emit("change");
       this.modified = false;
     }

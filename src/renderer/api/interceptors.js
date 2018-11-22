@@ -2,7 +2,7 @@ import axios from "axios";
 import router from "../router";
 
 export default function setup() {
-  axios.defaults.baseURL = process.env.API_URL;
+  axios.defaults.baseURL = "http://localhost:3000"; // process.env.API_URL;
   axios.interceptors.request.use(
     function(config) {
       let token = localStorage.getItem("token");

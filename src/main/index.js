@@ -9,6 +9,63 @@ ipcMain.on("checked", data => {
   mainWindow.maximize();
 });
 
+function formatSizeUnits(bytes) {
+  if (bytes >= 1073741824) {
+    bytes = `${(bytes / 1073741824).toFixed(2)} GB`;
+  } else if (bytes >= 1048576) {
+    bytes = `${(bytes / 1048576).toFixed(2)} MB`;
+  } else if (bytes >= 1024) {
+    bytes = `${(bytes / 1024).toFixed(2)} KB`;
+  } else if (bytes >= 1) {
+    bytes = `${bytes} B`;
+  }
+
+  return bytes;
+}
+
+autoUpdater.on("checking-for-update", () => {
+  sendMessageToFront("message", "checking", "Buscando actualizaciones");
+});
+
+autoUpdater.on("update-available", info => {
+  sendMessageToFront("message", "available", "Version disponible");
+});
+
+autoUpdater.on("update-not-available", info => {
+  sendMessageToFront("message", "notAvailable", "No hay una nueva version disponible");
+});
+
+autoUpdater.on("error", err => {
+  sendMessageToFront("message", "error", `Error in auto-updater: ${err}`);
+});
+
+autoUpdater.on("update-downloaded", () => {
+  sendMessageToFront("message", "done", "se bajo la actualizacion");
+});
+
+autoUpdater.on("download-progress", progressObj => {
+  let percent = `${Math.floor(progressObj.percent)} %`;
+  let downloaded = formatSizeUnits(progressObj.transferred);
+  let total = formatSizeUnits(progressObj.total);
+  sendMessageToFront("message", "download", `${percent} (${downloaded} / ${total})`);
+});
+
+function startListenerUpdater() {
+  ipcMain.on("start-connection", () => {
+    sendMessageToFront("message", "start-listening", "Entablamos comunicacion");
+    autoUpdater.checkForUpdates();
+  });
+
+  ipcMain.on("install", () => {
+    autoUpdater.quitAndInstall();
+  });
+}
+
+function sendMessageToFront(event, status, data) {
+  console.info(`Message to send: ${event} - ${status} - ${data}`);
+  mainWindow.webContents.send(event, status, data);
+}
+
 const menuTemplate = [
   {
     label: "JJR",
@@ -39,7 +96,7 @@ const menuTemplate = [
         label: "Nuevo IPP",
         accelerator: "CmdOrCtrl+Alt+N",
         click: () => {
-          sendMessageToFront("command", "newIpp");
+          sendMessageToFront("command", "command", "newIpp");
         }
       },
       { type: "separator" },
@@ -47,7 +104,7 @@ const menuTemplate = [
         label: "Buscador",
         accelerator: "CmdOrCtrl+Alt+F",
         click: () => {
-          sendMessageToFront("command", "gsearch");
+          sendMessageToFront("command", "command", "gsearch");
         }
       }
     ]
@@ -77,9 +134,7 @@ if (process.env.NODE_ENV === "development") {
   });
 }
 
-function sendMessageToFront(ev, text) {
-  mainWindow.webContents.send(ev, { event: ev, message: text });
-}
+
 
 /**
  * Set `__static` path to static files in production
@@ -126,6 +181,7 @@ function createWindow() {
 }
 
 app.on("ready", () => {
+  startListenerUpdater();
   createWindow();
 });
 
