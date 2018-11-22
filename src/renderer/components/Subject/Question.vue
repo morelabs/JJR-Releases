@@ -53,58 +53,33 @@
             v-model="answer.value"
             clearable
             @change="update"/>
-          <span v-if="useJsonTable">
-            <div
-              v-for="(subquestion) in question.child_questions"
-              :key="subquestion.code"
-              :ref="subquestion.code"
-              class="subquestion_slot">
-              <span>{{ subquestion.label }}</span>
-              <el-input
-                v-if="subquestion.data_type == 'string'"
-                clearable/>
-              <el-select
-                v-if="['combo', 'tag_list'].includes(subquestion.data_type)"
-                placeholder="Seleccione"
-                style="width: 100%">
-                <el-option
-                  v-for="item in subquestion.options"
-                  :key="item"
-                  :label="item"
-                  :value="item"/>
-              </el-select>
-              <el-select
-                v-if="subquestion.data_type == 'sql_list'"
-                placeholder="Seleccione"
-                style="width: 100%">
-                <el-option
-                  v-for="item in getDynamicOptions(subquestion)"
-                  :key="item"
-                  :label="item"
-                  :value="item"/>
-              </el-select>
-            </div>
-            <el-button
-              type="success"
-              size="mini"
-              round>Agregar</el-button>
-          </span>
         </span>
         <span v-else>
           {{ answer.value || "S/D" }}
         </span>
       </el-col>
     </el-row>
+    <el-row
+      v-if="useJsonTable"
+      class="json-table">
+      <complex-question
+        :child-questions="question.child_questions"
+        :answer="answer"
+        @change="update"
+      />
+    </el-row>
   </div>
 </template>
 
 <script>
 import { clone } from "lodash";
+import ComplexQuestion from "./ComplexQuestion";
 import { createNamespacedHelpers as namespace } from "vuex";
 const { mapActions: subjectActions } = namespace("subject");
 
 export default {
   name: "Question",
+  components: { ComplexQuestion },
   props: {
     question: {
       type: Object,
@@ -167,7 +142,7 @@ export default {
       this.show_component = true;
     },
     copyAnswer() {
-      this.original_value = this.answer.value;
+      this.original_value = clone(this.answer.value);
     },
     update() {
       this.loading = true;
@@ -201,20 +176,6 @@ export default {
       let question_ids = this.question.dependent_options.ids || [];
       let show = this.question.dependent_options[this.answer.value] || false;
       this.$emit("toggle", { ids: question_ids, show: show });
-    },
-    getDynamicOptions(subquestion) {
-      let answerId = this.answer.id;
-      let options = [];
-      this.getDynamicOptionList({ answerId, optionList: subquestion.options })
-        .then(response => {
-          console.log("response", response);
-          options = response.data;
-        })
-        .catch(error => {
-          console.log("error en getDynamicOptionList", error);
-        });
-      console.log("options", options);
-      return options;
     }
   }
 };
