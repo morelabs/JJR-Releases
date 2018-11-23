@@ -2,7 +2,7 @@
   <div class="search-form">
     <div
       @click="openSearch()">
-      <span>Ir a ...</span>
+      <span>Buscar</span>
       <div style="float: right"><i class="el-icon-search"></i></div>
     </div>
     <div

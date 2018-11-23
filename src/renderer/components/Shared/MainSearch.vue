@@ -31,9 +31,6 @@
             <el-option
               value="ipp"
               label="IPP"/>
-            <el-option
-              value="contacto"
-              label="Contacto"/>
           </el-select>
         </el-input>
         <div
@@ -49,8 +46,7 @@
             @click="goTo(suggestion)">
             <span v-html="boldenSuggestion(suggestion, query)"></span>
             <div class="extra">
-              <span v-if="source === 'contacto'">{{ suggestion.name || 'Sin datos' }}</span>
-              <span v-if="source === 'ipp'">{{ suggestion.assignees || 'Peniente de asignacion' }}</span>
+              <span>{{ suggestion.definition }}</span>
             </div>
           </div>
         </div>
@@ -60,6 +56,8 @@
 </template>
 
 <script>
+import { createNamespacedHelpers as namespace } from "vuex";
+const { mapActions: ippActions } = namespace("ipp");
 export default {
   name: "MainSearch",
   data() {
@@ -76,47 +74,12 @@ export default {
         suggestionItem: "my-suggestion-list-item"
       },
       fields: {
-        contacto: "email",
-        ipp: "number"
-      },
-      list: {
-        ipp: [
-          {
-            id: 1,
-            value: "123123123123",
-            assignees: "Juan, Pedro, Soledad"
-          },
-          {
-            id: 2,
-            number: "143123123123",
-            assignees: ""
-          },
-          {
-            id: 3,
-            number: "153123123123",
-            assignees: "Juan, Pedro, Soledad"
-          },
-          {
-            id: 4,
-            number: "173123123123",
-            assignees: "Juan, Pedro, Soledad"
-          },
-          {
-            id: 5,
-            number: "1235123123123",
-            assignees: ""
-          }
-        ],
-        contacto: [
-          { id: 1, email: "pepe@mail.com", name: "Jorge Moreno" },
-          { id: 2, email: "andres@mail.com", name: "Andres Moreno" },
-          { id: 3, email: "jose@mail.com", name: "Jose Moreno" },
-          { id: 4, email: "jose.andres@mail.com", name: "J. Andres Moreno" }
-        ]
+        ipp: "ipp_number"
       }
     };
   },
   methods: {
+    ...ippActions(["fetchIpps"]),
     openSearch() {
       this.showForm = true;
       setTimeout(() => {
@@ -129,23 +92,22 @@ export default {
     },
     goTo(selected) {
       this.showForm = false;
-      if (this.source === "expediente")
-        this.$router.push({ name: "file", params: { id: selected.id } });
-      else if (this.source === "contacto")
-        console.log("Ir al perfil del usuario");
-      else if (this.source === "ipp") console.log("Abrir ipp?");
+      console.log(selected);
+      this.$router.push({ name: "ipp", params: { id: selected.id } });
     },
     filterOptions(value) {
+      if (value.length <= 3) return;
       return new Promise((resolve, reject) => {
-        this.loading = true;
-        let field = this.fields[this.source];
-        setTimeout(() => {
-          let result = this.list[this.source].filter(option => {
-            return String(option[field]).includes(String(value));
+        this.loadIPPs(value)
+          .then(response => {
+            this.loading = false;
+            let ipps = response.ipp_cases;
+            resolve(ipps);
+          })
+          .catch(error => {
+            console.log(error);
+            reject();
           });
-          this.loading = false;
-          resolve(result);
-        }, 300);
       });
     },
     boldenSuggestion(suggestion, query) {
@@ -154,6 +116,15 @@ export default {
         new RegExp("(.*?)(" + query + ")(.*?)", "gi"),
         "$1<b class='red'>$2</b>$3"
       );
+    },
+    loadIPPs() {
+      this.loading = true;
+      let params = {
+        criteria: this.query,
+        page: 1,
+        pageSize: 100
+      };
+      return this.fetchIpps(params);
     }
   }
 };

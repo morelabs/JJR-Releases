@@ -32,7 +32,11 @@ autoUpdater.on("update-available", info => {
 });
 
 autoUpdater.on("update-not-available", info => {
-  sendMessageToFront("message", "notAvailable", "No hay una nueva version disponible");
+  sendMessageToFront(
+    "message",
+    "notAvailable",
+    "No hay una nueva version disponible"
+  );
 });
 
 autoUpdater.on("error", err => {
@@ -47,7 +51,11 @@ autoUpdater.on("download-progress", progressObj => {
   let percent = `${Math.floor(progressObj.percent)} %`;
   let downloaded = formatSizeUnits(progressObj.transferred);
   let total = formatSizeUnits(progressObj.total);
-  sendMessageToFront("message", "download", `${percent} (${downloaded} / ${total})`);
+  sendMessageToFront(
+    "message",
+    "download",
+    `${percent} (${downloaded} / ${total})`
+  );
 });
 
 function startListenerUpdater() {
@@ -133,8 +141,6 @@ if (process.env.NODE_ENV === "development") {
     role: "toggledevtools"
   });
 }
-
-
 
 /**
  * Set `__static` path to static files in production

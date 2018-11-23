@@ -9,11 +9,12 @@ export default function setup() {
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
       }
+      config.headers["Access-Control-Jurisdiction"] = "";
       config.headers["Accept"] = "application/json";
       config.headers["Content-Type"] = "application/json";
       config.headers["Access-Control-Allow-Origin"] = "*";
       config.headers["Access-Control-Allow-Headers"] =
-        "Origin, Accept, Content-Type, Authorization, Access-Control-Allow-Origin, Api-region";
+        "Origin, Accept, Content-Type, Authorization, Access-Control-Allow-Origin, Access-Control-Jurisdiction";
       return config;
     },
     function(err) {

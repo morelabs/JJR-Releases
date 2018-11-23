@@ -35,7 +35,7 @@
           @confirm-logout="confirmLogout()"/>
       </div>
     </el-tooltip>
-    <!-- <search-button @open-search="openSearchModal()"/> -->
+    <search-button @open-search="openSearchModal()"/>
     <br>
     <div class="menu-items">
       <side-menu-item

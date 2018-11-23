@@ -39,7 +39,6 @@
           <el-radio-group
             v-if="question.data_type == 'boolean'"
             v-model="answer.value"
-            size="small"
             @change="update">
             <el-radio-button label="Si"/>
             <el-radio-button label="No"/>

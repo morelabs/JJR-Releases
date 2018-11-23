@@ -23,27 +23,28 @@
         </div>
       </el-col>
     </el-row>
+    <br>
     <el-row
       v-for="(item, index) in answer.value.values"
       :gutter="20"
-      :key="index">
+      :key="index"
+      class="value-row">
       <el-col
         v-for="(value, key, index2) in item"
         :key="index2"
-        :span="bestSize"
-        style="border-bottom: solid 1px #eee;">
-        <div style="padding: 5px 10px">{{ value }}</div>
+        :span="bestSize">
+        <div class="value-cell">{{ value }}</div>
       </el-col>
       <el-col :span="bestSize">
         <el-button
           type="info"
           size="small"
           plain
-          style="width: 100%; margin-top: -5px;"
+          class="value-cell-button"
           @click.native.prevent="removeSubAnswer(index)">Quitar</el-button>
       </el-col>
     </el-row>
-    <div style="margin-top: 10px;">
+    <div class="save-answer-button">
       <el-button
         v-if="modified"
         type="danger"
@@ -124,5 +125,21 @@ export default {
 .question-data {
   /*border-top: solid 1px #eee;*/
   padding: 5px 0px;
+}
+
+.value-row {
+  border-bottom: solid 1px #eee;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+}
+.value-cell {
+  padding: 5px 10px;
+}
+.value-cell-button {
+  width: 100%;
+  margin-top: -5px;
+}
+.save-answer-button {
+  margin: 10px 0px;
 }
 </style>

@@ -41,7 +41,8 @@
               <ul>
                 <li
                   v-for="(vict, index) in ipp.victimizers"
-                  :key="index"><victimizer :victimizer="vict"/></li>
+                  :key="index"><victimizer :victimizer="vict"/>
+                </li>
               </ul>
             </el-tab-pane>
             <el-tab-pane
