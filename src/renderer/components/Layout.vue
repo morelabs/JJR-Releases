@@ -86,17 +86,20 @@ export default {
     // Manage updates
     ipcRenderer.send("start-connection", {});
 
-    ipcRenderer.on("message", (event, data) => {
-      console.log(data);
-      this.message = data;
+    ipcRenderer.on("message", (event, message) => {
+      console.log(event);
+      console.log(message);
+      this.message = message.data;
     });
 
     // manage menu commands
-    ipcRenderer.on("command", (event, data) => {
-      if (data.message === "gsearch") {
+    ipcRenderer.on("command", (event, message) => {
+      console.log(event);
+      console.log(message);
+      if (message.status === "search") {
         this.openSearchModal();
-      } else {
-        this.$router.push({ name: data.message });
+      } else if (message.status === "new") {
+        this.$router.push({ name: message.data });
       }
     });
   },
@@ -111,7 +114,8 @@ export default {
       this.collapsed = value;
     },
     openSearchModal() {
-      this.$refs.search.openSearch();
+      let modal = this.$refs.search;
+      modal.openSearch();
     },
     toggleModal() {
       if (this.showModal) {
@@ -171,7 +175,7 @@ export default {
   line-height: 4em;
   border-bottom: solid 1px #eee;
   position: absolute;
-  z-index: 1000;
+  z-index: 100;
   background: #fff;
   width: 100%;
   padding: 10px 20px;
@@ -182,7 +186,7 @@ export default {
   left: 0px;
   position: absolute;
   width: 100%;
-  z-index: 1000;
+  z-index: 100;
   background: #fff;
   border-top: solid 1px #eee;
   padding: 13px 20px;
@@ -223,5 +227,8 @@ export default {
 .page .page-content .page-form {
   width: 80%;
   margin: auto;
+}
+.el-popover {
+  z-index: 20000;
 }
 </style>

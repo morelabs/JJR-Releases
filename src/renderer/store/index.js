@@ -9,6 +9,7 @@ import referent from "./modules/referent";
 import program from "./modules/program";
 import organization from "./modules/organization";
 import zone from "./modules/zone";
+import person from "./modules/person";
 
 Vue.use(Vuex);
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     organization,
     program,
     referent,
+    person,
     zone
   },
   strict: process.env.NODE_ENV !== "production"

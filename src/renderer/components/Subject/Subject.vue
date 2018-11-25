@@ -1,44 +1,27 @@
 <template>
   <div
     v-loading="!subject.id"
-    class="page" >
+    class="page subject" >
     <div v-if="subject.id">
       <el-aside
         :class="isOpen ? 'not-collapsed' : 'collapsed'"
         class="subject-aside">
-        <div class="subject-aside-header">
-          <a @click="isOpen = !isOpen"><i class="el-icon-close"></i></a>
-          <h2>Datos del sujeto</h2>
-        </div>
-        <div class="subject-aside-content">
-          <el-card class="box-card">
-            <div slot="header">Datos personales</div>
-            <p>Nombre: {{ fullname }}</p>
-            <p>DNI: {{ subject.person.document_number }}</p>
-            <p>Genero: {{ gender }}</p>
-            <p>Nacimiento: {{ subject.person.birth_date | moment("DD MMMM, YYYY") }}</p>
-            <p>Direccion: {{ subject.person.address }}</p>
-          </el-card>
-          <hr>
-          <el-card class="box-card">
-            <div slot="header">Datos de contacto</div>
-            <div
-              v-for="(item, index) in subject.person.contacts"
-              :key="index"
-              class="contact_slot">
-              <contact :contact="item"/>
-            </div>
-          </el-card>
-          <hr>
-          <el-card class="box-card">
-            <div slot="header">Responsables</div>
-            <div
-              v-for="(item, index) in subject.person.responsibles"
-              :key="index"
-              class="responsible_slot">
-              <responsible :responsible="item"/>
-            </div>
-          </el-card>
+        <div class="aside-container">
+          <div class="subject-aside-header">
+            <a @click="isOpen = !isOpen"><i class="el-icon-close"></i></a>
+            <h2>Datos Personales</h2>
+          </div>
+          <div class="subject-aside-content">
+            <person
+              :person="subject.person"
+              @udpate-person="(data) => updatePerson(data)"/>
+            <contacts
+              :person="subject.person"
+              @update-contacts="(data) => updateContacts(data)"/>
+            <responsables
+              :person="subject.person"
+              @update-contacts="(data) => updateResponsables(data)"/>
+          </div>
         </div>
       </el-aside>
       <div
@@ -49,8 +32,13 @@
           :to="{ name: 'ipp', params: { id: subject.ipp_case_id } }"
           style="float: left; margin: 5px 20px 5px 0px; font-size: 20px;"><i class="el-icon-back"></i></router-link>
         <h2>
-          <span>IPP - Nro. {{ subject.ipp_case.ipp_number }} -  {{ fullname }}</span>
-          <span class="header-toggle"><a @click="isOpen = !isOpen"><i class="el-icon-arrow-left"></i></a></span>
+          <span>IPP - Nro. {{ subject.ipp_case.ipp_number }}</span>
+          -
+          <el-tooltip content="Abrir panel de datos personales">
+            <a
+              style="color: #888;"
+              @click="isOpen = !isOpen">{{ fullname }}</a>
+          </el-tooltip>
           <span class="header-notification">{{ subject.inquiry_date || "Sin fecha de indagatoria" }}</span>
         </h2>
       </div>
@@ -59,8 +47,7 @@
           <div class="ipp-content">
             <el-tabs 
               v-model="activeTabName"
-              :stretch="true"
-              @tab-click="handleClick">
+              :stretch="true">
               <el-tab-pane
                 v-for="(category_data, category_name, category_index) in subject.file_data"
                 :key="category_index"
@@ -96,9 +83,10 @@
 </template>
 
 <script>
-import { filter, map } from "lodash";
-import Contact from "./Contact";
-import Responsible from "./Responsible";
+import { filter, map, clone } from "lodash";
+import Contacts from "./Contacts";
+import Responsables from "./Responsables";
+import Person from "./Person";
 import Question from "./Question";
 import * as moment from "moment";
 import { createNamespacedHelpers as namespace } from "vuex";
@@ -106,13 +94,16 @@ const { mapActions: subjectActions } = namespace("subject");
 
 export default {
   name: "Subject",
-  components: { Contact, Responsible, Question },
+  components: { Contacts, Responsables, Question, Person },
   data() {
     return {
       loading: false,
       subject: {},
       activeTabName: "Datos Familiares",
-      isOpen: false
+      isOpen: false,
+      dateFormat: "dddd dd, MMMM yyyy",
+      isDisabled: true,
+      originalPerson: {}
     };
   },
   computed: {
@@ -136,7 +127,7 @@ export default {
     this.loadSubject();
   },
   methods: {
-    ...subjectActions(["fetchSubject"]),
+    ...subjectActions(["fetchSubject", "saveSubjectData"]),
     filter: filter,
     loadSubject() {
       this.loading = true;
@@ -151,8 +142,8 @@ export default {
           this.loading = false;
         });
     },
-    handleClick(element, event) {
-      //console.log("Selected", element, event);
+    updatePerson(data) {
+      this.subject.person = data;
     },
     toggleQuestionComponent(data) {
       let _this = this;
@@ -169,79 +160,102 @@ export default {
 };
 </script>
 
-<style scoped>
-.ipp-top-info {
-  margin: 10px 0px;
-  border-bottom: solid 3px #eee;
-  padding-bottom: 15px;
-}
-.ipp-top-info .box-card {
-  min-height: 300px;
-  overflow-y: scroll;
-}
-.ipp-top-info .box-card h4 {
-  margin-top: 0px;
-  padding-bottom: 10px;
-  border-bottom: solid 1px #eee;
-}
-.ipp-content ul {
-  list-style: none;
-  margin: 0px;
-  padding: 0px;
-}
-.header-notification {
-  float: right;
-  margin: 5px 30px 5px 0px;
-  color: #f56c6c;
-}
-.header-toggle {
-  float: right;
-  margin: 5px 25px;
-  font-size: 30px;
-  font-weight: bold;
-}
-.subject-aside {
-  display: none;
-  height: 100%;
-  background: #fff;
-  color: #333;
-  z-index: 10002;
-  width: 500px !important;
-  right: 0px;
-  position: absolute;
-  border-left: solid 1px #eee;
-}
-.subject-aside.collapsed {
-  display: none;
-}
-
-.subject-aside.not-collapsed {
-  display: block;
-}
-.subject-aside .subject-aside-header {
-  border-bottom: solid 1px #eee;
-  height: 4rem;
-  line-height: 4rem;
-  padding: 10px 0px;
-}
-.subject-aside .subject-aside-content {
-  padding: 20px;
-}
-.subject-aside .subject-aside-header h2 {
-  margin: 5px 20px;
-}
-.subject-aside .subject-aside-header a {
-  float: right;
-  font-size: 30px;
-  margin: 5px 20px;
-}
-
-.backdrop {
-  position: absolute;
-  z-index: 1001;
-  height: 100%;
-  background: #333;
-  width: 100%;
-  opacity: 0.7;
+<style lang="scss">
+.subject {
+  .ipp-top-info {
+    margin: 10px 0px;
+    border-bottom: solid 3px #eee;
+    padding-bottom: 15px;
+  }
+  .ipp-top-info .box-card {
+    min-height: 300px;
+    overflow-y: scroll;
+  }
+  .ipp-top-info .box-card h4 {
+    margin-top: 0px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px #eee;
+  }
+  .ipp-content ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+  }
+  .header-notification {
+    float: right;
+    margin: 5px 20px 5px 0px;
+    color: #f56c6c;
+  }
+  .subject-aside {
+    height: 100%;
+    background: #fff;
+    color: #333;
+    z-index: 150;
+    width: 600px !important;
+    right: 0;
+    position: absolute;
+    border-left: solid 1px #eee;
+  }
+  .subject-aside.collapsed {
+    display: none;
+  }
+  .subject-aside.not-collapsed {
+    display: block;
+  }
+  .subject-aside .aside-container {
+    position: relative;
+    height: 100%;
+    .subject-aside-header {
+      border-bottom: solid 1px #eee;
+      height: 4rem;
+      line-height: 4rem;
+      padding: 10px 0px;
+      position: absolute;
+      background: #fff;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 121;
+      h2 {
+        margin: 5px 20px;
+      }
+      a {
+        float: right;
+        font-size: 30px;
+        margin: 5px 20px;
+      }
+    }
+    .subject-aside-content {
+      height: 100%;
+      overflow: scroll;
+      .edit-buttons {
+        float: right;
+        font-size: 0.8rem;
+        margin: 5px 0px;
+        a.save {
+          color: #f56c6c;
+          margin-left: 10px;
+        }
+        a.cancel,
+        a.edit {
+          color: #999;
+        }
+      }
+    }
+  }
+  .backdrop {
+    position: absolute;
+    z-index: 145;
+    height: 100%;
+    background: #333;
+    width: 100%;
+    opacity: 0.7;
+  }
+  .box-card {
+    margin-bottom: 20px;
+  }
+  a {
+    cursor: pointer;
+  }
 }
 </style>

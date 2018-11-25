@@ -292,6 +292,7 @@ export default {
 .menu-items a.menu-item span {
   padding-left: 35px;
 }
+
 .menu-items h3 i,
 .menu-items .menu-item.dashboard i {
   float: left;
@@ -309,7 +310,7 @@ export default {
   padding: 10px 0px 10px 10px;
 }
 .menu-items h3 {
-  margin: 0px;
+  margin: 10px 0px;
   padding: 10px 0px 10px 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   border-top: 1px solid rgba(255, 255, 255, 0.3);

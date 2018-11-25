@@ -71,7 +71,7 @@ function startListenerUpdater() {
 
 function sendMessageToFront(event, status, data) {
   console.info(`Message to send: ${event} - ${status} - ${data}`);
-  mainWindow.webContents.send(event, status, data);
+  mainWindow.webContents.send(event, { status, data });
 }
 
 const menuTemplate = [
@@ -102,17 +102,17 @@ const menuTemplate = [
     submenu: [
       {
         label: "Nuevo IPP",
-        accelerator: "CmdOrCtrl+Alt+N",
+        accelerator: "CmdOrCtrl+N",
         click: () => {
-          sendMessageToFront("command", "command", "newIpp");
+          sendMessageToFront("command", "new", "newIpp");
         }
       },
       { type: "separator" },
       {
         label: "Buscador",
-        accelerator: "CmdOrCtrl+Alt+F",
+        accelerator: "CmdOrCtrl+F",
         click: () => {
-          sendMessageToFront("command", "command", "gsearch");
+          sendMessageToFront("command", "search", "gsearch");
         }
       }
     ]

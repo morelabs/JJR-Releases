@@ -104,6 +104,11 @@ export default {
       }
     }
   },
+  watch: {
+    "$route.params.id": () => {
+      this.loadIpp();
+    }
+  },
   created() {
     this.loadIpp();
   },
