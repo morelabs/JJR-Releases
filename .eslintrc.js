@@ -17,9 +17,9 @@ module.exports = {
     "plugin:vue/recommended",
   ],
   // required to lint *.vue files
-  plugins: [
-    'prettier',
-  ],
+  // plugins: [
+  //   'prettier',
+  // ],
   rules: {
     // allow async-await
     'generator-star-spacing': 'off',

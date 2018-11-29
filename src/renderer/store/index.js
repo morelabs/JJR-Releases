@@ -10,6 +10,7 @@ import program from "./modules/program";
 import organization from "./modules/organization";
 import zone from "./modules/zone";
 import person from "./modules/person";
+import user from "./modules/user";
 
 Vue.use(Vuex);
 
@@ -23,7 +24,8 @@ export default new Vuex.Store({
     program,
     referent,
     person,
-    zone
+    zone,
+    user
   },
   strict: process.env.NODE_ENV !== "production"
 });

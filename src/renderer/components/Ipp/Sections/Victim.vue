@@ -2,15 +2,19 @@
   <div class="person-info">
     <p>{{ fullname }}</p>
     <p>DNI: {{ victim.person.document_number || "-----" }}</p>
-    <p>
+    <div class="user-actions">
       <router-link :to="{ name: 'subject', params: { id: victim.id } }">
         <el-button
           size="mini"
-          type="primary">
+          type="danger">
           Ver expediente
         </el-button>
       </router-link>
-    </p>
+      <el-button
+        type="danger"
+        size="mini"
+        @click="openModal()">Editar Datos Personales</el-button>
+    </div>
   </div>
 </template>
 
@@ -32,13 +36,19 @@ export default {
       return `${this.victim.person.lastname},
         ${this.victim.person.firstname}`;
     }
+  },
+  methods: {
+    openModal() {
+      this.$emit("open-modal");
+    }
   }
 };
 </script>
 
 <style lang="css" scoped>
 .person-info {
-  border-bottom: solid 1px #eee;
-  padding: 10px 0px;
+  padding: 20px 10px;
+  margin-bottom: 20px;
+  background: #fafafa;
 }
 </style>

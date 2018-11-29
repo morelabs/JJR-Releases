@@ -98,6 +98,36 @@ const removePerson = ({ commit }, { personId, role }) => {
   });
 };
 
+const addResponsable = ({ commit }, { ippId, userId }) => {
+  console.log("Add action", ippId, userId);
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`ipp_cases/${ippId}/responsables`, {
+        ipp_case_responsable: { responsable_id: userId }
+      })
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
+
+const removeResponsable = ({ commit }, { ippId, responsableId }) => {
+  console.log("Remove action", ippId, responsableId);
+  return new Promise((resolve, reject) => {
+    axios
+      .delete(`ipp_cases/${ippId}/responsables/${responsableId}`)
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
+
 const addPoliceStation = ({ commit }, { police_station }) => {
   return new Promise((resolve, reject) => {
     commit(types.ADD_POLICE_STATION, police_station);
@@ -162,6 +192,8 @@ export default {
   addIpp,
   addPerson,
   removePerson,
+  addResponsable,
+  removeResponsable,
   addCrime,
   removeCrime,
   addPoliceStation,

@@ -37,9 +37,8 @@
       </el-col>
       <el-col :span="bestSize">
         <el-button
-          type="info"
+          type="text"
           size="small"
-          plain
           class="value-cell-button"
           @click.native.prevent="removeSubAnswer(index)">Quitar</el-button>
       </el-col>

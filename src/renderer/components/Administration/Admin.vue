@@ -23,7 +23,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .admin-header {
   border-bottom: solid 2px #f1f1f1;
   text-align: center;
