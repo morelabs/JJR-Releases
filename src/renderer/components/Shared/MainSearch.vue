@@ -4,11 +4,6 @@
     title="Buscador Avanzado"
     width="40%">
     <div>
-      <div style="color: #999;">
-        Buscador avanzado. Seleccione un objeto para buscar y comience a escribir.
-        Se mostrará un listado de sugestiones que podra clickear para abrirlo
-      </div>
-      <hr>
       <vue-simple-suggest
         ref="suggestions"
         :list="filterOptions"
@@ -138,7 +133,7 @@ export default {
 .my-suggestion-list {
   margin-top: 10px;
   font-size: 15px;
-  background: #f0f0f0;
+  background: #fafafa;
   color: #333;
   z-index: 1000;
   max-height: 400px;
@@ -159,7 +154,7 @@ export default {
 }
 .my-suggestion-list .my-suggestion-list-item .extra {
   float: right;
-  color: #999;
+  color: #888;
   margin-left: 5px;
 }
 .red {

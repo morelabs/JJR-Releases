@@ -7,8 +7,7 @@
         </router-link>
       </div>
       <h2>
-        IPP - Nro.
-        <span v-if="ipp.id">{{ ipp.ipp_number }}</span>
+        IPP - <span v-if="ipp.id">{{ "Nro." + ipp.ipp_number }}</span>
       </h2>
     </div>
     <div class="page-content no-bottom">
@@ -41,7 +40,7 @@
                   :key="index">
                   <victimizer
                     :victimizer="vict"
-                    @open-modal="openModal(vict)"/>
+                    @open-modal="openModal(vict)" />
                 </li>
               </ul>
             </el-tab-pane>
@@ -52,14 +51,14 @@
                 <li
                   v-for="(vict, index) in ipp.victims"
                   :key="index">
-                  <victim :victim="vict"/>
+                  <victim :victim="vict" />
                 </li>
               </ul>
             </el-tab-pane>
             <el-tab-pane
               label="Asignados"
               name="thirth">
-              <ipp-case-responsables :ipp="ipp"/>
+              <ipp-case-responsables :ipp="ipp" />
             </el-tab-pane>
             <el-tab-pane
               label="Informacion"
