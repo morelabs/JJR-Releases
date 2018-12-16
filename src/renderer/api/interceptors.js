@@ -6,8 +6,12 @@ export default function setup() {
   axios.interceptors.request.use(
     function(config) {
       let token = localStorage.getItem("token");
+      let jur = localStorage.getItem("current");
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
+      }
+      if (jur) {
+        config.headers["Jurisdiction"] = JSON.parse(jur).id;
       }
       config.headers["Access-Control-Jurisdiction"] = "";
       config.headers["Accept"] = "application/json";

@@ -7,6 +7,7 @@ const checkUser = ({ commit, state }) => {
     const token = localStorage.getItem("token");
     if (token) {
       const user = JWTDecode(token);
+      localStorage.setItem("current", JSON.stringify(user.jurisdiction));
       commit(types.UPDATE_CURRENT_USER, user);
       resolve(user);
     } else {
@@ -23,7 +24,7 @@ const login = ({ commit }, payload) => {
       .then(response => {
         const token = response.data.auth_token;
         let user = JWTDecode(token);
-        console.log("Login action", user);
+        localStorage.setItem("current", JSON.stringify(user.jurisdiction));
         commit(types.LOGIN_SUCCESS, { token: token, user: user });
         resolve(user);
       })
@@ -47,12 +48,35 @@ const checkConn = ({ commit }) => {
       axios
         .get("/check")
         .then(response => {
+          console.log(response);
           resolve(response);
         })
         .catch(error => {
+          console.log(error);
           reject(error);
         });
     }, 5000);
+  });
+};
+
+const setJurisdiction = ({ commit }, { jursidictionUserId, isDefault }) => {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`users/set_default_jurisdiction`, {
+        jur_id: jursidictionUserId,
+        is_default: isDefault
+      })
+      .then(response => {
+        localStorage.setItem(
+          "current",
+          JSON.stringify(response.data.jurisdiction)
+        );
+        commit(types.SET_JURISDICTION, response.data);
+        resolve();
+      })
+      .catch(error => {
+        reject(error);
+      });
   });
 };
 
@@ -60,5 +84,6 @@ export default {
   checkUser,
   login,
   logout,
-  checkConn
+  checkConn,
+  setJurisdiction
 };

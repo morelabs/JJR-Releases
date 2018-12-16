@@ -10,7 +10,7 @@
         <label>{{ question.item_type == "data" ? `${question.item_number} - ` : null }} {{ question.label }}</label>
       </el-col>
       <el-col :span="10">
-        <span v-if="editableQuestion()">
+        <span v-if="editableQuestion">
           <el-select
             v-if="useMultipleSelect"
             v-model="answer.value"
@@ -120,6 +120,9 @@ export default {
     };
   },
   computed: {
+    editableQuestion() {
+      return this.editable;
+    },
     useJsonTable() {
       return this.question.data_type == "json";
     },
@@ -142,9 +145,6 @@ export default {
   },
   methods: {
     ...subjectActions(["updateAnswer"]),
-    editableQuestion() {
-      return this.editable;
-    },
     hideQuestion() {
       this.show_component = false;
     },
@@ -164,7 +164,9 @@ export default {
       this.updateAnswer({ answerId, payload: payload })
         .then(response => {
           this.$notify.success({
-            title: `Dato guardado`,
+            title: `Pregunta
+              ${this.question.item_number || this.question.label}
+            guardada`,
             duration: 1000
           });
           this.copyAnswer();

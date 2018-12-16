@@ -47,6 +47,7 @@
         icon="icono-arg-justicia-negativo"
         class-name="menu-item dashboard"/>
       <side-menu-item
+        v-is-enabled-for="['admin']"
         :collapsed="collapsed"
         :route-name="{ path: '/admin/usuarios' }"
         :is-main="true"

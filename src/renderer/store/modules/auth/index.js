@@ -23,6 +23,9 @@ const mutations = {
   [types.LOGOUT_SUCCESS](state) {
     state.user = {};
     localStorage.removeItem("token");
+  },
+  [types.SET_JURISDICTION](state, data) {
+    state.user.jurisdiction = data.jurisdiction;
   }
 };
 

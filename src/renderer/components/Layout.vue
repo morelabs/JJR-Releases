@@ -8,6 +8,16 @@
         @open-search-modal="openSearchModal()"
         @confirm-logout="closeSession()"
         @toggle-collapse="(value) => toggleCollapse(value)"/>
+      <div
+        id="currentJurisdiction"
+        @click="setDefaultModal = true">
+        <span
+          v-if="user.jurisdiction.default"
+          class="jur-mark"><i class="el-icon-check"></i>
+        </span>
+        {{ user.jurisdiction.name }}
+      </div>
+
     </el-aside>
     <el-main>
       <transition
@@ -44,6 +54,51 @@
         </div>
       </div>
     </el-dialog>
+    <el-dialog
+      :visible.sync="setDefaultModal"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      :show-close="false"
+      title="Seleccione Jurisdiccion">
+      <div style="padding: 20px 0px;">
+        <el-select
+          v-model="defaultJurisdiction"
+          clearable
+          placeholder="Select"
+          style="width: 100%;">
+          <el-option
+            v-for="item in user.jurisdiction_list"
+            :key="item.value"
+            :label="item.name"
+            :value="item.id">
+            <span style="float: left">{{ item.name }}</span>
+            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.role }}</span>
+            <span
+              v-if="item.default"
+              style="float: right; color: #27be12; margin: 0px 10px; font-size: 15px;"><i class="el-icon-check"></i></span>
+          </el-option>
+        </el-select>
+        <div style="color: #F56C6C; margin: 10px 3px;">
+          <el-switch
+            v-model="setJurDefault"
+            active-color="#13ce66"
+            inactive-text="Cambiar de jurisdiccion"
+            active-text="Cambiar de jurisdiccion y guardar como default"
+            style="display: block"/>
+        </div>
+        <hr>
+        <div slot="footer">
+          <div style="text-align: right;">
+            <el-button
+              :disabled="!defaultJurisdiction && !user.jurisdiction.id"
+              @click="setDefaultModal = false">Cancelar</el-button>
+            <el-button
+              type="primary"
+              @click="setDefaultJurisdiction()">Guardar</el-button>
+          </div>
+        </div>
+      </div>
+    </el-dialog>
   </el-container>
 </template>
 
@@ -66,6 +121,9 @@ export default {
       confirmLogut: false,
       collapsed: false,
       showModal: false,
+      setDefaultModal: false,
+      defaultJurisdiction: null,
+      setJurDefault: false,
       message: ""
     };
   },
@@ -102,9 +160,14 @@ export default {
         this.$router.push({ name: message.data });
       }
     });
+    let currentJur = localStorage.getItem("current");
+    console.log("CurrentJur", currentJur);
+    if (!currentJur) {
+      this.setDefaultModal = true;
+    }
   },
   methods: {
-    ...authActions(["logout"]),
+    ...authActions(["logout", "setJurisdiction"]),
     closeSession() {
       this.logout().then(() => {
         this.$router.push({ name: "login" });
@@ -130,6 +193,20 @@ export default {
     },
     checkUpdate() {
       ipcRenderer.send("start-connection");
+    },
+    setDefaultJurisdiction() {
+      this.setJurisdiction({
+        jursidictionUserId: this.defaultJurisdiction,
+        isDefault: this.setJurDefault
+      })
+        .then(() => {
+          this.setDefaultModal = false;
+          this.defaultJurisdiction = null;
+          this.setJurDefault = false;
+        })
+        .catch(error => {
+          console.log("Error", error);
+        });
     }
   }
 };
@@ -230,5 +307,23 @@ export default {
 }
 .el-popover {
   z-index: 20000;
+}
+#currentJurisdiction {
+  background: rgb(39, 46, 54);
+  text-align: center;
+  font-size: 15px;
+  margin: 15px 10px;
+  padding: 20px;
+  cursor: pointer;
+}
+#currentJurisdiction .jur-mark {
+  color: #27be12;
+  float: left;
+  border: solid 1px #27be12;
+  border-radius: 100%;
+  height: 1rem;
+  width: 1rem;
+  padding: 2px;
+  margin: 0px 10px 0px -10px;
 }
 </style>

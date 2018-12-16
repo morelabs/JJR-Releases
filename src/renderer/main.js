@@ -32,6 +32,8 @@ import "element-ui/lib/theme-chalk/index.css";
 import "@/assets/css/icono-arg.css";
 import "vue-simple-suggest/dist/styles.css";
 
+import { isEnabledFor } from "./directives/IsEnabledFor.js";
+
 if (!process.env.IS_WEB) Vue.use(require("vue-electron"));
 Vue.http = Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
@@ -62,6 +64,9 @@ Vue.filter("capitalize", function(name) {
     .split(" ");
   return values.map(n => n.charAt(0).toUpperCase() + n.slice(1)).join(" ");
 });
+
+Vue.directive("isEnabledFor", isEnabledFor);
+
 /* eslint-disable no-new */
 new Vue({
   el: "#app",

@@ -33,18 +33,20 @@
         No hay asignados todavia
       </div>
     </div>
-    <h3 class="subtitle">Buscar usuarios</h3>
-    <el-autocomplete
-      v-model="criteria"
-      :fetch-suggestions="querySearchAsync"
-      :clearable="true"
-      placeholder="Please input"
-      style="width: 100%;"
-      @select="assign">
-      <template slot-scope="scope">
-        {{ scope.item.name }} <span style="float: right;">{{ scope.item.email }}</span>
-      </template>
-    </el-autocomplete>
+    <div v-is-enabled-for="['admin', 'coordinador']">
+      <h3 class="subtitle">Buscar usuarios</h3>
+      <el-autocomplete
+        v-model="criteria"
+        :fetch-suggestions="querySearchAsync"
+        :clearable="true"
+        placeholder="Please input"
+        style="width: 100%;"
+        @select="assign">
+        <template slot-scope="scope">
+          {{ scope.item.name }} <span style="float: right;">{{ scope.item.email }}</span>
+        </template>
+      </el-autocomplete>
+    </div>
   </div>
 </template>
 
