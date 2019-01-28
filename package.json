@@ -20,7 +20,8 @@
     "package:mac": "build --mac -p never",
     "package:win": "build --win -p never",
     "publish:mac": "build --mac -p always",
-    "publish:win": "build --win -p always"
+    "publish:win": "build --win -p always",
+    "publish:all": "build --mac --win -p always"
   },
   "build": {
     "productName": "JJR",
@@ -29,7 +30,15 @@
       "output": "build"
     },
     "files": [
-      "dist/electron/**/*"
+      "dist/electron/**/*",
+      "package.json"
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "jmoren",
+        "repo": "JJR-Releases"
+      }
     ],
     "dmg": {
       "contents": [
